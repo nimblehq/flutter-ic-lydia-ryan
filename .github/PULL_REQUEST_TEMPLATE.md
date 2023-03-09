@@ -1,4 +1,4 @@
-https://github.com/nimblehq/flutter_templates/issues/??
+- Closes https://github.com/nimblehq/flutter-ic-lydia-ryan/issues/??
 
 ## What happened 👀
 
