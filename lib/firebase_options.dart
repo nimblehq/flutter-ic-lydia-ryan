@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '554416796284',
     projectId: 'flutter-ic-lydia-ryan',
     storageBucket: 'flutter-ic-lydia-ryan.appspot.com',
-    iosClientId: '554416796284-r2q6j3ser1qe5r8fehob053c3pk2r2ub.apps.googleusercontent.com',
+    iosClientId:
+        '554416796284-r2q6j3ser1qe5r8fehob053c3pk2r2ub.apps.googleusercontent.com',
     iosBundleId: 'com.lydiaryan.fluttersurvey.staging',
   );
 }
