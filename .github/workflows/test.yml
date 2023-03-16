@@ -3,7 +3,7 @@ on:
   # Trigger the workflow on push or pull request,
   # but push action is only for the feature branch
   pull_request:
-    types: [ opened, synchronize, edited, reopened ]
+    types: [ opened, synchronize, edited, reopened ] 
   push:
     branches-ignore:
       - develop
