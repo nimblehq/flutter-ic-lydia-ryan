@@ -56,8 +56,8 @@ platform :ios do
       export_method: 'ad-hoc'
     )
     firebase_app_distribution(
-        app: #{FIREBASE_APP_ID},
-        firebase_cli_token: #{FIREBASE_TOKEN},
+        app: "#{FIREBASE_APP_ID}",
+        firebase_cli_token: "#{FIREBASE_TOKEN}",
         groups: "developer",
     )
   end
