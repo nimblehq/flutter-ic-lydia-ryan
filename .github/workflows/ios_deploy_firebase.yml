@@ -39,6 +39,13 @@ jobs:
         run: |
           echo $ENV_PRODUCTION > .env
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+          working-directory: 'ios'
+
       - name: Bundle install
         run: cd ./ios && bundle install
 
