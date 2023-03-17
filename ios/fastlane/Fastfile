@@ -4,7 +4,7 @@ require './Constants/Constants'
 require './Constants/Environments'
 require './Managers/MatchManager'
 
-FIREBASE_APP_ID = ENV["FIREBASE_APP_ID_STAGING"]
+FIREBASE_APP_ID = ENV["FIREBASE_IOS_APP_ID_STAGING"]
 FIREBASE_TOKEN = ENV["FIREBASE_TOKEN"]
 
 match_manager = MatchManager.new(

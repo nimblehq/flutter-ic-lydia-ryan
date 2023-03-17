@@ -47,5 +47,5 @@ jobs:
       - name: Deploy to Firebase App Distribution
         run: cd ./ios && bundle exec fastlane build_and_upload_app
         env:
-          FIREBASE_IOS_APP_ID_STAGING: ${{ secrets.FIREBASE_APP_ID_STAGING }}
+          FIREBASE_IOS_APP_ID_STAGING: ${{ secrets.FIREBASE_IOS_APP_ID_STAGING }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
