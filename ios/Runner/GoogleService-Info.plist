@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>554416796284-r2q6j3ser1qe5r8fehob053c3pk2r2ub.apps.googleusercontent.com</string>
+	<string>554416796284-7n5f13oasm3boh58mui5sll91k6h48vv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.554416796284-r2q6j3ser1qe5r8fehob053c3pk2r2ub</string>
+	<string>com.googleusercontent.apps.554416796284-7n5f13oasm3boh58mui5sll91k6h48vv</string>
 	<key>API_KEY</key>
 	<string>AIzaSyD04-d6onRVCgj3jALEXrLkswUiBkIDtB8</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.lydiaryan.fluttersurvey.staging</string>
+	<string>com.lydiaryan.fluttersurvey</string>
 	<key>PROJECT_ID</key>
 	<string>flutter-ic-lydia-ryan</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:554416796284:ios:8ef7369a12daacc7ebcff9</string>
+	<string>1:554416796284:ios:754f1f12e4589648ebcff9</string>
 </dict>
 </plist>
