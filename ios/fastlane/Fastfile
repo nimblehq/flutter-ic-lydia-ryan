@@ -4,7 +4,7 @@ require './Constants/Constants'
 require './Constants/Environments'
 require './Managers/MatchManager'
 
-FIREBASE_APP_ID = ENV["FIREBASE_IOS_APP_ID_STAGING"]
+FIREBASE_APP_ID = ENV["FIREBASE_IOS_APP_ID"]
 FIREBASE_TOKEN = ENV["FIREBASE_TOKEN"]
 
 match_manager = MatchManager.new(
@@ -45,14 +45,14 @@ platform :ios do
   lane :build_and_upload_app do
     set_app_version
     bump_build
-    upload_staging_to_firebase
+    upload_to_firebase
 #     upload_production_to_testflight
   end
 
-  desc 'Build and upload staging to Firebase App Distribution'
-  private_lane :upload_staging_to_firebase do
+  desc 'Build and upload to Firebase App Distribution'
+  private_lane :upload_to_firebase do
     build_ios_app(
-      scheme: 'staging',
+      scheme: 'production',
       export_method: 'ad-hoc'
     )
     firebase_app_distribution(
@@ -62,8 +62,9 @@ platform :ios do
     )
   end
 
-  desc 'Build and upload production to TestFlight'
-  private_lane :upload_production_to_testflight do
+  #TODO export_method app-store isn't working
+  desc 'Build and upload to TestFlight'
+  private_lane :upload_to_testflight do
     build_ios_app(
       scheme: 'production',
       export_method: 'app-store'
