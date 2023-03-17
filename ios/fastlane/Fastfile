@@ -2,16 +2,10 @@
 
 require './Constants/Constants'
 require './Constants/Environments'
-require './Managers/BuildManager'
-require './Managers/DistributionManager'
 require './Managers/MatchManager'
 
-builder = BuildManager.new(fastlane: self)
-
-distribution_manager = DistributionManager.new(
-  fastlane: self,
-  build_path: Constants.BUILD_PATH
-)
+FIREBASE_APP_ID = ENV["FIREBASE_APP_ID_STAGING"]
+FIREBASE_TOKEN = ENV["FIREBASE_TOKEN"]
 
 match_manager = MatchManager.new(
   fastlane: self,
@@ -45,50 +39,36 @@ platform :ios do
     match(force: true)
   end
 
-  # Testflight
+  # Distribution
 
-  desc 'Build and upload Staging app to Test Flight'
-  lane :build_and_upload_testflight_app do
+  desc 'Build and upload app'
+  lane :build_and_upload_app do
     set_app_version
     bump_build
-    builder.build_app_store(
-      Constants.SCHEME_NAME_STAGING,
-      Constants.PRODUCT_NAME_STAGING,
-      Constants.BUNDLE_ID_STAGING,
-      false
-    )
-    upload_build_to_testflight
+    upload_staging_to_firebase
+#     upload_production_to_testflight
   end
 
-  desc 'upload develop build to Test Flight'
-  private_lane :upload_build_to_testflight do
-    distribution_manager.upload_to_testflight(
-      product_name: Constants.PRODUCT_NAME_STAGING,
-      bundle_identifier: Constants.BUNDLE_ID_STAGING
+  desc 'Build and upload staging to Firebase App Distribution'
+  private_lane :upload_staging_to_firebase do
+    build_ios_app(
+      scheme: 'staging',
+      export_method: 'ad-hoc'
+    )
+    firebase_app_distribution(
+        app: #{FIREBASE_APP_ID},
+        firebase_cli_token: #{FIREBASE_TOKEN},
+        groups: "developer",
     )
   end
 
-  # AppStore
-
-  desc 'Build and upload Staging app to App Store Connect'
-  lane :build_and_upload_app_store_connect_app do
-    set_app_version
-    bump_build
-    builder.build_app_store(
-      Constants.SCHEME_NAME_STAGING,
-      Constants.PRODUCT_NAME_STAGING,
-      Constants.BUNDLE_ID_STAGING,
-      false
+  desc 'Build and upload production to TestFlight'
+  private_lane :upload_production_to_testflight do
+    build_ios_app(
+      scheme: 'production',
+      export_method: 'app-store'
     )
-    upload_build_to_app_store_connect
-  end
-
-  desc 'upload develop build to App Store Connect'
-  private_lane :upload_build_to_app_store_connect do
-    distribution_manager.upload_to_app_store_connect(
-      product_name: Constants.PRODUCT_NAME_STAGING,
-      bundle_identifier: Constants.BUNDLE_ID_STAGING
-    )
+    upload_to_testflight
   end
 
   # Private helper lanes
@@ -108,6 +88,19 @@ platform :ios do
     increment_build_number(
       build_number: number_of_commits,
       xcodeproj: Constants.PROJECT_PATH
+    )
+  end
+
+  desc 'Build app'
+  lane :build_ios_app do |values|
+    scheme = values[:scheme]
+    export_method = values[:export_method]
+    build_app(
+      configuration: "Debug-#{scheme}",
+      scheme: "#{scheme}",
+      export_method: "#{export_method}",
+      clean: true,
+      output_name: "#{scheme}.ipa"
     )
   end
 end

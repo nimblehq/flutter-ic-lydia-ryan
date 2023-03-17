@@ -1,0 +1,51 @@
+name: iOS - Deploy Staging build to Firebase
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build_and_deploy_android:
+    name: Build & Deploy iOS
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Checkout repository
+      - uses: actions/checkout@v3
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Setup Flutter environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.3.10'
+
+      - name: Get flutter dependencies
+        run: flutter pub get
+
+      - name: Run code generator.
+        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      - name: Setup .env.staging
+        env:
+          ENV_STAGING: ${{ secrets.ENV_STAGING }}
+        run: |
+          echo $ENV_STAGING > .env.staging
+
+      - name: Bundle install
+        run: cd ./ios && bundle install
+
+      - name: Pod install
+        run: cd ./ios && pod install
+
+      - name: Deploy to Firebase App Distribution
+        run: cd ./ios && bundle exec fastlane build_and_upload_app
+        env:
+          FIREBASE_IOS_APP_ID_STAGING: ${{ secrets.FIREBASE_APP_ID_STAGING }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
