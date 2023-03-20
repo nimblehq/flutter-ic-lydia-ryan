@@ -52,6 +52,9 @@ jobs:
       - name: Pod install
         run: cd ./ios && pod install
 
+      - name: Match Adhoc
+        run: cd ./ios && bundle exec fastlane sync_adhoc_signing
+
       - name: Deploy to Firebase App Distribution
         run: cd ./ios && bundle exec fastlane build_and_upload_app
         env:

@@ -24,9 +24,9 @@ platform :ios do
 
   # Code Sign
 
-  desc 'Sync AppStore Staging match signing'
-  lane :sync_appstore_staging_signing do
-    match_manager.sync_app_store_signing(app_identifier: [Constants.BUNDLE_ID_STAGING])
+  desc 'Sync ad-hoc production match signing'
+  lane :sync_adhoc_signing do
+    match_manager.sync_adhoc_signing(app_identifier: [Constants.BUNDLE_ID_PRODUCTION])
   end
 
   desc 'Register new devices'
@@ -65,6 +65,7 @@ platform :ios do
   #TODO export_method app-store isn't working
   desc 'Build and upload to TestFlight'
   private_lane :upload_to_testflight do
+    sync_app_store_signing
     build_ios_app(
       scheme: 'production',
       export_method: 'app-store'
