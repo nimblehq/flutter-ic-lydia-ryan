@@ -2,10 +2,19 @@
 
 require './Constants/Constants'
 require './Constants/Environments'
+require './Managers/BuildManager'
+require './Managers/DistributionManager'
 require './Managers/MatchManager'
 
 FIREBASE_APP_ID = ENV["FIREBASE_IOS_APP_ID"]
 FIREBASE_TOKEN = ENV["FIREBASE_TOKEN"]
+
+builder = BuildManager.new(fastlane: self)
+
+distribution_manager = DistributionManager.new(
+  fastlane: self,
+  build_path: Constants.BUILD_PATH
+)
 
 match_manager = MatchManager.new(
   fastlane: self,
@@ -29,6 +38,11 @@ platform :ios do
     match_manager.sync_adhoc_signing(app_identifier: [Constants.BUNDLE_ID_PRODUCTION])
   end
 
+  desc 'Sync ad-hoc production match signing'
+  lane :sync_app_store_signing do
+    match_manager.sync_app_store_signing(app_identifier: [Constants.BUNDLE_ID_PRODUCTION])
+  end
+
   desc 'Register new devices'
   lane :register_new_device do
     device_name = prompt(text: 'Enter the device name: ')
@@ -42,35 +56,39 @@ platform :ios do
   # Distribution
 
   desc 'Build and upload app'
-  lane :build_and_upload_app do
+  lane :bump_app_version do
     set_app_version
     bump_build
-    upload_to_firebase
-#     upload_production_to_testflight
   end
 
   desc 'Build and upload to Firebase App Distribution'
-  private_lane :upload_to_firebase do
-    build_ios_app(
-      scheme: 'production',
-      export_method: 'ad-hoc'
+  lane :build_and_upload_to_firebase do
+    builder.build_ad_hoc(
+        Constants.SCHEME_NAME_PRODUCTION,
+        Constants.PRODUCT_NAME_PRODUCTION,
+        Constants.BUNDLE_ID_PRODUCTION
     )
-    firebase_app_distribution(
-        app: "#{FIREBASE_APP_ID}",
-        firebase_cli_token: "#{FIREBASE_TOKEN}",
-        groups: "developer",
+    distribution_manager.upload_to_firebase(
+      product_name: Constants.PRODUCT_NAME_PRODUCTION,
+      firebase_app_id: "#{FIREBASE_APP_ID}",
+      firebase_token: "#{FIREBASE_TOKEN}",
+      tester_groups: "developer",
+      notes: ""
     )
   end
 
-  #TODO export_method app-store isn't working
   desc 'Build and upload to TestFlight'
-  private_lane :upload_to_testflight do
-    sync_app_store_signing
-    build_ios_app(
-      scheme: 'production',
-      export_method: 'app-store'
+  lane :build_and_upload_to_testflight do
+    builder.build_app_store(
+        Constants.SCHEME_NAME_PRODUCTION,
+        Constants.PRODUCT_NAME_PRODUCTION,
+        Constants.BUNDLE_ID_PRODUCTION,
+        false
     )
-    upload_to_testflight
+    distribution_manager.upload_to_testflight(
+      product_name: Constants.PRODUCT_NAME_PRODUCTION,
+      bundle_identifier: Constants.BUNDLE_ID_PRODUCTION
+    )
   end
 
   # Private helper lanes
@@ -94,7 +112,7 @@ platform :ios do
   end
 
   desc 'Build app'
-  lane :build_ios_app do |values|
+  private_lane :build_ios_app do |values|
     scheme = values[:scheme]
     export_method = values[:export_method]
     build_app(

@@ -11,15 +11,18 @@ jobs:
     name: Build & Deploy iOS
     runs-on: macOS-latest
     environment: staging
+    env:
+      TEAM_ID: ${{ secrets.TEAM_ID }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.4.1
         with:
-          distribution: 'adopt'
-          java-version: '11'
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Setup Flutter environment
         uses: subosito/flutter-action@v2
@@ -52,11 +55,17 @@ jobs:
       - name: Pod install
         run: cd ./ios && pod install
 
+      - name: Match App Store
+        run: cd ./ios && bundle exec fastlane sync_app_store_signing
+
+      - name: Deploy to TestFlight
+        run: cd ./ios && bundle exec fastlane build_and_upload_to_testflight
+
       - name: Match Adhoc
         run: cd ./ios && bundle exec fastlane sync_adhoc_signing
 
       - name: Deploy to Firebase App Distribution
-        run: cd ./ios && bundle exec fastlane build_and_upload_app
+        run: cd ./ios && bundle exec fastlane build_and_upload_to_firebase
         env:
           FIREBASE_IOS_APP_ID: ${{ secrets.FIREBASE_IOS_APP_ID_PRODUCTION }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
