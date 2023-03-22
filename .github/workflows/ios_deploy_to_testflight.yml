@@ -1,43 +1,43 @@
-# name: ios-deploy-to-testflight
-# on:
-#   push:
-#     branches:
-#       - develop
-#       - chore/5-set-up-cicd-with-github-actions
+name: ios-deploy-to-testflight
+on:
+  push:
+    branches:
+      - develop
+      - chore/5-set-up-cicd-with-github-actions
 
-# jobs:
-#   build_and_upload_to_app_store:
-#     name: Build and upload iOS app to AppStore
-#     runs-on: macOS-12
-#     env:
-#       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-#       APPSTORE_CONNECT_API_KEY: ${{ secrets.APPSTORE_CONNECT_API_KEY }}
-#     steps:
-#     - name: Checkout the repository
-#       uses: actions/checkout@v3.3.0
+jobs:
+  build_and_upload_to_app_store:
+    name: Build and upload iOS app to AppStore
+    runs-on: macOS-12
+    env:
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      APPSTORE_CONNECT_API_KEY: ${{ secrets.APPSTORE_CONNECT_API_KEY }}
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v3.3.0
 
-#     - name: Install SSH key
-#       uses: webfactory/ssh-agent@v0.4.1
-#       with:
-#         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.4.1
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-#     - name: Set up Flutter version
-#       uses: subosito/flutter-action@v1
-#       with:
-#         flutter-version: '3.3.8'
+    - name: Set up Flutter version
+      uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '3.3.8'
 
-#     - name: Get Flutter dependencies
-#       run: flutter pub get
+    - name: Get Flutter dependencies
+      run: flutter pub get
 
-#     - name: Run code generator
-#       run: flutter packages pub run build_runner build --delete-conflicting-outputs
+    - name: Run code generator
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-#     - name: Install iOS dependencies
-#       run: cd ./ios && bundle install && bundle exec pod install
+    - name: Install iOS dependencies
+      run: cd ./ios && bundle install && bundle exec pod install
 
-#     - name: Match AppStore
-#       run: cd ./ios && bundle exec fastlane sync_app_store_signing
+    - name: Match AppStore
+      run: cd ./ios && bundle exec fastlane sync_app_store_signing
 
-#     - name: Deploy production build to TestFlight
-#       run: |
-#         cd ./ios && bundle exec fastlane build_and_upload_to_testflight
+    - name: Deploy production build to TestFlight
+      run: |
+        cd ./ios && bundle exec fastlane build_and_upload_to_testflight
