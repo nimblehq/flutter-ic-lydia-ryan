@@ -36,8 +36,8 @@ jobs:
       run: cd ./ios && bundle install && bundle exec pod install
 
     - name: Match AppStore
-      run: cd ./ios && bundle exec fastlane sync_appstore_production_signing
+      run: cd ./ios && bundle exec fastlane sync_app_store_signing
 
-    - name: Deploy production build to AppStore
+    - name: Deploy production build to TestFlight
       run: |
-        cd ./ios && bundle exec fastlane build_and_upload_app_store_connect_app
+        cd ./ios && bundle exec fastlane build_and_upload_to_testflight

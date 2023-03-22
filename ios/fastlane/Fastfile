@@ -8,6 +8,7 @@ require './Managers/MatchManager'
 
 FIREBASE_APP_ID = ENV["FIREBASE_IOS_APP_ID"]
 FIREBASE_TOKEN = ENV["FIREBASE_TOKEN"]
+APPSTORE_CONNECT_API_KEY = ENV["APPSTORE_CONNECT_API_KEY"]
 
 builder = BuildManager.new(fastlane: self)
 
@@ -38,7 +39,7 @@ platform :ios do
     match_manager.sync_adhoc_signing(app_identifier: [Constants.BUNDLE_ID_PRODUCTION])
   end
 
-  desc 'Sync ad-hoc production match signing'
+  desc 'Sync AppStore production match signing'
   lane :sync_app_store_signing do
     match_manager.sync_app_store_signing(app_identifier: [Constants.BUNDLE_ID_PRODUCTION])
   end
@@ -79,15 +80,33 @@ platform :ios do
 
   desc 'Build and upload to TestFlight'
   lane :build_and_upload_to_testflight do
+    set_app_version
+    bump_build
     builder.build_app_store(
-        Constants.SCHEME_NAME_PRODUCTION,
-        Constants.PRODUCT_NAME_PRODUCTION,
-        Constants.BUNDLE_ID_PRODUCTION,
-        false
+      Constants.SCHEME_NAME_PRODUCTION,
+      Constants.PRODUCT_NAME_PRODUCTION,
+      Constants.BUNDLE_ID_PRODUCTION,
+      false
     )
+    set_connect_api_key
+    upload_build_to_testflight
+  end
+
+  desc 'Upload production build to TestFlight'
+  private_lane :upload_build_to_testflight do
     distribution_manager.upload_to_testflight(
       product_name: Constants.PRODUCT_NAME_PRODUCTION,
       bundle_identifier: Constants.BUNDLE_ID_PRODUCTION
+    )
+  end
+
+  desc 'set App Store Connect API Key'
+  lane :set_connect_api_key do
+    app_store_connect_api_key(
+      key_id: Constants.APP_STORE_KEY_ID,
+      issuer_id: Constants.APP_STORE_ISSUER_ID,
+      key_content: "#{APPSTORE_CONNECT_API_KEY}",
+      is_key_content_base64: true
     )
   end
 
