@@ -60,7 +60,6 @@ platform :ios do
 
   desc 'Build and upload to Firebase App Distribution'
   lane :build_and_upload_to_firebase do
-    xcversion(version: "8.1") # Selects Xcode 8.1.0
     bump_app_version
     builder.build_ad_hoc(
         Constants.SCHEME_NAME_PRODUCTION,
@@ -78,7 +77,6 @@ platform :ios do
 
   desc 'Build and upload to TestFlight'
   lane :build_and_upload_to_testflight do
-    xcversion(version: "8.1") # Selects Xcode 8.1.0
     bump_app_version
     builder.build_app_store(
       Constants.SCHEME_NAME_PRODUCTION,
