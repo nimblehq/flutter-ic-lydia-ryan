@@ -15,6 +15,7 @@ jobs:
       TEAM_ID: ${{ secrets.TEAM_ID }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      APPSTORE_CONNECT_API_KEY: ${{ secrets.APPSTORE_CONNECT_API_KEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -49,11 +50,8 @@ jobs:
           bundler-cache: true
           working-directory: 'ios'
 
-      - name: Bundle install
-        run: cd ./ios && bundle install
-
-      - name: Pod install
-        run: cd ./ios && pod install
+      - name: Install iOS dependencies
+        run: cd ./ios && bundle install && bundle exec pod install
 
       - name: Match Adhoc
         run: cd ./ios && bundle exec fastlane sync_adhoc_signing
