@@ -127,17 +127,4 @@ platform :ios do
       xcodeproj: Constants.PROJECT_PATH
     )
   end
-
-  desc 'Build app'
-  private_lane :build_ios_app do |values|
-    scheme = values[:scheme]
-    export_method = values[:export_method]
-    build_app(
-      configuration: "Debug-#{scheme}",
-      scheme: "#{scheme}",
-      export_method: "#{export_method}",
-      clean: true,
-      output_name: "#{scheme}.ipa"
-    )
-  end
 end
