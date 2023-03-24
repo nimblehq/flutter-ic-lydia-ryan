@@ -52,16 +52,10 @@ platform :ios do
 
   # Distribution
 
-  desc 'Build and upload app'
-  lane :bump_app_version do
-    set_app_version
-    bump_build
-  end
-
   desc 'Build and upload to Firebase App Distribution'
   lane :build_and_upload_to_firebase do
-    set_xcode_version
-    bump_app_version
+    set_app_version
+    bump_build
     builder.build_ad_hoc(
         Constants.SCHEME_NAME_PRODUCTION,
         Constants.PRODUCT_NAME_PRODUCTION,
@@ -78,8 +72,8 @@ platform :ios do
 
   desc 'Build and upload to TestFlight'
   lane :build_and_upload_to_testflight do
-    set_xcode_version
-    bump_app_version
+    set_app_version
+    bump_build
     builder.build_app_store(
       Constants.SCHEME_NAME_PRODUCTION,
       Constants.PRODUCT_NAME_PRODUCTION,
@@ -98,8 +92,10 @@ platform :ios do
     )
   end
 
+  # Private helper lanes
+
   desc 'set App Store Connect API Key'
-  lane :set_connect_api_key do
+  private_lane :set_connect_api_key do
     app_store_connect_api_key(
       key_id: Constants.APP_STORE_KEY_ID,
       issuer_id: Constants.APP_STORE_ISSUER_ID,
@@ -107,8 +103,6 @@ platform :ios do
       is_key_content_base64: true
     )
   end
-
-  # Private helper lanes
 
   desc 'check if any specific version number in build environment'
   private_lane :set_app_version do
@@ -123,16 +117,8 @@ platform :ios do
   desc 'set build number with number of commits'
   private_lane :bump_build do
     increment_build_number(
-      build_number: number_of_commits,
+      build_number: ENV["GITHUB_RUN_NUMBER"],
       xcodeproj: Constants.PROJECT_PATH
-    )
-  end
-
-  desc 'set xcode version'
-  private_lane :set_xcode_version do
-    xcodes(
-      version: '14',
-      select_for_current_build_only: true,
     )
   end
 end

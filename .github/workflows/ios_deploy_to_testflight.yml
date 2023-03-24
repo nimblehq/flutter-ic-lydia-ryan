@@ -3,12 +3,13 @@ on:
   push:
     branches:
       - develop
-      - chore/5-set-up-cicd-with-github-actions
+      - chore/5-kayla
 
 jobs:
   build_and_upload_to_app_store:
     name: Build and upload iOS app to AppStore
     runs-on: macOS-12
+    environment: staging
     env:
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       APPSTORE_CONNECT_API_KEY: ${{ secrets.APPSTORE_CONNECT_API_KEY }}
@@ -32,6 +33,9 @@ jobs:
     - name: Run code generator
       run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
+    - name: Select XCode
+      run: sudo xcode-select -s '/Applications/Xcode_14.2.app'
+
     - name: Install iOS dependencies
       run: cd ./ios && bundle install && bundle exec pod install
 
@@ -41,3 +45,5 @@ jobs:
     - name: Deploy production build to TestFlight
       run: |
         cd ./ios && bundle exec fastlane build_and_upload_to_testflight
+      env:
+          GITHUB_RUN_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
