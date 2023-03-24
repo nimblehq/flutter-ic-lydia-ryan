@@ -1,10 +1,11 @@
+# TODO Fix this workflow
+
 name: iOS - Deploy production build to Firebase
 
 on:
   push:
     branches:
       - develop
-      - chore/5-set-up-cicd-with-github-actions
 
 jobs:
   build_and_deploy_ios:
