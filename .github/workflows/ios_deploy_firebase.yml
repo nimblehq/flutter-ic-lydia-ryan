@@ -16,7 +16,6 @@ jobs:
       TEAM_ID: ${{ secrets.TEAM_ID }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-      APPSTORE_CONNECT_API_KEY: ${{ secrets.APPSTORE_CONNECT_API_KEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -62,3 +61,4 @@ jobs:
         env:
           FIREBASE_IOS_APP_ID: ${{ secrets.FIREBASE_IOS_APP_ID_PRODUCTION }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          BUILD_NUMBER:  {{ $GITHUB_RUN_NUMBER }}

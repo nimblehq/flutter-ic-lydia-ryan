@@ -120,10 +120,10 @@ platform :ios do
     end
   end
 
-  desc 'set build number with number of commits'
-  private_lane :bump_build do
+  desc 'Set build number '
+  private_lane :bump_build do |options|
     increment_build_number(
-      build_number: number_of_commits,
+      build_number: Environments.BUILD_NUMBER,
       xcodeproj: Constants.PROJECT_PATH
     )
   end

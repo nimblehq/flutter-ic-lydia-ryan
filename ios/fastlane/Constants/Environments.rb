@@ -26,4 +26,8 @@ class Environments
   def self.FIREBASE_TOKEN
     ENV["FIREBASE_TOKEN"]
   end
+
+  def self.BUILD_NUMBER
+    ENV['BUILD_NUMBER']
+  end
 end
