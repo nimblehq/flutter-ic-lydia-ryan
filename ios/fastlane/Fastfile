@@ -30,9 +30,14 @@ platform :ios do
 
   # Code Sign
 
-  desc 'Sync AppStore Staging match signing'
-  lane :sync_appstore_staging_signing do
-    match_manager.sync_app_store_signing(app_identifier: [Constants.BUNDLE_ID_STAGING])
+  desc 'Sync ad-hoc production match signing'
+  lane :sync_adhoc_signing do
+    match_manager.sync_adhoc_signing(app_identifier: [Constants.BUNDLE_ID_PRODUCTION])
+  end
+
+  desc 'Sync AppStore production match signing'
+  lane :sync_app_store_signing do
+    match_manager.sync_app_store_signing(app_identifier: [Constants.BUNDLE_ID_PRODUCTION])
   end
 
   desc 'Register new devices'
@@ -45,49 +50,61 @@ platform :ios do
     match(force: true)
   end
 
-  # Testflight
+  # Distribution
 
-  desc 'Build and upload Staging app to Test Flight'
-  lane :build_and_upload_testflight_app do
+  desc 'Build and upload app'
+  lane :bump_app_version do
     set_app_version
     bump_build
+  end
+
+  desc 'Build and upload to Firebase App Distribution'
+  lane :build_and_upload_to_firebase do
+    set_xcode_version
+    bump_app_version
+    builder.build_ad_hoc(
+        Constants.SCHEME_NAME_PRODUCTION,
+        Constants.PRODUCT_NAME_PRODUCTION,
+        Constants.BUNDLE_ID_PRODUCTION
+    )
+    distribution_manager.upload_to_firebase(
+      product_name: Constants.PRODUCT_NAME_PRODUCTION,
+      firebase_app_id: Environments.FIREBASE_APP_ID,
+      firebase_token: Environments.FIREBASE_TOKEN,
+      tester_groups: "developer",
+      notes: ""
+    )
+  end
+
+  desc 'Build and upload to TestFlight'
+  lane :build_and_upload_to_testflight do
+    set_xcode_version
+    bump_app_version
     builder.build_app_store(
-      Constants.SCHEME_NAME_STAGING,
-      Constants.PRODUCT_NAME_STAGING,
-      Constants.BUNDLE_ID_STAGING,
+      Constants.SCHEME_NAME_PRODUCTION,
+      Constants.PRODUCT_NAME_PRODUCTION,
+      Constants.BUNDLE_ID_PRODUCTION,
       false
     )
+    set_connect_api_key
     upload_build_to_testflight
   end
 
-  desc 'upload develop build to Test Flight'
+  desc 'Upload production build to TestFlight'
   private_lane :upload_build_to_testflight do
     distribution_manager.upload_to_testflight(
-      product_name: Constants.PRODUCT_NAME_STAGING,
-      bundle_identifier: Constants.BUNDLE_ID_STAGING
+      product_name: Constants.PRODUCT_NAME_PRODUCTION,
+      bundle_identifier: Constants.BUNDLE_ID_PRODUCTION
     )
   end
 
-  # AppStore
-
-  desc 'Build and upload Staging app to App Store Connect'
-  lane :build_and_upload_app_store_connect_app do
-    set_app_version
-    bump_build
-    builder.build_app_store(
-      Constants.SCHEME_NAME_STAGING,
-      Constants.PRODUCT_NAME_STAGING,
-      Constants.BUNDLE_ID_STAGING,
-      false
-    )
-    upload_build_to_app_store_connect
-  end
-
-  desc 'upload develop build to App Store Connect'
-  private_lane :upload_build_to_app_store_connect do
-    distribution_manager.upload_to_app_store_connect(
-      product_name: Constants.PRODUCT_NAME_STAGING,
-      bundle_identifier: Constants.BUNDLE_ID_STAGING
+  desc 'set App Store Connect API Key'
+  lane :set_connect_api_key do
+    app_store_connect_api_key(
+      key_id: Constants.APP_STORE_KEY_ID,
+      issuer_id: Constants.APP_STORE_ISSUER_ID,
+      key_content: Environments.APPSTORE_CONNECT_API_KEY,
+      is_key_content_base64: true
     )
   end
 
@@ -103,11 +120,19 @@ platform :ios do
     end
   end
 
-  desc 'set build number with number of commits'
-  private_lane :bump_build do
+  desc 'Set build number '
+  private_lane :bump_build do |options|
     increment_build_number(
-      build_number: number_of_commits,
+      build_number: Environments.BUILD_NUMBER,
       xcodeproj: Constants.PROJECT_PATH
+    )
+  end
+
+  desc 'set xcode version'
+  private_lane :set_xcode_version do
+    xcodes(
+      version: '14',
+      select_for_current_build_only: true,
     )
   end
 end
