@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "554416796284",
+    "project_id": "flutter-ic-lydia-ryan",
+    "storage_bucket": "flutter-ic-lydia-ryan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554416796284:android:cb5ecd4ed4927254ebcff9",
+        "android_client_info": {
+          "package_name": "com.lydiaryan.fluttersurvey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554416796284-sae4m1kc6ulpklje5rk82m10uhfmoloo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ2gfyVwBn4SuqOq9jTD7CmI7rMLIoPms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554416796284-sae4m1kc6ulpklje5rk82m10uhfmoloo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "554416796284-r2q6j3ser1qe5r8fehob053c3pk2r2ub.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lydiaryan.fluttersurvey.staging"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
