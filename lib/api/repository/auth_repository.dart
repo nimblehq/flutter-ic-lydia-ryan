@@ -1,3 +1,4 @@
+import 'package:lydiaryanfluttersurvey/api/exception/network_exceptions.dart';
 import 'package:lydiaryanfluttersurvey/api/service/auth_service.dart';
 import 'package:lydiaryanfluttersurvey/constants.dart';
 import 'package:lydiaryanfluttersurvey/env.dart';
@@ -23,6 +24,10 @@ class AuthRepositoryImpl implements AuthRepository {
       clientSecret: Env.secret,
     );
 
-    return _authService.login(loginRequest);
+    try {
+      return _authService.login(loginRequest);
+    } catch (e) {
+      return Future.error(NetworkExceptions.fromDioException(e));
+    }
   }
 }
