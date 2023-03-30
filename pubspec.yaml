@@ -33,6 +33,7 @@ dependencies:
   freezed_annotation: ^2.0.3
   go_router: ^4.1.0
   intl: ^0.17.0
+  japx: ^2.0.4
   json_annotation: ^4.5.0
   package_info_plus: ^1.4.2
   permission_handler: ^8.3.0
