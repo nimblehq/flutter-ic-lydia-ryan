@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'screens/login/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: routePathRootScreen,
         builder: (BuildContext context, GoRouterState state) =>
-            const HomeScreen(),
+            const LoginScreen(),
         routes: [
           GoRoute(
             path: routePathSecondScreen,
@@ -78,7 +79,7 @@ class HomeScreen extends StatelessWidget {
             FractionallySizedBox(
               widthFactor: 0.5,
               child: Image.asset(
-                Assets.images.nimbleLogo.path,
+                Assets.images.nimbleLogoWhite,
                 fit: BoxFit.fitWidth,
               ),
             ),
