@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lydiaryanfluttersurvey/screens/login/login_input_widget.dart';
 
+import '../../resources/dimensions.dart';
 import '../widgets/rounded_rectangle_button_widget.dart';
 import 'login_keys.dart';
 
@@ -21,7 +22,8 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding:
+              const EdgeInsets.symmetric(horizontal: Dimensions.paddingDefault),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -36,13 +38,13 @@ class LoginScreen extends StatelessWidget {
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: Dimensions.paddingMedium),
                 const LoginInputWidget(
                   key: LoginKey.liLoginPassword,
                   hintText: 'Password',
                   isPasswordType: true,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: Dimensions.paddingMedium),
                 RoundedRectangleButtonWidget(
                   key: LoginKey.rrbLogin,
                   text: 'Login',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 
 class RoundedRectangleButtonWidget extends StatelessWidget {
   const RoundedRectangleButtonWidget({
@@ -18,7 +19,8 @@ class RoundedRectangleButtonWidget extends StatelessWidget {
         minimumSize: const Size.fromHeight(56),
         backgroundColor: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius:
+              BorderRadius.circular(Dimensions.radiusRoundedRectangleButton),
         ),
       ),
       child: Text(
