@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:lydiaryanfluttersurvey/api/exception/network_exceptions.dart';
 import 'package:lydiaryanfluttersurvey/api/service/auth_service.dart';
 import 'package:lydiaryanfluttersurvey/constants.dart';
@@ -9,6 +10,7 @@ abstract class AuthRepository {
   Future<LoginResponse> login(String username, String password);
 }
 
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthService _authService;
 
