@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class LoginKey {
   LoginKey._();
 
-  static const lfLoginEmail = Key('lfLoginEmail');
-  static const lfLoginPassword = Key('lfLoginPassword');
+  static const liLoginEmail = Key('liLoginEmail');
+  static const liLoginPassword = Key('liLoginPassword');
   static const btLogin = Key('btLogin');
 }

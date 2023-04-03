@@ -70,4 +70,5 @@ flutter:
   fonts:
     - family: neuzeit
       fonts:
-        - asset: assets/fonts/neuzeit.otf
+        - asset: assets/fonts/neuzeit_regular.otf
+        - asset: assets/fonts/neuzeit_bold.otf

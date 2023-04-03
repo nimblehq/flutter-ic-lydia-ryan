@@ -1,7 +1,7 @@
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lydiaryanfluttersurvey/screens/login/login_form_widgets.dart';
+import 'package:lydiaryanfluttersurvey/screens/login/login_input_widget.dart';
 
 import 'login_keys.dart';
 
@@ -26,20 +26,31 @@ class LoginScreen extends StatelessWidget {
               SvgPicture.asset(
                 Assets.images.nimbleLogoWhite,
               ),
+              const SizedBox(height: 109),
               const Padding(
-                padding: EdgeInsets.only(left: 24, right: 24, top: 109),
-                child: LoginForm(
-                  key: LoginKey.lfLoginEmail,
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: LoginInputWidget(
+                  key: LoginKey.liLoginEmail,
                   hintText: 'Email',
+                  keyboardType: TextInputType.emailAddress,
                 ),
               ),
+              const SizedBox(height: 20),
               const Padding(
-                padding: EdgeInsets.only(left: 24, right: 24, top: 20),
-                child: LoginForm(
-                  key: LoginKey.lfLoginPassword,
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: LoginInputWidget(
+                  key: LoginKey.liLoginPassword,
                   hintText: 'Password',
+                  keyboardType: TextInputType.visiblePassword,
                 ),
               ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+              onPressed: () {
+                // TODO: Navigate to Second Screen
+              },
+              child: const Text("Login"),
+            ),
             ],
           ),
         ),

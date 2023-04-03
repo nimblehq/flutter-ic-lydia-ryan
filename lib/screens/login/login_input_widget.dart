@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginInputWidget extends StatelessWidget {
   final String hintText;
+  final TextInputType keyboardType;
 
-  const LoginForm({
+  const LoginInputWidget({
     super.key,
     required this.hintText,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -13,6 +15,7 @@ class LoginForm extends StatelessWidget {
     return TextField(
       style: const TextStyle(
         color: Colors.white,
+        fontSize: 17,
       ),
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -32,6 +35,7 @@ class LoginForm extends StatelessWidget {
           color: Colors.white30,
         ),
       ),
+      keyboardType: keyboardType,
     );
   }
 }
