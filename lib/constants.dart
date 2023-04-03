@@ -1,3 +1,7 @@
 class Constants {
-  static const grantType = "password";
+  static final auth = _Auth();
+}
+
+class _Auth {
+  get grantType => "password";
 }

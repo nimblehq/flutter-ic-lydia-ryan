@@ -5,11 +5,11 @@ class Env {
     return FlutterConfig.get('REST_API_ENDPOINT');
   }
 
-  static String get key {
+  static String get authClientId {
     return FlutterConfig.get('KEY');
   }
 
-  static String get secret {
+  static String get authClientSecret {
     return FlutterConfig.get('SECRET');
   }
 }

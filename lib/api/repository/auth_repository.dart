@@ -17,11 +17,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<LoginResponse> login(String username, String password) {
     LoginRequest loginRequest = LoginRequest(
-      grantType: Constants.grantType,
+      grantType: Constants.auth.grantType,
       email: username,
       password: password,
-      clientId: Env.key,
-      clientSecret: Env.secret,
+      clientId: Env.authClientId,
+      clientSecret: Env.authClientSecret,
     );
 
     try {
