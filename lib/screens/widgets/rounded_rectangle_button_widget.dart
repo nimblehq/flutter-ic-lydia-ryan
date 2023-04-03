@@ -16,7 +16,7 @@ class RoundedRectangleButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(56),
+        minimumSize: const Size.fromHeight(Dimensions.buttonHeight),
         backgroundColor: Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius:

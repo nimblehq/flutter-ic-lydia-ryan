@@ -9,4 +9,7 @@ class Dimensions {
   // Radius
   static const double radiusLoginInput = 12.0;
   static const double radiusRoundedRectangleButton = 10.0;
+
+  // Button
+  static const double buttonHeight = 56.0;
 }
