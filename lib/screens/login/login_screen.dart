@@ -1,6 +1,9 @@
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lydiaryanfluttersurvey/screens/login/login_form_widgets.dart';
+
+import 'login_keys.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -22,6 +25,20 @@ class LoginScreen extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 Assets.images.nimbleLogoWhite,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 24, right: 24, top: 109),
+                child: LoginForm(
+                  key: LoginKey.lfLoginEmail,
+                  hintText: 'Email',
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 24, right: 24, top: 20),
+                child: LoginForm(
+                  key: LoginKey.lfLoginPassword,
+                  hintText: 'Password',
+                ),
               ),
             ],
           ),
