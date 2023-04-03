@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class LoginInputWidget extends StatelessWidget {
   final String hintText;
   final TextInputType keyboardType;
+  final TextInputAction textInputAction;
+  final bool isPasswordType;
 
   const LoginInputWidget({
     super.key,
     required this.hintText,
     this.keyboardType = TextInputType.text,
+    this.textInputAction = TextInputAction.done,
+    this.isPasswordType = false,
   });
 
   @override
@@ -36,6 +40,13 @@ class LoginInputWidget extends StatelessWidget {
         ),
       ),
       keyboardType: keyboardType,
+      obscureText: isPasswordType,
+      enableSuggestions: !isPasswordType,
+      autocorrect: !isPasswordType,
+      textInputAction: textInputAction,
+      onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
     );
   }
 }

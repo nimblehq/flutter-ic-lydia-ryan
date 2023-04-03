@@ -33,6 +33,7 @@ class LoginScreen extends StatelessWidget {
                   key: LoginKey.liLoginEmail,
                   hintText: 'Email',
                   keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
                 ),
               ),
               const SizedBox(height: 20),
@@ -41,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                 child: LoginInputWidget(
                   key: LoginKey.liLoginPassword,
                   hintText: 'Password',
-                  keyboardType: TextInputType.visiblePassword,
+                  isPasswordType: true,
                 ),
               ),
               const SizedBox(height: 20),
