@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () {
                   // TODO: Navigate to Second Screen
                 },
-                child: const Text("Login"),
+                child: const Text('Login'),
               ),
             ],
           ),

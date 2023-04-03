@@ -17,10 +17,7 @@ class LoginInputWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 17,
-      ),
+      style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
