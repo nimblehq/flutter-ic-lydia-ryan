@@ -3,6 +3,7 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lydiaryanfluttersurvey/theme/app_theme.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -43,28 +44,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.white,
-        brightness: Brightness.light,
-        fontFamily: Assets.fonts.neuzeitRegular,
-        textTheme: const TextTheme(
-          titleLarge: TextStyle(
-            fontSize: 34.0,
-            fontWeight: FontWeight.w800,
-            color: Colors.white,
-          ),
-          titleMedium: TextStyle(
-            fontSize: 28.0,
-            fontWeight: FontWeight.w800,
-            color: Colors.white,
-          ),
-          bodyMedium: TextStyle(
-            fontSize: 17.0,
-            color: Colors.white,
-          ),
-        ),
-      ),
+      theme: AppTheme.defaultTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routeInformationProvider: _router.routeInformationProvider,

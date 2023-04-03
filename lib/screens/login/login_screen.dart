@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lydiaryanfluttersurvey/screens/login/login_input_widget.dart';
 
+import '../widgets/rounded_rectangle_button_widget.dart';
 import 'login_keys.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -19,40 +20,38 @@ class LoginScreen extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                Assets.images.nimbleLogoWhite,
-              ),
-              const SizedBox(height: 109),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: LoginInputWidget(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  Assets.images.nimbleLogoWhite,
+                ),
+                const SizedBox(height: 109),
+                const LoginInputWidget(
                   key: LoginKey.liLoginEmail,
                   hintText: 'Email',
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                 ),
-              ),
-              const SizedBox(height: 20),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: LoginInputWidget(
+                const SizedBox(height: 20),
+                const LoginInputWidget(
                   key: LoginKey.liLoginPassword,
                   hintText: 'Password',
                   isPasswordType: true,
                 ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // TODO: Navigate to Second Screen
-                },
-                child: const Text('Login'),
-              ),
-            ],
+                const SizedBox(height: 20),
+                RoundedRectangleButtonWidget(
+                  key: LoginKey.rrbLogin,
+                  text: 'Login',
+                  onPressed: () {
+                    // TODO: Login
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
