@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lydiaryanfluttersurvey/api/service/auth_service.dart';
 import 'package:lydiaryanfluttersurvey/di/provider/dio_provider.dart';
