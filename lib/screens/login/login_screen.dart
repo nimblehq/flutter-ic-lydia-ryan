@@ -1,8 +1,9 @@
 import 'dart:ui';
 
-import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:lydiaryanfluttersurvey/screens/login/login_input_widget.dart';
 
 import '../../resources/dimensions.dart';
@@ -47,22 +48,22 @@ class LoginScreen extends StatelessWidget {
                       Assets.images.nimbleLogoWhite,
                     ),
                     const SizedBox(height: 109),
-                    const LoginInputWidget(
+                    LoginInputWidget(
                       key: LoginKey.liLoginEmail,
-                      hintText: 'Email',
+                      hintText: AppLocalizations.of(context)!.email,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                     ),
                     const SizedBox(height: Dimensions.paddingMedium),
-                    const LoginInputWidget(
+                    LoginInputWidget(
                       key: LoginKey.liLoginPassword,
-                      hintText: 'Password',
+                      hintText: AppLocalizations.of(context)!.password,
                       isPasswordType: true,
                     ),
                     const SizedBox(height: Dimensions.paddingMedium),
                     RoundedRectangleButtonWidget(
                       key: LoginKey.rrbLogin,
-                      text: 'Login',
+                      text: AppLocalizations.of(context)!.login,
                       onPressed: () {
                         // TODO: Login
                       },
