@@ -2,5 +2,6 @@
   "hello": "Hello!",
   "email": "Email",
   "password": "Password",
-  "login": "Login"
+  "login": "Login",
+  "forgot_password": "Forgot?"
 }

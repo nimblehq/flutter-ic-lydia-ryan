@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 
 class LoginInputWidget extends StatelessWidget {
@@ -27,13 +28,26 @@ class LoginInputWidget extends StatelessWidget {
         hintText: hintText,
         filled: true,
         fillColor: Colors.white.withOpacity(0.18),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: Dimensions.paddingVerticalTextField,
-          horizontal: Dimensions.paddingHorizontalTextField,
+        contentPadding: const EdgeInsets.only(
+          top: Dimensions.paddingTopTextField,
+          bottom: Dimensions.paddingBottomTextField,
+          left: Dimensions.paddingHorizontalTextField,
+          right: Dimensions.paddingHorizontalTextField,
         ),
         hintStyle: const TextStyle(
           color: Colors.white30,
         ),
+        suffixIcon: isPasswordType
+            ? TextButton(
+                child: Text(
+                  AppLocalizations.of(context)!.forgot_password,
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: Colors.white.withOpacity(0.5),
+                      ),
+                ),
+                onPressed: () {},
+              )
+            : null,
       ),
       keyboardType: keyboardType,
       obscureText: isPasswordType,
