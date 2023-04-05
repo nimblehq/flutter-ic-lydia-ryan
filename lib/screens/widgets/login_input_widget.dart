@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 
-class LoginInputWidget extends StatelessWidget {
-  const LoginInputWidget({
+class AppInputWidget extends StatelessWidget {
+  const AppInputWidget({
     required this.hintText,
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
