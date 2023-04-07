@@ -54,50 +54,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: FutureBuilder<PackageInfo>(
-            future: PackageInfo.fromPlatform(),
-            builder: (context, snapshot) {
-              return snapshot.hasData
-                  ? Text(snapshot.data?.appName ?? "")
-                  : const SizedBox.shrink();
-            }),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 24),
-            FractionallySizedBox(
-              widthFactor: 0.5,
-              child: Image.asset(
-                Assets.images.nimbleLogoWhite,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(AppLocalizations.of(context)!.hello),
-            Text(
-              FlutterConfig.get('SECRET'),
-              style: const TextStyle(color: Colors.black, fontSize: 24),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () => context.go('/$routePathSecondScreen'),
-              child: const Text("Navigate to Second Screen"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class SecondScreen extends StatelessWidget {
   const SecondScreen({
     Key? key,
