@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:lydiaryanfluttersurvey/di/interceptor/app_interceptor.dart';
+import 'package:lydiaryanfluttersurvey/env.dart';
 
 const String headerContentType = 'Content-Type';
 const String defaultContentType = 'application/json; charset=utf-8';
 
+@Singleton()
 class DioProvider {
   Dio? _dio;
 
@@ -34,6 +37,7 @@ class DioProvider {
       ..options.connectTimeout = 3000
       ..options.receiveTimeout = 5000
       ..options.headers = {headerContentType: defaultContentType}
+      ..options.baseUrl = Env.restApiEndpoint
       ..interceptors.addAll(interceptors);
   }
 }
