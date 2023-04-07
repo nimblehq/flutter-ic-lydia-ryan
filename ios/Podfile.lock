@@ -32,6 +32,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_config (0.0.1):
     - Flutter
+  - flutter_localization (0.0.1):
+    - Flutter
   - GoogleDataTransport (9.2.1):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
@@ -55,15 +57,20 @@ PODS:
   - "permission_handler (5.1.0+2)":
     - Flutter
   - PromisesObjC (2.2.0)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - Flutter (from `Flutter`)
   - flutter_config (from `.symlinks/plugins/flutter_config/ios`)
+  - flutter_localization (from `.symlinks/plugins/flutter_localization/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
 
 SPEC REPOS:
   trunk:
@@ -86,12 +93,16 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_config:
     :path: ".symlinks/plugins/flutter_config/ios"
+  flutter_localization:
+    :path: ".symlinks/plugins/flutter_localization/ios"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
 
 SPEC CHECKSUMS:
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
@@ -103,6 +114,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 13dde135fa0524e15bddb133ccc8465c53a1b3f3
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_config: 2226c1df19c78fe34a05eb7f1363445f18e76fc1
+  flutter_localization: f43b18844a2b3d2c71fd64f04ffd6b1e64dd54d4
   GoogleDataTransport: ea169759df570f4e37bdee1623ec32a7e64e67c4
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
@@ -110,6 +122,7 @@ SPEC CHECKSUMS:
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
 
 PODFILE CHECKSUM: 0649db66e3e5e19c303123296d621da53d2eeafc
 
