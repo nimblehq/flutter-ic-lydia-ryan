@@ -3,9 +3,11 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lydiaryanfluttersurvey/theme/app_theme.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'screens/login/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: routePathRootScreen,
         builder: (BuildContext context, GoRouterState state) =>
-            const HomeScreen(),
+            const LoginScreen(),
         routes: [
           GoRoute(
             path: routePathSecondScreen,
@@ -42,11 +44,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        brightness: Brightness.light,
-        fontFamily: Assets.fonts.neuzeit,
-      ),
+      theme: AppTheme.defaultTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routeInformationProvider: _router.routeInformationProvider,
@@ -78,7 +76,7 @@ class HomeScreen extends StatelessWidget {
             FractionallySizedBox(
               widthFactor: 0.5,
               child: Image.asset(
-                Assets.images.nimbleLogo.path,
+                Assets.images.nimbleLogoWhite,
                 fit: BoxFit.fitWidth,
               ),
             ),

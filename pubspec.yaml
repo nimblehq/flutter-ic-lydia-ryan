@@ -28,8 +28,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_config: ^2.0.0
-  flutter_localizations:
-    sdk: flutter
+  flutter_localization: ^0.1.10
+  flutter_svg: ^2.0.4
   freezed_annotation: ^2.0.3
   go_router: ^4.1.0
   intl: ^0.17.0
@@ -69,4 +69,7 @@ flutter:
   fonts:
     - family: neuzeit
       fonts:
-        - asset: assets/fonts/neuzeit.otf
+        - asset: assets/fonts/neuzeit_regular.otf
+          weight: 400
+        - asset: assets/fonts/neuzeit_bold.otf
+          weight: 800
