@@ -73,11 +73,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     const SizedBox(height: 109),
                     AppInputWidget(
-                        key: LoginKey.liLoginEmail,
-                        hintText: AppLocalizations.of(context)!.email,
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        controller: _emailInputController),
+                      key: LoginKey.liLoginEmail,
+                      hintText: AppLocalizations.of(context)!.email,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      controller: _emailInputController,
+                    ),
                     const SizedBox(height: Dimensions.paddingMedium),
                     AppInputWidget(
                       key: LoginKey.liLoginPassword,
