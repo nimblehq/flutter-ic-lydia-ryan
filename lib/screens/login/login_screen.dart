@@ -5,19 +5,28 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/login_input_widget.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../base/base_view_model_state.dart';
 import '../../resources/dimensions.dart';
 import '../widgets/rounded_rectangle_button_widget.dart';
 import 'login_keys.dart';
+import 'login_view_model.dart';
 
-class LoginScreen extends StatefulWidget {
+final loginViewModelProvider =
+    StateNotifierProvider.autoDispose<LoginViewModel, BaseViewModelState>(
+        (ref) {
+  return LoginViewModel();
+});
+
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _emailInputController = TextEditingController();
   final _passwordInputController = TextEditingController();
 
@@ -81,8 +90,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       key: LoginKey.rrbLogin,
                       text: AppLocalizations.of(context)!.login,
                       onPressed: () {
-                        var emailInput = _emailInputController.text;
-                        var passwordInput = _passwordInputController.text;
+                        ref.read(loginViewModelProvider.notifier).login(
+                              _emailInputController.text,
+                              _passwordInputController.text,
+                            );
                       },
                     ),
                   ],
