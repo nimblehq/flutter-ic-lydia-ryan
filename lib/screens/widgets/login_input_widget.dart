@@ -5,6 +5,7 @@ import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 class AppInputWidget extends StatelessWidget {
   const AppInputWidget({
     required this.hintText,
+    required this.controller,
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
     this.isPasswordType = false,
@@ -15,10 +16,12 @@ class AppInputWidget extends StatelessWidget {
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final bool isPasswordType;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
         border: OutlineInputBorder(

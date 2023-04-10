@@ -10,8 +10,23 @@ import '../../resources/dimensions.dart';
 import '../widgets/rounded_rectangle_button_widget.dart';
 import 'login_keys.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _emailInputController = TextEditingController();
+  final _passwordInputController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailInputController.dispose();
+    _passwordInputController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,23 +64,25 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 109),
                     AppInputWidget(
-                      key: LoginKey.liLoginEmail,
-                      hintText: AppLocalizations.of(context)!.email,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                    ),
+                        key: LoginKey.liLoginEmail,
+                        hintText: AppLocalizations.of(context)!.email,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        controller: _emailInputController),
                     const SizedBox(height: Dimensions.paddingMedium),
                     AppInputWidget(
                       key: LoginKey.liLoginPassword,
                       hintText: AppLocalizations.of(context)!.password,
                       isPasswordType: true,
+                      controller: _passwordInputController,
                     ),
                     const SizedBox(height: Dimensions.paddingMedium),
                     RoundedRectangleButtonWidget(
                       key: LoginKey.rrbLogin,
                       text: AppLocalizations.of(context)!.login,
                       onPressed: () {
-                        // TODO: Login
+                        var emailInput = _emailInputController.text;
+                        var passwordInput = _passwordInputController.text;
                       },
                     ),
                   ],
