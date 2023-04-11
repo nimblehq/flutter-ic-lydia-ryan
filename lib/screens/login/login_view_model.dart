@@ -7,9 +7,9 @@ import '../../di/injection.dart';
 import '../../usecases/base/base_use_case.dart';
 
 class LoginViewModel extends StateNotifier<BaseViewModelState> {
-  LoginViewModel() : super(const BaseViewModelState.init());
+  LoginViewModel(this._loginUseCase) : super(const BaseViewModelState.init());
 
-  final LoginUseCase _loginUseCase = getIt<LoginUseCase>();
+  final LoginUseCase _loginUseCase;
 
   void login(String email, String password) async {
     state = const BaseViewModelState.loading();

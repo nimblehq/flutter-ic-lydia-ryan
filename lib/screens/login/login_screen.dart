@@ -8,7 +8,9 @@ import 'package:lydiaryanfluttersurvey/screens/widgets/login_input_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../base/base_view_model_state.dart';
+import '../../di/injection.dart';
 import '../../resources/dimensions.dart';
+import '../../usecases/login_use_case.dart';
 import '../widgets/rounded_rectangle_button_widget.dart';
 import 'login_keys.dart';
 import 'login_view_model.dart';
@@ -16,7 +18,7 @@ import 'login_view_model.dart';
 final loginViewModelProvider =
     StateNotifierProvider.autoDispose<LoginViewModel, BaseViewModelState>(
         (ref) {
-  return LoginViewModel();
+  return LoginViewModel(getIt.get<LoginUseCase>());
 });
 
 class LoginScreen extends ConsumerStatefulWidget {
