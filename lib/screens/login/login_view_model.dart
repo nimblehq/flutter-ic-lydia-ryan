@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lydiaryanfluttersurvey/base/base_view_model_state.dart';
 import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
 
-import '../../di/injection.dart';
 import '../../usecases/base/base_use_case.dart';
 
 class LoginViewModel extends StateNotifier<BaseViewModelState> {
