@@ -20,7 +20,7 @@ void main() {
     });
 
     test('When login is successful, it returns Success result', () async {
-      final loginResponse = LoginResponse("", "", "", "", "");
+      final loginResponse = LoginResponse("", "", 0, "", 0);
       when(mockAuthRepository.login(email, password))
           .thenAnswer((_) async => loginResponse);
 
