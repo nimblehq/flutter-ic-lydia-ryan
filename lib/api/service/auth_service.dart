@@ -10,5 +10,5 @@ abstract class AuthService {
   factory AuthService(Dio dio, {String baseUrl}) = _AuthService;
 
   @POST('/api/v1/oauth/token')
-  Future<LoginResponse> login(LoginRequest request);
+  Future<LoginResponse> login(@Body() LoginRequest request);
 }
