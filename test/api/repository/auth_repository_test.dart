@@ -26,7 +26,7 @@ void main() {
     });
 
     test('When calling login successfully, it returns LoginResponse', () async {
-      final loginResponse = LoginResponse("", "", "", "", "");
+      final loginResponse = LoginResponse("", "", 0, "", 0);
 
       when(mockAuthService.login(any)).thenAnswer((_) async => loginResponse);
 
