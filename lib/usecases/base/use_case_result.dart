@@ -11,7 +11,7 @@ class Success<T> extends Result<T> {
 }
 
 class UseCaseException implements Exception {
-  final dynamic actualException;
+  final NetworkExceptions actualException;
 
   UseCaseException(this.actualException);
 }

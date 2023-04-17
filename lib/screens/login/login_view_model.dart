@@ -13,23 +13,21 @@ class LoginViewModel extends StateNotifier<BaseViewModelState> {
 
   void login(String email, String password) async {
     state = const BaseViewModelState.loading();
-    if (_validateInputs(email, password)) {
-      Result<void> result = await _loginUseCase.call(
-        LoginInput(
-          email: email,
-          password: password,
-        ),
-      );
-      if (result is Success) {
-        state = const BaseViewModelState.success();
-        showToast('Login success');
-      } else {
-        state =
-            BaseViewModelState.apiError((result as Failed).getErrorMessage());
-        showToast('Login Failed: $state');
-      }
-    } else {
+
+    if (!_validateInputs(email, password)) {
       state = const BaseViewModelState.invalidInputsError();
+      return;
+    }
+
+    Result<void> result = await _loginUseCase.call(
+      LoginInput(email: email, password: password),
+    );
+    if (result is Success) {
+      state = const BaseViewModelState.success();
+      showToast('Login success');
+    } else {
+      state = BaseViewModelState.apiError((result as Failed).getErrorMessage());
+      showToast('Login Failed: $state');
     }
   }
 

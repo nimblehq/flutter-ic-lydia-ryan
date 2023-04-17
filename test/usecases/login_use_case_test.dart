@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lydiaryanfluttersurvey/api/exception/network_exceptions.dart';
 import 'package:lydiaryanfluttersurvey/model/response/login_response.dart';
 import 'package:lydiaryanfluttersurvey/usecases/base/base_use_case.dart';
 import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
@@ -33,8 +34,8 @@ void main() {
     });
 
     test('When login is unsuccessful, it returns Failed result', () async {
-      when(mockAuthRepository.login(email, password))
-          .thenAnswer((_) => Future.error(Exception));
+      when(mockAuthRepository.login(email, password)).thenAnswer(
+          (_) => Future.error(const NetworkExceptions.badRequest()));
 
       final result = await useCase.call(LoginInput(
         email: email,
