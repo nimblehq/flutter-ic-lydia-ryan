@@ -4,6 +4,7 @@ import 'package:lydiaryanfluttersurvey/base/base_view_model_state.dart';
 import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
 
 import '../../usecases/base/base_use_case.dart';
+import '../../utils/toast_message.dart';
 
 class LoginViewModel extends StateNotifier<BaseViewModelState> {
   LoginViewModel(this._loginUseCase) : super(const BaseViewModelState.init());
@@ -21,9 +22,11 @@ class LoginViewModel extends StateNotifier<BaseViewModelState> {
       );
       if (result is Success) {
         state = const BaseViewModelState.success();
+        showToast('Login success');
       } else {
         state =
             BaseViewModelState.apiError((result as Failed).getErrorMessage());
+        showToast('Login Failed: $state');
       }
     } else {
       state = const BaseViewModelState.invalidInputsError();
