@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lydiaryanfluttersurvey/utils/toast_message.dart';
 
 import '../../base/base_view_model_state.dart';
 import '../../di/injection.dart';
@@ -42,6 +43,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<BaseViewModelState>(loginViewModelProvider, (_, state) {
+      state.maybeWhen(
+        success: () => showToast('Login Success'), // TODO _navigateToHome()
+        apiError: (errorMessage) => showToast('Login Failed: $errorMessage'),
+        invalidInputsError: () => showToast('Login Failed: Invalid Inputs'),
+        orElse: () {},
+      );
+    });
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(

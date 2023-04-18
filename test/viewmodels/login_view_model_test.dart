@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lydiaryanfluttersurvey/api/exception/network_exceptions.dart';
 import 'package:lydiaryanfluttersurvey/base/base_view_model_state.dart';
 import 'package:lydiaryanfluttersurvey/model/response/login_response.dart';
 import 'package:lydiaryanfluttersurvey/screens/login/login_view_model.dart';
@@ -47,8 +46,7 @@ void main() {
       final mockException = MockUseCaseException();
       const errorMessage = 'Error message';
 
-      when(mockException.actualException)
-          .thenReturn(const NetworkExceptions.defaultError(errorMessage));
+      when(mockException.actualException).thenReturn(Exception(errorMessage));
       when(mockLoginUseCase.call(any))
           .thenAnswer((_) async => Failed(mockException));
 
@@ -56,7 +54,8 @@ void main() {
           viewModelStream,
           emitsInOrder([
             const BaseViewModelState.loading(),
-            const BaseViewModelState.apiError('Error message'),
+            BaseViewModelState.apiError(
+                Failed(mockException).getErrorMessage()),
           ]));
 
       viewModel.login(email, password);
