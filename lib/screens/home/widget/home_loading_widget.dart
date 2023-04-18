@@ -26,29 +26,32 @@ class HomeLoadingWidget extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildShimmer(screenWidth * 0.4),
+                        _buildShimmer(
+                            context: context, width: screenWidth * 0.4),
                         const SizedBox(height: 14.0),
-                        _buildShimmer(screenWidth * 0.3),
+                        _buildShimmer(
+                            context: context, width: screenWidth * 0.3),
                       ],
                     ),
                     const Expanded(child: SizedBox.shrink()),
                     _buildShimmer(
-                      Dimensions.userAvatarRadius,
+                      context: context,
+                      width: Dimensions.userAvatarRadius,
                       height: Dimensions.userAvatarRadius,
                       borderRadius: Dimensions.userAvatarRadius / 2,
                     )
                   ],
                 ),
                 const Expanded(child: SizedBox.shrink()),
-                _buildShimmer(screenWidth),
+                _buildShimmer(context: context, width: screenWidth),
                 const SizedBox(height: Dimensions.paddingSmallPlus),
-                _buildShimmer(screenWidth * 0.7),
+                _buildShimmer(context: context, width: screenWidth * 0.7),
                 const SizedBox(height: Dimensions.paddingSmall),
-                _buildShimmer(screenWidth * 0.4),
+                _buildShimmer(context: context, width: screenWidth * 0.4),
                 const SizedBox(height: Dimensions.paddingSmallPlus),
-                _buildShimmer(screenWidth * 0.9),
+                _buildShimmer(context: context, width: screenWidth * 0.9),
                 const SizedBox(height: Dimensions.paddingSmall),
-                _buildShimmer(screenWidth * 0.6),
+                _buildShimmer(context: context, width: screenWidth * 0.6),
               ],
             ),
           ),
@@ -57,8 +60,9 @@ class HomeLoadingWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildShimmer(
-    double width, {
+  Widget _buildShimmer({
+    required BuildContext context,
+    required double width,
     double height = Dimensions.homeSkeletonLoadingTextHeight,
     double borderRadius = Dimensions.homeSkeletonLoadingTextBorderRadius,
   }) {
@@ -67,7 +71,7 @@ class HomeLoadingWidget extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
       ),
     );
   }
