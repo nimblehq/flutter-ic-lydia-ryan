@@ -4,6 +4,7 @@ import '../gen/assets.gen.dart';
 
 class AppTheme {
   static ThemeData get defaultTheme => ThemeData(
+        scaffoldBackgroundColor: Colors.black,
         primarySwatch: Colors.blue,
         primaryColor: Colors.white,
         brightness: Brightness.light,
