@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lydiaryanfluttersurvey/base/base_view_model_state.dart';
-import 'package:lydiaryanfluttersurvey/database/shared_preferences_utils.dart';
+import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 import 'package:lydiaryanfluttersurvey/usecases/base/base_use_case.dart';
 import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
 

@@ -5,13 +5,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lydiaryanfluttersurvey/base/base_view_model_state.dart';
-import 'package:lydiaryanfluttersurvey/database/shared_preferences_utils.dart';
 import 'package:lydiaryanfluttersurvey/di/injection.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/circle_loading_indicator.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
+import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
 import 'package:lydiaryanfluttersurvey/utils/toast_message.dart';
 
