@@ -1,9 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:lydiaryanfluttersurvey/api/repository/auth_repository.dart';
+import 'package:lydiaryanfluttersurvey/database/shared_preferences_utils.dart';
 import 'package:lydiaryanfluttersurvey/model/response/login_response.dart';
 import 'package:lydiaryanfluttersurvey/usecases/base/base_use_case.dart';
-
-import '../database/shared_preferences_utils.dart';
 
 class LoginInput {
   final String email;

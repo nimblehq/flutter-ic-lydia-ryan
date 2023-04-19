@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lydiaryanfluttersurvey/base/base_view_model_state.dart';
 import 'package:lydiaryanfluttersurvey/database/shared_preferences_utils.dart';
+import 'package:lydiaryanfluttersurvey/di/injection.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
+import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/widgets/circle_loading_indicator.dart';
+import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
+import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
 import 'package:lydiaryanfluttersurvey/utils/toast_message.dart';
 
-import '../../base/base_view_model_state.dart';
-import '../../di/injection.dart';
-import '../../resources/dimensions.dart';
-import '../../usecases/login_use_case.dart';
-import '../widgets/circle_loading_indicator.dart';
-import '../widgets/rounded_rectangle_button_widget.dart';
 import 'login_keys.dart';
 import 'login_view_model.dart';
 
