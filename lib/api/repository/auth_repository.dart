@@ -22,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<LoginResponse> login(String username, String password) {
     LoginRequest loginRequest = LoginRequest(
-      grantType: Constants.auth.grantType,
+      grantType: Constants.auth.grantTypePassword,
       email: username,
       password: password,
       clientId: Env.authClientId,
@@ -39,7 +39,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<LoginResponse> refreshToken(String refreshToken) {
     RefreshTokenRequest refreshTokenRequest = RefreshTokenRequest(
-      grantType: Constants.auth.grantType,
+      grantType: Constants.auth.grantTypeRefreshToken,
       refreshToken: refreshToken,
       clientId: Env.authClientId,
       clientSecret: Env.authClientSecret,
