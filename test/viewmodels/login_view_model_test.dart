@@ -104,5 +104,17 @@ void main() {
 
       expect(loginViewModel.isLoggedIn(), true);
     });
+
+    test(
+        'When user logged in and any tokens are not persisted, isLoggedIn returns false',
+        () async {
+      when(mockSharedPreferencesUtils.accessToken).thenReturn('accessToken');
+      when(mockSharedPreferencesUtils.refreshToken).thenReturn(null);
+
+      LoginViewModel loginViewModel =
+          LoginViewModel(mockLoginUseCase, mockSharedPreferencesUtils);
+
+      expect(loginViewModel.isLoggedIn(), false);
+    });
   });
 }
