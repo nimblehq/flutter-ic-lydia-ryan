@@ -118,12 +118,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           onPressed: () {
                             ref.watch(loginViewModelProvider).maybeWhen(
                                 loading: () {
-                                  return;
-                                }, orElse: () {
+                              return;
+                            }, orElse: () {
                               ref.read(loginViewModelProvider.notifier).login(
-                                _emailInputController.text,
-                                _passwordInputController.text,
-                              );
+                                    _emailInputController.text,
+                                    _passwordInputController.text,
+                                  );
                             });
                           },
                         ),
