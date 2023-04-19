@@ -1,11 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lydiaryanfluttersurvey/database/shared_preferences_utils.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lydiaryanfluttersurvey/utils/toast_message.dart';
 
 import '../../base/base_view_model_state.dart';
@@ -20,7 +21,10 @@ import 'login_view_model.dart';
 final loginViewModelProvider =
     StateNotifierProvider.autoDispose<LoginViewModel, BaseViewModelState>(
         (ref) {
-  return LoginViewModel(getIt.get<LoginUseCase>());
+  return LoginViewModel(
+    getIt.get<LoginUseCase>(),
+    getIt.get<SharedPreferencesUtils>(),
+  );
 });
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -43,6 +47,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (ref.read(loginViewModelProvider.notifier).isLoggedIn()) {
+      // TODO _navigateToHome()
+      showToast('Logged In. Will navigate to Home Screen');
+      return Container();
+    }
+
     ref.listen<BaseViewModelState>(loginViewModelProvider, (_, state) {
       state.maybeWhen(
         success: () => showToast('Login Success'), // TODO _navigateToHome()
@@ -108,12 +118,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           onPressed: () {
                             ref.watch(loginViewModelProvider).maybeWhen(
                                 loading: () {
-                              return;
-                            }, orElse: () {
+                                  return;
+                                }, orElse: () {
                               ref.read(loginViewModelProvider.notifier).login(
-                                    _emailInputController.text,
-                                    _passwordInputController.text,
-                                  );
+                                _emailInputController.text,
+                                _passwordInputController.text,
+                              );
                             });
                           },
                         ),

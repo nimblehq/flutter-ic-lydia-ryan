@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class SharedPreferencesUtils {
@@ -10,6 +11,7 @@ abstract class SharedPreferencesUtils {
   void setAccessToken(String? value);
 }
 
+@Singleton(as: SharedPreferencesUtils)
 class SharedPreferencesUtilsImpl implements SharedPreferencesUtils {
   SharedPreferencesUtilsImpl(this._sharedPreferences);
 

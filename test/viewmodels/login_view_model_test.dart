@@ -11,6 +11,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('LoginViewModelTest', () {
     late MockLoginUseCase mockLoginUseCase;
+    late MockSharedPreferencesUtils mockSharedPreferencesUtils;
     late LoginViewModel viewModel;
 
     const String email = 'email@email.com';
@@ -18,7 +19,8 @@ void main() {
 
     setUp(() {
       mockLoginUseCase = MockLoginUseCase();
-      viewModel = LoginViewModel(mockLoginUseCase);
+      mockSharedPreferencesUtils = MockSharedPreferencesUtils();
+      viewModel = LoginViewModel(mockLoginUseCase, mockSharedPreferencesUtils);
     });
 
     test('When login is successful, it emits loading and success state orderly',
@@ -89,6 +91,18 @@ void main() {
       verifyNever(mockLoginUseCase.call(any));
 
       viewModel.login('invalidEmail', ' ');
+    });
+
+    test(
+        'When user logged in and tokens are persisted, isLoggedIn returns true',
+        () async {
+      when(mockSharedPreferencesUtils.accessToken).thenReturn('accessToken');
+      when(mockSharedPreferencesUtils.refreshToken).thenReturn('refreshToken');
+
+      LoginViewModel loginViewModel =
+          LoginViewModel(mockLoginUseCase, mockSharedPreferencesUtils);
+
+      expect(loginViewModel.isLoggedIn(), true);
     });
   });
 }
