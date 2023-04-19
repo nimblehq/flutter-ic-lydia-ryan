@@ -17,9 +17,9 @@ class LoginInput {
 @Injectable()
 class LoginUseCase extends UseCase<LoginResponse, LoginInput> {
   final AuthRepository _authRepository;
-  final SharedPreferencesUtils _sharedPreferencesUtils;
+  final SharedPreferencesUtils _sharedPreferenceUtils;
 
-  LoginUseCase(this._authRepository, this._sharedPreferencesUtils);
+  LoginUseCase(this._authRepository, this._sharedPreferenceUtils);
 
   @override
   Future<Result<LoginResponse>> call(LoginInput params) {
@@ -32,7 +32,7 @@ class LoginUseCase extends UseCase<LoginResponse, LoginInput> {
   }
 
   void _saveToken(LoginResponse loginResponse) {
-    _sharedPreferencesUtils.setAccessToken(loginResponse.accessToken);
-    _sharedPreferencesUtils.setRefreshToken(loginResponse.refreshToken);
+    _sharedPreferenceUtils.setAccessToken(loginResponse.accessToken);
+    _sharedPreferenceUtils.setRefreshToken(loginResponse.refreshToken);
   }
 }
