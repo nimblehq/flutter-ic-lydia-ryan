@@ -8,11 +8,9 @@ import '../mocks/generate_mocks.mocks.dart';
 void main() {
   group('VerifyLoginUseCaseTest', () {
     late MockSharedPreferencesUtils mockSharedPreferencesUtils;
-    late VerifyLoggedInUseCase useCase;
 
     setUp(() {
       mockSharedPreferencesUtils = MockSharedPreferencesUtils();
-      useCase = VerifyLoggedInUseCase(mockSharedPreferencesUtils);
     });
 
     test('When user logged in and tokens are persisted, it returns true',
