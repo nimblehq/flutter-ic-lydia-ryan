@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:lydiaryanfluttersurvey/di/injection.dart';
 import 'package:lydiaryanfluttersurvey/di/interceptor/app_interceptor.dart';
 import 'package:lydiaryanfluttersurvey/env.dart';
+import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 
 const String headerContentType = 'Content-Type';
 const String defaultContentType = 'application/json; charset=utf-8';
@@ -18,9 +20,12 @@ class DioProvider {
 
   Dio _createDio({bool requireAuthenticate = false}) {
     final dio = Dio();
+    final SharedPreferencesUtils sharedPreferencesUtils =
+        getIt<SharedPreferencesUtils>();
     final appInterceptor = AppInterceptor(
       requireAuthenticate,
       dio,
+      sharedPreferencesUtils,
     );
     final interceptors = <Interceptor>[];
     interceptors.add(appInterceptor);
