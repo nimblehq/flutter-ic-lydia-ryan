@@ -11,19 +11,25 @@ const String defaultContentType = 'application/json; charset=utf-8';
 
 @Singleton()
 class DioProvider {
-  Dio? _dio;
+  Dio? _nonAuthenticatedDio;
+  Dio? _authenticatedDio;
 
-  Dio getDio() {
-    _dio ??= _createDio();
-    return _dio!;
+  Dio getNonAuthenticatedDio() {
+    _nonAuthenticatedDio ??= _createDio();
+    return _nonAuthenticatedDio!;
   }
 
-  Dio _createDio({bool requireAuthenticate = false}) {
+  Dio getAuthenticatedDio() {
+    _authenticatedDio ??= _createDio(requireAuthentication: true);
+    return _authenticatedDio!;
+  }
+
+  Dio _createDio({bool requireAuthentication = false}) {
     final dio = Dio();
     final SharedPreferencesUtils sharedPreferencesUtils =
         getIt<SharedPreferencesUtils>();
     final appInterceptor = AppInterceptor(
-      requireAuthenticate,
+      requireAuthentication,
       dio,
       sharedPreferencesUtils,
     );

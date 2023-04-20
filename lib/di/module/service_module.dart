@@ -8,9 +8,11 @@ import 'package:lydiaryanfluttersurvey/env.dart';
 abstract class ServiceModule {
   @Singleton()
   AuthService provideAuthService(DioProvider dioProvider) =>
-      AuthService(dioProvider.getDio(), baseUrl: Env.restApiEndpoint);
+      AuthService(dioProvider.getNonAuthenticatedDio(),
+          baseUrl: Env.restApiEndpoint);
 
   @Singleton()
   SurveyService provideSurveyService(DioProvider dioProvider) =>
-      SurveyService(dioProvider.getDio(), baseUrl: Env.restApiEndpoint);
+      SurveyService(dioProvider.getAuthenticatedDio(),
+          baseUrl: Env.restApiEndpoint);
 }
