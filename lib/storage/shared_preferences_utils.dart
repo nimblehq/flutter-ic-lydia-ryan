@@ -6,9 +6,15 @@ abstract class SharedPreferencesUtils {
 
   String get accessToken;
 
+  String get tokenType;
+
+  String get headerAuthorization;
+
   void setRefreshToken(String? value);
 
   void setAccessToken(String? value);
+
+  void setTokenType(String? tokenType);
 }
 
 @Singleton(as: SharedPreferencesUtils)
@@ -25,6 +31,12 @@ class SharedPreferencesUtilsImpl implements SharedPreferencesUtils {
       _sharedPreferences.getString('refresh_token') ?? '';
 
   @override
+  String get tokenType => _sharedPreferences.getString('token_type') ?? '';
+
+  @override
+  String get headerAuthorization => '$tokenType $accessToken';
+
+  @override
   void setRefreshToken(String? value) async {
     await _sharedPreferences.setString('refresh_token', value ?? '');
   }
@@ -32,5 +44,10 @@ class SharedPreferencesUtilsImpl implements SharedPreferencesUtils {
   @override
   void setAccessToken(String? value) async {
     await _sharedPreferences.setString('access_token', value ?? '');
+  }
+
+  @override
+  void setTokenType(String? tokenType) async {
+    await _sharedPreferences.setString('token_type', tokenType ?? '');
   }
 }

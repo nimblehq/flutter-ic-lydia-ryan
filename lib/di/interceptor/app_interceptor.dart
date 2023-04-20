@@ -24,7 +24,8 @@ class AppInterceptor extends Interceptor {
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     if (_requireAuthenticate) {
-      options.headers.putIfAbsent(_headerAuthorization, () => "");
+      options.headers.putIfAbsent(_headerAuthorization,
+          () => _sharedPreferencesUtils.headerAuthorization);
     }
     return super.onRequest(options, handler);
   }
@@ -51,8 +52,7 @@ class AppInterceptor extends Interceptor {
       final result = await refreshTokenUseCase.call();
       if (result is Success<LoginResponse>) {
         // Update new token header
-        final newAuthToken =
-            result.value.tokenType + _sharedPreferencesUtils.accessToken;
+        final newAuthToken = _sharedPreferencesUtils.headerAuthorization;
         error.requestOptions.headers[_headerAuthorization] = newAuthToken;
 
         // Create request with new access token

@@ -34,5 +34,6 @@ class LoginUseCase extends UseCase<LoginResponse, LoginInput> {
   void _saveToken(LoginResponse loginResponse) {
     _sharedPreferenceUtils.setAccessToken(loginResponse.accessToken);
     _sharedPreferenceUtils.setRefreshToken(loginResponse.refreshToken);
+    _sharedPreferenceUtils.setTokenType(loginResponse.tokenType);
   }
 }
