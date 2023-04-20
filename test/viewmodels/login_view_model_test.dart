@@ -11,7 +11,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('LoginViewModelTest', () {
     late MockLoginUseCase mockLoginUseCase;
-    late MockSharedPreferencesUtils mockSharedPreferencesUtils;
+    late MockVerifyLoggedInUseCase mockVerifyLoggedInUseCase;
     late LoginViewModel viewModel;
 
     const String email = 'email@email.com';
@@ -19,8 +19,8 @@ void main() {
 
     setUp(() {
       mockLoginUseCase = MockLoginUseCase();
-      mockSharedPreferencesUtils = MockSharedPreferencesUtils();
-      viewModel = LoginViewModel(mockLoginUseCase, mockSharedPreferencesUtils);
+      mockVerifyLoggedInUseCase = MockVerifyLoggedInUseCase();
+      viewModel = LoginViewModel(mockLoginUseCase, mockVerifyLoggedInUseCase);
     });
 
     test('When login is successful, it emits loading and success state orderly',
@@ -93,28 +93,38 @@ void main() {
       viewModel.login('invalidEmail', ' ');
     });
 
-    test(
-        'When user logged in and tokens are persisted, isLoggedIn returns true',
-        () async {
-      when(mockSharedPreferencesUtils.accessToken).thenReturn('accessToken');
-      when(mockSharedPreferencesUtils.refreshToken).thenReturn('refreshToken');
+    test("When user logged in, isLoggedIn returns true", () async {
+      when(mockVerifyLoggedInUseCase.call())
+          .thenAnswer((_) async => Success(true));
 
-      LoginViewModel loginViewModel =
-          LoginViewModel(mockLoginUseCase, mockSharedPreferencesUtils);
+      viewModel.isLoggedIn.listen(expectAsync1((value) {
+        expect(value, true);
+      }));
 
-      expect(loginViewModel.isLoggedIn(), true);
+      viewModel.isLoggedIn;
     });
 
-    test(
-        'When user logged in and any tokens are not persisted, isLoggedIn returns false',
+    test("When user did not log in, isLoggedIn returns false", () async {
+      when(mockVerifyLoggedInUseCase.call())
+          .thenAnswer((_) async => Success(false));
+
+      viewModel.isLoggedIn.listen(expectAsync1((value) {
+        expect(value, false);
+      }));
+
+      viewModel.isLoggedIn;
+    });
+
+    test("When VerifyLoggedInUseCase returns error, isLoggedIn returns false",
         () async {
-      when(mockSharedPreferencesUtils.accessToken).thenReturn('accessToken');
-      when(mockSharedPreferencesUtils.refreshToken).thenReturn(null);
+      when(mockVerifyLoggedInUseCase.call())
+          .thenAnswer((_) async => Failed(UseCaseException(Exception())));
 
-      LoginViewModel loginViewModel =
-          LoginViewModel(mockLoginUseCase, mockSharedPreferencesUtils);
+      viewModel.isLoggedIn.listen(expectAsync1((value) {
+        expect(value, false);
+      }));
 
-      expect(loginViewModel.isLoggedIn(), false);
+      viewModel.isLoggedIn;
     });
   });
 }

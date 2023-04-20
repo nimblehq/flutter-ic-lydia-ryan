@@ -1,26 +1,20 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lydiaryanfluttersurvey/base/base_view_model_state.dart';
-import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 import 'package:lydiaryanfluttersurvey/usecases/base/base_use_case.dart';
 import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
+import 'package:lydiaryanfluttersurvey/usecases/verify_logged_in_use_case.dart';
 
 class LoginViewModel extends StateNotifier<BaseViewModelState> {
+  final LoginUseCase _loginUseCase;
+  final VerifyLoggedInUseCase _verifyLoggedInUseCase;
+
+  Stream<bool> get isLoggedIn => _verifyLoggedIn().asStream();
+
   LoginViewModel(
     this._loginUseCase,
-    this._sharedPreferencesUtils,
-  ) : super(const BaseViewModelState.init()) {
-    _accessToken = _sharedPreferencesUtils.accessToken ?? "";
-    _refreshToken = _sharedPreferencesUtils.refreshToken ?? "";
-  }
-
-  final LoginUseCase _loginUseCase;
-  final SharedPreferencesUtils _sharedPreferencesUtils;
-
-  late String _accessToken;
-  late String _refreshToken;
-
-  bool isLoggedIn() => _accessToken.isNotEmpty && _refreshToken.isNotEmpty;
+    this._verifyLoggedInUseCase,
+  ) : super(const BaseViewModelState.init());
 
   void login(String email, String password) async {
     state = const BaseViewModelState.loading();
@@ -44,5 +38,14 @@ class LoginViewModel extends StateNotifier<BaseViewModelState> {
     final isEmailValid = EmailValidator.validate(email);
     final isPasswordValid = password.isNotEmpty && password.length >= 8;
     return isEmailValid && isPasswordValid;
+  }
+
+  Future<bool> _verifyLoggedIn() async {
+    Result<void> result = await _verifyLoggedInUseCase.call();
+    if (result is Success) {
+      return result.value;
+    }
+
+    return false;
   }
 }

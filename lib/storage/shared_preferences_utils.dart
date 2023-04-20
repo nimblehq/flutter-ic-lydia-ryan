@@ -2,9 +2,9 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class SharedPreferencesUtils {
-  String? get refreshToken;
+  String get refreshToken;
 
-  String? get accessToken;
+  String get accessToken;
 
   void setRefreshToken(String? value);
 
@@ -18,10 +18,11 @@ class SharedPreferencesUtilsImpl implements SharedPreferencesUtils {
   final SharedPreferences _sharedPreferences;
 
   @override
-  String? get accessToken => _sharedPreferences.getString('access_token');
+  String get accessToken => _sharedPreferences.getString('access_token') ?? '';
 
   @override
-  String? get refreshToken => _sharedPreferences.getString('refresh_token');
+  String get refreshToken =>
+      _sharedPreferences.getString('refresh_token') ?? '';
 
   @override
   void setRefreshToken(String? value) async {
@@ -29,7 +30,7 @@ class SharedPreferencesUtilsImpl implements SharedPreferencesUtils {
   }
 
   @override
-  void setAccessToken(String? value) {
-    _sharedPreferences.setString('access_token', value ?? '');
+  void setAccessToken(String? value) async {
+    await _sharedPreferences.setString('access_token', value ?? '');
   }
 }
