@@ -11,6 +11,7 @@ import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/circle_loading_indicator.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
+import 'package:lydiaryanfluttersurvey/usecases/get_surveys_use_case.dart';
 import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
 import 'package:lydiaryanfluttersurvey/usecases/verify_logged_in_use_case.dart';
 import 'package:lydiaryanfluttersurvey/utils/toast_message.dart';
@@ -24,6 +25,7 @@ final loginViewModelProvider =
   return LoginViewModel(
     getIt.get<LoginUseCase>(),
     getIt.get<VerifyLoggedInUseCase>(),
+    getIt.get<GetSurveysUseCase>(),
   );
 });
 
@@ -62,6 +64,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         success: () {
           showToast('Login Success');
           // TODO _navigateToHome()
+          ref.read(loginViewModelProvider.notifier).getSurveys();
         },
         apiError: (errorMessage) => showToast('Login Failed: $errorMessage'),
         invalidInputsError: () => showToast('Login Failed: Invalid Inputs'),

@@ -6,6 +6,7 @@ part 'surveys_response.g.dart';
 
 @JsonSerializable()
 class SurveysResponse {
+  @JsonKey(name: 'data')
   final List<SurveyResponse> surveysResponse;
 
   SurveysResponse(
@@ -13,7 +14,7 @@ class SurveysResponse {
   );
 
   factory SurveysResponse.fromJson(Map<String, dynamic> json) =>
-      _$SurveysResponseFromJson(mapDataJson(json));
+      _$SurveysResponseFromJson(mapRootJson(json));
 
   Map<String, dynamic> toJson() => _$SurveysResponseToJson(this);
 }
