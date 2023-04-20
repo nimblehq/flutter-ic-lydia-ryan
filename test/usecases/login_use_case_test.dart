@@ -67,6 +67,21 @@ void main() {
           .setRefreshToken(loginResponse.refreshToken));
     });
 
+    test('When login is successful, it saves tokenType to shared preferences',
+        () async {
+      final loginResponse = LoginResponse("", "tokenType", 0, "", 0);
+      when(mockAuthRepository.login(email, password))
+          .thenAnswer((_) async => loginResponse);
+
+      final result = await useCase.call(LoginInput(
+        email: email,
+        password: password,
+      ));
+
+      expect(result, isA<Success<LoginResponse>>());
+      verify(mockSharedPreferencesUtils.setTokenType(loginResponse.tokenType));
+    });
+
     test('When login is unsuccessful, it returns Failed result', () async {
       when(mockAuthRepository.login(email, password))
           .thenAnswer((_) => Future.error(UseCaseException(Exception(''))));
