@@ -13,7 +13,7 @@ class RefreshTokenUseCase extends NoParamsUseCase<LoginResponse> {
 
   @override
   Future<Result<LoginResponse>> call() async {
-    String refreshToken = _sharedPreferencesUtils.refreshToken ?? "";
+    String refreshToken = _sharedPreferencesUtils.refreshToken;
     if (refreshToken.isEmpty) {
       return Failed(UseCaseException(Exception("Refresh token is empty")));
     }
