@@ -1,10 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lydiaryanfluttersurvey/theme/app_theme.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stack_trace/stack_trace.dart';
+
 import 'di/injection.dart';
 import 'firebase_options.dart';
 import 'screens/login/login_screen.dart';
@@ -12,6 +14,11 @@ import 'screens/login/login_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
+  FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is Trace) return stack.vmTrace;
+    if (stack is Chain) return stack.toTrace().vmTrace;
+    return stack;
+  };
   configureDependencies();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -35,12 +42,12 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: routePathRootScreen,
         builder: (BuildContext context, GoRouterState state) =>
-            const LoginScreen(),
+        const LoginScreen(),
         routes: [
           GoRoute(
             path: routePathSecondScreen,
             builder: (BuildContext context, GoRouterState state) =>
-                const SecondScreen(),
+            const SecondScreen(),
           ),
         ],
       ),
