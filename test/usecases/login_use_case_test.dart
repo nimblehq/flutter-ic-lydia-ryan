@@ -11,7 +11,7 @@ void main() {
     late MockAuthRepository mockAuthRepository;
     late LoginUseCase useCase;
 
-    const email = "email";
+    const email = "email@email.com";
     const password = "password";
 
     setUp(() {
@@ -24,16 +24,22 @@ void main() {
       when(mockAuthRepository.login(email, password))
           .thenAnswer((_) async => loginResponse);
 
-      final result = await useCase.call(LoginInput(email, password));
+      final result = await useCase.call(LoginInput(
+        email: email,
+        password: password,
+      ));
 
       expect(result, isA<Success<LoginResponse>>());
     });
 
     test('When login is unsuccessful, it returns Failed result', () async {
       when(mockAuthRepository.login(email, password))
-          .thenAnswer((_) => Future.error(Exception));
+          .thenAnswer((_) => Future.error(UseCaseException(Exception(''))));
 
-      final result = await useCase.call(LoginInput(email, password));
+      final result = await useCase.call(LoginInput(
+        email: email,
+        password: password,
+      ));
 
       expect(result, isA<Failed<LoginResponse>>());
     });

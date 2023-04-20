@@ -7,7 +7,10 @@ class LoginInput {
   final String email;
   final String password;
 
-  LoginInput(this.email, this.password);
+  LoginInput({
+    required this.email,
+    required this.password,
+  });
 }
 
 @Injectable()
@@ -22,6 +25,7 @@ class LoginUseCase extends UseCase<LoginResponse, LoginInput> {
         .login(params.email, params.password)
         // ignore: unnecessary_cast
         .then((value) => Success(value) as Result<LoginResponse>)
-        .onError((error, stackTrace) => Failed(UseCaseException(error)));
+        .onError<Exception>(
+            (error, stackTrace) => Failed(UseCaseException(error)));
   }
 }
