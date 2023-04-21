@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lydiaryanfluttersurvey/extension/date_time_extension.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -80,7 +80,7 @@ class _HomePagingWidgetState extends State<HomePagingWidget> {
                   ?.copyWith(fontSize: 13),
             ),
             Text(
-              _daysSince(context, survey.activeAt),
+              survey.activeAt.daysSince(context),
               style: Theme.of(context).textTheme.titleLarge,
             )
           ],
@@ -88,20 +88,6 @@ class _HomePagingWidgetState extends State<HomePagingWidget> {
         ),
       ],
     );
-  }
-
-  String _daysSince(BuildContext context, DateTime dateTime) {
-    final dateFormat = DateFormat('yyyy-MM-dd');
-    final DateTime now = DateTime.parse(dateFormat.format(DateTime.now()));
-    final DateTime date = DateTime.parse(dateFormat.format(dateTime));
-    final difference = now.difference(date).inDays;
-    if (difference == 0) {
-      return AppLocalizations.of(context)!.today;
-    } else if (difference == 1) {
-      return AppLocalizations.of(context)!.yesterday;
-    } else {
-      return AppLocalizations.of(context)!.days_ago(difference);
-    }
   }
 
   Widget _buildSurveyFooter(
