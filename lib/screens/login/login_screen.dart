@@ -1,27 +1,34 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
-import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lydiaryanfluttersurvey/base/base_view_model_state.dart';
+import 'package:lydiaryanfluttersurvey/di/injection.dart';
+import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
+import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
+import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/widgets/circle_loading_indicator.dart';
+import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
+import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
+import 'package:lydiaryanfluttersurvey/usecases/verify_logged_in_use_case.dart';
 import 'package:lydiaryanfluttersurvey/utils/toast_message.dart';
 
-import '../../base/base_view_model_state.dart';
-import '../../di/injection.dart';
-import '../../resources/dimensions.dart';
-import '../../usecases/login_use_case.dart';
-import '../widgets/circle_loading_indicator.dart';
-import '../widgets/rounded_rectangle_button_widget.dart';
 import 'login_keys.dart';
 import 'login_view_model.dart';
 
 final loginViewModelProvider =
     StateNotifierProvider.autoDispose<LoginViewModel, BaseViewModelState>(
         (ref) {
-  return LoginViewModel(getIt.get<LoginUseCase>());
+  return LoginViewModel(
+    getIt.get<LoginUseCase>(),
+    getIt.get<VerifyLoggedInUseCase>(),
+  );
 });
+
+final isLoggedInProvider = StreamProvider.autoDispose<bool>(
+    (ref) => ref.watch(loginViewModelProvider.notifier).isLoggedIn);
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -43,9 +50,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoggedIn = ref.watch(isLoggedInProvider).value ?? false;
+    if (isLoggedIn) {
+      showToast('Logged In. Will navigate to Home Screen');
+      // TODO _navigateToHome()
+      return Container();
+    }
+
     ref.listen<BaseViewModelState>(loginViewModelProvider, (_, state) {
       state.maybeWhen(
-        success: () => showToast('Login Success'), // TODO _navigateToHome()
+        success: () {
+          showToast('Login Success');
+          // TODO _navigateToHome()
+        },
         apiError: (errorMessage) => showToast('Login Failed: $errorMessage'),
         invalidInputsError: () => showToast('Login Failed: Invalid Inputs'),
         orElse: () {},

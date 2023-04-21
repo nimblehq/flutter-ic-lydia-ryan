@@ -43,6 +43,7 @@ dependencies:
   package_info_plus: ^1.4.2
   permission_handler: ^8.3.0
   retrofit: ^3.0.1+1
+  shared_preferences: ^2.1.0
   shimmer: ^2.0.0
 
 dev_dependencies:
