@@ -4,27 +4,46 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/common/background_widget.dart';
 
-class HomePagingWidget extends StatelessWidget {
+class HomePagingWidget extends StatefulWidget {
   final List<SurveyUiModel> surveys;
 
   const HomePagingWidget({super.key, required this.surveys});
 
   @override
+  State<StatefulWidget> createState() => _HomePagingWidgetState();
+}
+
+class _HomePagingWidgetState extends State<HomePagingWidget> {
+  int _currentIndex = 0;
+
+  void _onPageChanged(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController();
-    return PageView(
-        controller: pageController,
-        children: surveys
-            .map((SurveyUiModel survey) => _buildSurveyItem(context, survey))
-            .toList());
+    return Stack(
+      children: [
+        PageView(
+          controller: pageController,
+          onPageChanged: _onPageChanged,
+          children: widget.surveys
+              .map((SurveyUiModel survey) => BackgroundWidget(
+                    image: Image.network("${survey.coverImageUrl}l").image,
+                  ))
+              .toList(),
+        ),
+        _buildSurveyItem(context, widget.surveys[_currentIndex])
+      ],
+    );
   }
 
   Widget _buildSurveyItem(BuildContext context, SurveyUiModel survey) {
     return Stack(
       children: [
-        BackgroundWidget(
-          image: Image.network("${survey.coverImageUrl}l").image,
-        ),
         SafeArea(
           child: Column(
             children: [

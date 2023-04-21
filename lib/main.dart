@@ -4,6 +4,7 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lydiaryanfluttersurvey/screens/home/home_screen.dart';
 import 'package:lydiaryanfluttersurvey/theme/app_theme.dart';
 import 'package:stack_trace/stack_trace.dart';
 
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: routePathRootScreen,
         builder: (BuildContext context, GoRouterState state) =>
-            const LoginScreen(),
+            const HomeScreen(),
         routes: [
           GoRoute(
             path: routePathSecondScreen,
