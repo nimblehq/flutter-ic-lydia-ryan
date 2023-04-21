@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class SurveyUiModel {
   final String id;
   final String title;
@@ -12,4 +14,7 @@ class SurveyUiModel {
     required this.coverImageUrl,
     required this.activeAt,
   });
+
+  String formattedDate() =>
+      DateFormat("EEEE, MMMM dd").format(activeAt).toUpperCase();
 }
