@@ -14,9 +14,9 @@ class SurveyRepositoryImpl implements SurveyRepository {
   SurveyRepositoryImpl(this._surveyService);
 
   @override
-  Future<SurveysResponse> getSurveys() {
+  Future<SurveysResponse> getSurveys() async {
     try {
-      return _surveyService.getSurveys();
+      return await _surveyService.getSurveys();
     } catch (e) {
       return Future.error(NetworkExceptions.fromDioException(e));
     }

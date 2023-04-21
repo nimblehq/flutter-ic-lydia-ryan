@@ -14,7 +14,5 @@ class SurveysResponse {
   );
 
   factory SurveysResponse.fromJson(Map<String, dynamic> json) =>
-      _$SurveysResponseFromJson(mapRootJson(json));
-
-  Map<String, dynamic> toJson() => _$SurveysResponseToJson(this);
+      _$SurveysResponseFromJson(fromRootJsonApi(json));
 }

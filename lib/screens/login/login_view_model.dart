@@ -58,7 +58,6 @@ class LoginViewModel extends StateNotifier<BaseViewModelState> {
     Result<void> result = await _getSurveysUseCase.call();
     if (result is Success) {
       state = const BaseViewModelState.success();
-      print("result: " + result.value);
     } else {
       state = BaseViewModelState.apiError((result as Failed).getErrorMessage());
     }
