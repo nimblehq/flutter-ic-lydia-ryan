@@ -13,8 +13,8 @@ import 'package:mockito/annotations.dart';
   MockSpec<AuthRepository>(),
   MockSpec<AuthService>(),
   MockSpec<DioError>(),
-  MockSpec<UseCaseException>(),
   MockSpec<SharedPreferencesUtils>(),
+  MockSpec<UseCaseException>(),
   MockSpec<LoginUseCase>(),
   MockSpec<VerifyLoggedInUseCase>(),
 ])
