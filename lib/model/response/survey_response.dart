@@ -6,16 +6,16 @@ part 'survey_response.g.dart';
 @JsonSerializable()
 class SurveyResponse {
   final String id;
-  final String title;
-  final String description;
-  final String thankEmailAboveThreshold;
-  final String thankEmailBelowThreshold;
+  final String? title;
+  final String? description;
+  final String? thankEmailAboveThreshold;
+  final String? thankEmailBelowThreshold;
   final bool isActive;
-  final String coverImageUrl;
-  final String createdAt;
-  final String activeAt;
-  final String inactiveAt;
-  final String surveyType;
+  final String? coverImageUrl;
+  final String? createdAt;
+  final String? activeAt;
+  final String? inactiveAt;
+  final String? surveyType;
 
   SurveyResponse(
     this.id,
