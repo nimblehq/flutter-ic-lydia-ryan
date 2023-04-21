@@ -137,15 +137,17 @@ class _HomePagingWidgetState extends State<HomePagingWidget> {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyMedium)),
             Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: FloatingActionButton(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    onPressed: () => {},
-                    child: const Icon(
-                      Icons.chevron_right,
-                      color: Colors.black,
-                      size: 56 * 0.75, // 75% of fab size
-                    )))
+              padding: const EdgeInsets.only(left: 20),
+              child: FloatingActionButton(
+                backgroundColor: Theme.of(context).primaryColor,
+                onPressed: () => {},
+                child: const Icon(
+                  Icons.chevron_right,
+                  color: Colors.black,
+                  size: 56 * 0.75, // 75% of fab size
+                ),
+              ),
+            ),
           ],
         )
       ],
