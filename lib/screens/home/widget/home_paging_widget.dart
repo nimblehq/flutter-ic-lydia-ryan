@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lydiaryanfluttersurvey/extension/date_time_extension.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
