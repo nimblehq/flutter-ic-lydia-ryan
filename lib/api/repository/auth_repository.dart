@@ -20,7 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._authService);
 
   @override
-  Future<LoginResponse> login(String username, String password) async {
+  Future<LoginResponse> login(String username, String password) {
     LoginRequest loginRequest = LoginRequest(
       grantType: Constants.auth.grantTypePassword,
       email: username,
@@ -30,14 +30,14 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     try {
-      return await _authService.login(loginRequest);
+      return _authService.login(loginRequest);
     } catch (e) {
       return Future.error(NetworkExceptions.fromDioException(e));
     }
   }
 
   @override
-  Future<LoginResponse> refreshToken(String refreshToken) async {
+  Future<LoginResponse> refreshToken(String refreshToken) {
     RefreshTokenRequest refreshTokenRequest = RefreshTokenRequest(
       grantType: Constants.auth.grantTypeRefreshToken,
       refreshToken: refreshToken,
@@ -46,7 +46,7 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     try {
-      return await _authService.refreshToken(refreshTokenRequest);
+      return _authService.refreshToken(refreshTokenRequest);
     } catch (e) {
       return Future.error(NetworkExceptions.fromDioException(e));
     }
