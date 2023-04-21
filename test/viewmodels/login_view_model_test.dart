@@ -13,7 +13,6 @@ void main() {
     late MockLoginUseCase mockLoginUseCase;
     late MockVerifyLoggedInUseCase mockVerifyLoggedInUseCase;
     late LoginViewModel viewModel;
-    late MockGetSurveysUseCase mockGetSurveysUseCase;
 
     const String email = 'email@email.com';
     const String password = '12345678';
@@ -21,9 +20,10 @@ void main() {
     setUp(() {
       mockLoginUseCase = MockLoginUseCase();
       mockVerifyLoggedInUseCase = MockVerifyLoggedInUseCase();
-      mockGetSurveysUseCase = MockGetSurveysUseCase();
       viewModel = LoginViewModel(
-          mockLoginUseCase, mockVerifyLoggedInUseCase, mockGetSurveysUseCase);
+        mockLoginUseCase,
+        mockVerifyLoggedInUseCase,
+      );
     });
 
     test('When login is successful, it emits loading and success state orderly',
