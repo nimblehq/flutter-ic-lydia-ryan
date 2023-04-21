@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class BackGroundWidget extends StatelessWidget {
+class BackgroundWidget extends StatelessWidget {
   final ImageProvider image;
   final double opacity;
 
-  const BackGroundWidget({
+  const BackgroundWidget({
     Key? key,
     required this.image,
     this.opacity = 0.35,

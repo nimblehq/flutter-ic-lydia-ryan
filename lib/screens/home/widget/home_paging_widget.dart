@@ -22,7 +22,7 @@ class HomePagingWidget extends StatelessWidget {
   Widget _buildSurveyItem(BuildContext context, SurveyUiModel survey) {
     return Stack(
       children: [
-        BackGroundWidget(
+        BackgroundWidget(
           image: Image.network("${survey.coverImageUrl}l").image,
         ),
         SafeArea(
