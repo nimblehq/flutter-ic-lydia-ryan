@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_ui_model.dart';
-import 'package:lydiaryanfluttersurvey/screens/common/background_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePagingWidget extends StatefulWidget {
