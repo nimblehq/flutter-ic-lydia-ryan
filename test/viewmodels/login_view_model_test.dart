@@ -20,7 +20,10 @@ void main() {
     setUp(() {
       mockLoginUseCase = MockLoginUseCase();
       mockVerifyLoggedInUseCase = MockVerifyLoggedInUseCase();
-      viewModel = LoginViewModel(mockLoginUseCase, mockVerifyLoggedInUseCase);
+      viewModel = LoginViewModel(
+        mockLoginUseCase,
+        mockVerifyLoggedInUseCase,
+      );
     });
 
     test('When login is successful, it emits loading and success state orderly',
