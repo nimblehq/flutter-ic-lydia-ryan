@@ -3,5 +3,17 @@
   "email": "Email",
   "password": "Password",
   "login": "Login",
-  "forgot_password": "Forgot?"
+  "forgot_password": "Forgot?",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "days_ago": "{daysAgo} days ago",
+  "@days_ago": {
+    "description": "Format how many days ago",
+    "placeholders": {
+      "daysAgo": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  }
 }
