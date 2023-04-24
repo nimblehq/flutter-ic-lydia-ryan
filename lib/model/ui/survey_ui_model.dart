@@ -15,6 +15,6 @@ class SurveyUiModel {
     required this.activeAt,
   });
 
-  String formattedDate() =>
+  String formattedActiveAt() =>
       DateFormat("EEEE, MMMM dd").format(activeAt).toUpperCase();
 }

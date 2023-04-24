@@ -8,12 +8,15 @@ extension DateTimeExtension on DateTime {
     final DateTime now = DateTime.parse(dateFormat.format(DateTime.now()));
     final DateTime date = DateTime.parse(dateFormat.format(this));
     final difference = now.difference(date).inDays;
+
     if (difference == 0) {
       return AppLocalizations.of(context)!.today;
-    } else if (difference == 1) {
-      return AppLocalizations.of(context)!.yesterday;
-    } else {
-      return AppLocalizations.of(context)!.days_ago(difference);
     }
+
+    if (difference == 1) {
+      return AppLocalizations.of(context)!.yesterday;
+    }
+
+    return AppLocalizations.of(context)!.days_ago(difference);
   }
 }

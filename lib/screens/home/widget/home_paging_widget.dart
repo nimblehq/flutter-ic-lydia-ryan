@@ -72,7 +72,7 @@ class _HomePagingWidgetState extends State<HomePagingWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              survey.formattedDate(),
+              survey.formattedActiveAt(),
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
