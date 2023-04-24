@@ -1,26 +1,37 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:lydiaryanfluttersurvey/di/injection.dart';
 import 'package:lydiaryanfluttersurvey/di/interceptor/app_interceptor.dart';
 import 'package:lydiaryanfluttersurvey/env.dart';
+import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 
 const String headerContentType = 'Content-Type';
 const String defaultContentType = 'application/json; charset=utf-8';
 
 @Singleton()
 class DioProvider {
-  Dio? _dio;
+  Dio? _nonAuthenticatedDio;
+  Dio? _authenticatedDio;
 
-  Dio getDio() {
-    _dio ??= _createDio();
-    return _dio!;
+  Dio getNonAuthenticatedDio() {
+    _nonAuthenticatedDio ??= _createDio();
+    return _nonAuthenticatedDio!;
   }
 
-  Dio _createDio({bool requireAuthenticate = false}) {
+  Dio getAuthenticatedDio() {
+    _authenticatedDio ??= _createDio(requireAuthentication: true);
+    return _authenticatedDio!;
+  }
+
+  Dio _createDio({bool requireAuthentication = false}) {
     final dio = Dio();
+    final SharedPreferencesUtils sharedPreferencesUtils =
+        getIt<SharedPreferencesUtils>();
     final appInterceptor = AppInterceptor(
-      requireAuthenticate,
+      requireAuthentication,
       dio,
+      sharedPreferencesUtils,
     );
     final interceptors = <Interceptor>[];
     interceptors.add(appInterceptor);

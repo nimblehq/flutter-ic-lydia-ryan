@@ -9,14 +9,16 @@ import '../mocks/generate_mocks.mocks.dart';
 void main() {
   group('LoginUseCaseTest', () {
     late MockAuthRepository mockAuthRepository;
+    late MockSharedPreferencesUtils mockSharedPreferencesUtils;
     late LoginUseCase useCase;
 
-    const email = "email";
+    const email = "email@email.com";
     const password = "password";
 
     setUp(() {
       mockAuthRepository = MockAuthRepository();
-      useCase = LoginUseCase(mockAuthRepository);
+      mockSharedPreferencesUtils = MockSharedPreferencesUtils();
+      useCase = LoginUseCase(mockAuthRepository, mockSharedPreferencesUtils);
     });
 
     test('When login is successful, it returns Success result', () async {
@@ -24,16 +26,70 @@ void main() {
       when(mockAuthRepository.login(email, password))
           .thenAnswer((_) async => loginResponse);
 
-      final result = await useCase.call(LoginInput(email, password));
+      final result = await useCase.call(LoginInput(
+        email: email,
+        password: password,
+      ));
 
       expect(result, isA<Success<LoginResponse>>());
     });
 
+    test('When login is successful, it saves accessToken to shared preferences',
+        () async {
+      final loginResponse = LoginResponse("accessToken", "", 0, "", 0);
+      when(mockAuthRepository.login(email, password))
+          .thenAnswer((_) async => loginResponse);
+
+      final result = await useCase.call(LoginInput(
+        email: email,
+        password: password,
+      ));
+
+      expect(result, isA<Success<LoginResponse>>());
+      verify(
+          mockSharedPreferencesUtils.setAccessToken(loginResponse.accessToken));
+    });
+
+    test(
+        'When login is successful, it saves refreshToken to shared preferences',
+        () async {
+      final loginResponse = LoginResponse("", "", 0, "refreshToken", 0);
+      when(mockAuthRepository.login(email, password))
+          .thenAnswer((_) async => loginResponse);
+
+      final result = await useCase.call(LoginInput(
+        email: email,
+        password: password,
+      ));
+
+      expect(result, isA<Success<LoginResponse>>());
+      verify(mockSharedPreferencesUtils
+          .setRefreshToken(loginResponse.refreshToken));
+    });
+
+    test('When login is successful, it saves tokenType to shared preferences',
+        () async {
+      final loginResponse = LoginResponse("", "tokenType", 0, "", 0);
+      when(mockAuthRepository.login(email, password))
+          .thenAnswer((_) async => loginResponse);
+
+      final result = await useCase.call(LoginInput(
+        email: email,
+        password: password,
+      ));
+
+      expect(result, isA<Success<LoginResponse>>());
+      verify(mockSharedPreferencesUtils.setTokenType(loginResponse.tokenType));
+    });
+
     test('When login is unsuccessful, it returns Failed result', () async {
       when(mockAuthRepository.login(email, password))
-          .thenAnswer((_) => Future.error(Exception));
+          .thenAnswer((_) => Future.error(UseCaseException(Exception(''))));
 
-      final result = await useCase.call(LoginInput(email, password));
+      final result = await useCase.call(LoginInput(
+        email: email,
+        password: password,
+      ));
 
       expect(result, isA<Failed<LoginResponse>>());
     });

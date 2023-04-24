@@ -3,5 +3,7 @@ class Constants {
 }
 
 class _Auth {
-  get grantType => "password";
+  get grantTypePassword => "password";
+
+  get grantTypeRefreshToken => "refresh_token";
 }

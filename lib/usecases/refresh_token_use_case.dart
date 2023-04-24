@@ -4,26 +4,21 @@ import 'package:lydiaryanfluttersurvey/model/response/login_response.dart';
 import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 import 'package:lydiaryanfluttersurvey/usecases/base/base_use_case.dart';
 
-class LoginInput {
-  final String email;
-  final String password;
-
-  LoginInput({
-    required this.email,
-    required this.password,
-  });
-}
-
 @Injectable()
-class LoginUseCase extends UseCase<LoginResponse, LoginInput> {
+class RefreshTokenUseCase extends NoParamsUseCase<LoginResponse> {
   final AuthRepository _authRepository;
-  final SharedPreferencesUtils _sharedPreferenceUtils;
+  final SharedPreferencesUtils _sharedPreferencesUtils;
 
-  LoginUseCase(this._authRepository, this._sharedPreferenceUtils);
+  RefreshTokenUseCase(this._authRepository, this._sharedPreferencesUtils);
 
   @override
-  Future<Result<LoginResponse>> call(LoginInput params) {
-    return _authRepository.login(params.email, params.password).then((value) {
+  Future<Result<LoginResponse>> call() async {
+    String refreshToken = _sharedPreferencesUtils.refreshToken;
+    if (refreshToken.isEmpty) {
+      return Failed(UseCaseException(Exception("Refresh token is empty")));
+    }
+
+    return _authRepository.refreshToken(refreshToken).then((value) {
       _saveToken(value);
       // ignore: unnecessary_cast
       return Success(value) as Result<LoginResponse>;
@@ -32,8 +27,7 @@ class LoginUseCase extends UseCase<LoginResponse, LoginInput> {
   }
 
   void _saveToken(LoginResponse loginResponse) {
-    _sharedPreferenceUtils.setAccessToken(loginResponse.accessToken);
-    _sharedPreferenceUtils.setRefreshToken(loginResponse.refreshToken);
-    _sharedPreferenceUtils.setTokenType(loginResponse.tokenType);
+    _sharedPreferencesUtils.setAccessToken(loginResponse.accessToken);
+    _sharedPreferencesUtils.setRefreshToken(loginResponse.refreshToken);
   }
 }
