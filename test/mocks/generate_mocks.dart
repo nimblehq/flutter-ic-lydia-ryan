@@ -8,7 +8,6 @@ import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 import 'package:lydiaryanfluttersurvey/usecases/base/base_use_case.dart';
 import 'package:lydiaryanfluttersurvey/usecases/get_surveys_use_case.dart';
 import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
-import 'package:lydiaryanfluttersurvey/usecases/verify_logged_in_use_case.dart';
 import 'package:mockito/annotations.dart';
 
 @GenerateNiceMocks([
@@ -21,7 +20,6 @@ import 'package:mockito/annotations.dart';
   MockSpec<SharedPreferencesUtils>(),
   MockSpec<UseCaseException>(),
   MockSpec<LoginUseCase>(),
-  MockSpec<VerifyLoggedInUseCase>(),
   MockSpec<GetSurveysUseCase>(),
 ])
 main() {
