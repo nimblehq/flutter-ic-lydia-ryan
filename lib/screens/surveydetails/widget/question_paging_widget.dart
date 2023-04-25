@@ -33,8 +33,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
       children: [
         PageView(
           controller: pageController,
-          scrollBehavior: null,
           onPageChanged: _onPageChanged,
+          physics: const NeverScrollableScrollPhysics(),
           children: widget.questions
               .map((QuestionUiModel question) => BackgroundWidget(
                     image: Image.network(question.largeCoverImageUrl).image,
@@ -151,29 +151,18 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
         Padding(
             padding: const EdgeInsets.only(left: 20),
             child: _isIntroQuestion(question)
-                ? _startSurveyButtonWidget(context)
+                ? _startSurveyButtonWidget(context, controller)
                 : _isLastQuestion(question)
                     ? _submitSurveyButtonWidget(context)
-                    : _nextButtonWidget(context)),
+                    : _nextButtonWidget(context, controller)),
       ],
     );
   }
 
-  Widget _backButtonWidget(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () => {context.pop()},
-      child: Icon(
-        Icons.chevron_left,
-        color: Theme.of(context).primaryColor,
-        size: 30 * 0.75, // 75% of fab size
-      ),
-    );
-  }
-
-  Widget _nextButtonWidget(BuildContext context) {
+  Widget _nextButtonWidget(BuildContext context, PageController controller) {
     return FloatingActionButton(
       backgroundColor: Theme.of(context).primaryColor,
-      onPressed: () => {},
+      onPressed: () => _nextPage(controller),
       child: const Icon(
         Icons.chevron_right,
         color: Colors.black,
@@ -182,12 +171,20 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     );
   }
 
-  Widget _startSurveyButtonWidget(BuildContext context) {
+  Widget _startSurveyButtonWidget(
+      BuildContext context, PageController controller) {
     return SizedBox(
       child: RoundedRectangleButtonWidget(
         text: AppLocalizations.of(context)!.start_survey,
-        onPressed: () {},
+        onPressed: () => _nextPage(controller),
       ),
+    );
+  }
+
+  void _nextPage(PageController controller) {
+    controller.nextPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeIn,
     );
   }
 
