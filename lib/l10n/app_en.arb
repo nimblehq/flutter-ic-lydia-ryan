@@ -15,5 +15,21 @@
         "example": "5"
       }
     }
-  }
+  },
+  "question_number": "{questionIndex}/{totalQuestions}",
+  "@question_number": {
+    "description": "Format question index",
+    "placeholders": {
+      "questionIndex": {
+        "type": "int",
+        "example": "1"
+      },
+      "totalQuestions": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "start_survey": "Start Survey",
+  "submit": "Submit"
 }

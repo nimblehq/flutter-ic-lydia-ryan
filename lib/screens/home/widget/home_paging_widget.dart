@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lydiaryanfluttersurvey/extension/date_time_extension.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
+import 'package:lydiaryanfluttersurvey/utils/app_navigator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePagingWidget extends StatefulWidget {
@@ -125,7 +127,7 @@ class _HomePagingWidgetState extends State<HomePagingWidget> {
               padding: const EdgeInsets.only(left: 20),
               child: FloatingActionButton(
                 backgroundColor: Theme.of(context).primaryColor,
-                onPressed: () => {},
+                onPressed: () => _navigateToSurveyDetails(survey.id),
                 child: const Icon(
                   Icons.chevron_right,
                   color: Colors.black,
@@ -137,5 +139,11 @@ class _HomePagingWidgetState extends State<HomePagingWidget> {
         )
       ],
     );
+  }
+
+  void _navigateToSurveyDetails(String surveyId) {
+    var params = <String, String>{};
+    params[RoutePath.surveyDetails.argument] = surveyId;
+    context.pushNamed(RoutePath.surveyDetails.name, params: params);
   }
 }

@@ -112,6 +112,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         RoundedRectangleButtonWidget(
                           key: LoginKey.rrbLogin,
                           text: AppLocalizations.of(context)!.login,
+                          width: double.infinity,
                           onPressed: () {
                             ref.watch(loginViewModelProvider).maybeWhen(
                                 loading: () {
