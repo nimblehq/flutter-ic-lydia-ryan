@@ -181,17 +181,17 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     );
   }
 
-  void _nextPage(PageController controller) {
-    controller.nextPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
-  }
-
   Widget _submitSurveyButtonWidget(BuildContext context) {
     return RoundedRectangleButtonWidget(
       text: AppLocalizations.of(context)!.submit,
       onPressed: () {},
+    );
+  }
+
+  void _nextPage(PageController controller) {
+    controller.nextPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeIn,
     );
   }
 
