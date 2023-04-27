@@ -50,7 +50,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     ref.listen<BaseViewModelState>(loginViewModelProvider, (_, state) {
       state.maybeWhen(
         success: () {
-          showToast('Login Success');
           _navigateToHome(context);
         },
         apiError: (errorMessage) => showToast('Login Failed: $errorMessage'),
@@ -112,6 +111,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         RoundedRectangleButtonWidget(
                           key: LoginKey.rrbLogin,
                           text: AppLocalizations.of(context)!.login,
+                          width: double.infinity,
                           onPressed: () {
                             ref.watch(loginViewModelProvider).maybeWhen(
                                 loading: () {

@@ -5,29 +5,36 @@ class RoundedRectangleButtonWidget extends StatelessWidget {
   const RoundedRectangleButtonWidget({
     required this.onPressed,
     required this.text,
+    this.width,
     super.key,
   });
 
   final VoidCallback onPressed;
   final String text;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(Dimensions.buttonHeight),
-        backgroundColor: Theme.of(context).primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(Dimensions.radiusRoundedRectangleButton),
+    return SizedBox(
+      width: width,
+      height: Dimensions.buttonHeight,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).primaryColor,
+          padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.buttonHorizontalPadding),
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(Dimensions.radiusRoundedRectangleButton),
+          ),
         ),
-      ),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: Colors.black,
-            ),
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: Colors.black,
+              ),
+        ),
       ),
     );
   }
