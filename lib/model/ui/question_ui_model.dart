@@ -1,10 +1,11 @@
 enum QuestionDisplayType {
-  intro('intro'),
-  star('star');
+  intro('intro', null),
+  star('star', '⭐️');
 
-  const QuestionDisplayType(this.type);
+  const QuestionDisplayType(this.type, this.emoji);
 
   final String type;
+  final String? emoji;
 }
 
 class QuestionUiModel {

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_rating_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
 
@@ -64,6 +65,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
                 const SizedBox(height: Dimensions.paddingLarge),
                 _buildQuestionHeader(context, question),
                 const Spacer(),
+                _buildAnswerContent(context, question),
                 _buildQuestionFooter(context, question, controller),
               ],
             ),
@@ -137,6 +139,22 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
           ),
         ],
       ],
+    );
+  }
+
+  Widget _buildAnswerContent(BuildContext context, QuestionUiModel question) {
+    return Expanded(
+      // child: ListView.builder(
+      //   itemCount: question.answers.length,
+      //   itemBuilder: (BuildContext context, int index) {
+      //     return _buildAnswerItem(context, question.answers[index]);
+      //   },
+      // ),
+      child: AnswerEmojiRatingWidget(
+        emoji: '⭐️',
+        count: 5,
+        onRated: (int rating) {},
+      ),
     );
   }
 
