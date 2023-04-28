@@ -10,6 +10,8 @@ abstract class SharedPreferencesUtils {
 
   String get headerAuthorization;
 
+  bool get isLoggedIn;
+
   void setRefreshToken(String? value);
 
   void setAccessToken(String? value);
@@ -35,6 +37,9 @@ class SharedPreferencesUtilsImpl implements SharedPreferencesUtils {
 
   @override
   String get headerAuthorization => '$tokenType $accessToken';
+
+  @override
+  bool get isLoggedIn => accessToken.isNotEmpty && refreshToken.isNotEmpty;
 
   @override
   void setRefreshToken(String? value) async {

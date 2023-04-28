@@ -3,5 +3,33 @@
   "email": "Email",
   "password": "Password",
   "login": "Login",
-  "forgot_password": "Forgot?"
+  "forgot_password": "Forgot?",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "days_ago": "{daysAgo} days ago",
+  "@days_ago": {
+    "description": "Format how many days ago",
+    "placeholders": {
+      "daysAgo": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "question_number": "{questionIndex}/{totalQuestions}",
+  "@question_number": {
+    "description": "Format question index",
+    "placeholders": {
+      "questionIndex": {
+        "type": "int",
+        "example": "1"
+      },
+      "totalQuestions": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "start_survey": "Start Survey",
+  "submit": "Submit"
 }

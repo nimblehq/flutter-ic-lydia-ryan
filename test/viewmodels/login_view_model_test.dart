@@ -11,7 +11,6 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('LoginViewModelTest', () {
     late MockLoginUseCase mockLoginUseCase;
-    late MockVerifyLoggedInUseCase mockVerifyLoggedInUseCase;
     late LoginViewModel viewModel;
 
     const String email = 'email@email.com';
@@ -19,11 +18,7 @@ void main() {
 
     setUp(() {
       mockLoginUseCase = MockLoginUseCase();
-      mockVerifyLoggedInUseCase = MockVerifyLoggedInUseCase();
-      viewModel = LoginViewModel(
-        mockLoginUseCase,
-        mockVerifyLoggedInUseCase,
-      );
+      viewModel = LoginViewModel(mockLoginUseCase);
     });
 
     test('When login is successful, it emits loading and success state orderly',
@@ -94,40 +89,6 @@ void main() {
       verifyNever(mockLoginUseCase.call(any));
 
       viewModel.login('invalidEmail', ' ');
-    });
-
-    test("When user logged in, isLoggedIn returns true", () async {
-      when(mockVerifyLoggedInUseCase.call())
-          .thenAnswer((_) async => Success(true));
-
-      viewModel.isLoggedIn.listen(expectAsync1((value) {
-        expect(value, true);
-      }));
-
-      viewModel.isLoggedIn;
-    });
-
-    test("When user did not log in, isLoggedIn returns false", () async {
-      when(mockVerifyLoggedInUseCase.call())
-          .thenAnswer((_) async => Success(false));
-
-      viewModel.isLoggedIn.listen(expectAsync1((value) {
-        expect(value, false);
-      }));
-
-      viewModel.isLoggedIn;
-    });
-
-    test("When VerifyLoggedInUseCase returns error, isLoggedIn returns false",
-        () async {
-      when(mockVerifyLoggedInUseCase.call())
-          .thenAnswer((_) async => Failed(UseCaseException(Exception())));
-
-      viewModel.isLoggedIn.listen(expectAsync1((value) {
-        expect(value, false);
-      }));
-
-      viewModel.isLoggedIn;
     });
   });
 }

@@ -5,11 +5,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lydiaryanfluttersurvey/theme/app_theme.dart';
+import 'package:lydiaryanfluttersurvey/utils/app_navigator.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'di/injection.dart';
 import 'firebase_options.dart';
-import 'screens/login/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,28 +31,10 @@ void main() async {
   );
 }
 
-const routePathRootScreen = '/';
-const routePathSecondScreen = 'second';
-
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  final GoRouter _router = GoRouter(
-    routes: <GoRoute>[
-      GoRoute(
-        path: routePathRootScreen,
-        builder: (BuildContext context, GoRouterState state) =>
-            const LoginScreen(),
-        routes: [
-          GoRoute(
-            path: routePathSecondScreen,
-            builder: (BuildContext context, GoRouterState state) =>
-                const SecondScreen(),
-          ),
-        ],
-      ),
-    ],
-  );
+  final GoRouter _router = getIt.get<AppNavigator>().router();
 
   @override
   Widget build(BuildContext context) {
