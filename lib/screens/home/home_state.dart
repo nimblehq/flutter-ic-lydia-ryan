@@ -7,6 +7,6 @@ part 'home_state.freezed.dart';
 class HomeState with _$HomeState {
   const factory HomeState.init() = _Init;
   const factory HomeState.loading() = _Loading;
-  const factory HomeState.success(List<SurveyUiModel> surveys) = _Success;
-  const factory HomeState.error(String message) = _Error;
+  const factory HomeState.success() = _Success;
+  const factory HomeState.error() = _Error;
 }
