@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lydiaryanfluttersurvey/di/injection.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/home/home_state.dart';
@@ -54,6 +55,9 @@ Widget _buildHomeScreen(
   bool loading,
   String? errorMessage,
 ) {
+  if (errorMessage != null) {
+    Fluttertoast.showToast(msg: errorMessage);
+  }
   return Scaffold(
     body: HomePagingWidget(surveys: surveys),
   );

@@ -27,7 +27,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
       _surveys.add(surveys);
       state = const HomeState.success();
     } else if (result is Failed<SurveysResponse>) {
-      _error.add(result.exception.toString());
+      _error.add(result.exception.actualException.toString());
       state = const HomeState.error();
     }
   }
