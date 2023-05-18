@@ -43,22 +43,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return ref.watch<HomeState>(_homeViewModelProvider).when(
           init: () => const HomeLoadingWidget(),
-          success: () => _buildHomeScreen(surveys, false, null),
-          loading: () => _buildHomeScreen(surveys, true, null),
-          error: () => _buildHomeScreen(surveys, true, error),
+          success: () => _buildHomeScreen(surveys, null),
+          error: () => _buildHomeScreen(surveys, error),
         );
   }
-}
 
-Widget _buildHomeScreen(
-  List<SurveyUiModel> surveys,
-  bool loading,
-  String? errorMessage,
-) {
-  if (errorMessage != null) {
-    Fluttertoast.showToast(msg: errorMessage);
+  Widget _buildHomeScreen(
+    List<SurveyUiModel> surveys,
+    String? errorMessage,
+  ) {
+    if (errorMessage != null) {
+      Fluttertoast.showToast(msg: errorMessage);
+    }
+
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh: () => ref.read(_homeViewModelProvider.notifier).getSurveys(),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+              maxHeight: MediaQuery.of(context).size.height,
+            ),
+            child: HomePagingWidget(surveys: surveys),
+          ),
+        ),
+      ),
+    );
   }
-  return Scaffold(
-    body: HomePagingWidget(surveys: surveys),
-  );
 }

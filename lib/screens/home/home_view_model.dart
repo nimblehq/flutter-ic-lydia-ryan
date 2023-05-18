@@ -17,7 +17,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   HomeViewModel(this._getSurveysUseCase) : super(const HomeState.init());
 
-  void getSurveys() async {
+  Future<void> getSurveys() async {
     final result = await _getSurveysUseCase.call();
 
     if (result is Success<SurveysResponse>) {
