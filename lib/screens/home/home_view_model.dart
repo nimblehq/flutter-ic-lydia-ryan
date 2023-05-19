@@ -12,9 +12,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final BehaviorSubject<List<SurveyUiModel>> _surveys = BehaviorSubject();
   Stream<List<SurveyUiModel>> get surveys => _surveys.stream;
 
-  final BehaviorSubject<String> _error = BehaviorSubject();
-  Stream<String> get error => _error.stream;
-
   HomeViewModel(this._getSurveysUseCase) : super(const HomeState.init());
 
   Future<void> getSurveys() async {
@@ -27,8 +24,8 @@ class HomeViewModel extends StateNotifier<HomeState> {
       _surveys.add(surveys);
       state = const HomeState.success();
     } else if (result is Failed<SurveysResponse>) {
-      _error.add(result.exception.actualException.toString());
-      state = const HomeState.error();
+      final exception = result.exception.actualException;
+      state = HomeState.error(exception);
     }
   }
 }

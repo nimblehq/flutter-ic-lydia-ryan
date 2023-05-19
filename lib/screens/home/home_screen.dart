@@ -19,9 +19,6 @@ final _homeViewModelProvider =
 final _surveysStreamProvider = StreamProvider.autoDispose<List<SurveyUiModel>>(
     (ref) => ref.watch(_homeViewModelProvider.notifier).surveys);
 
-final _errorStreamProvider = StreamProvider.autoDispose<String>(
-    (ref) => ref.watch(_homeViewModelProvider.notifier).error);
-
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -39,12 +36,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final surveys = ref.watch(_surveysStreamProvider).value ?? [];
-    final error = ref.watch(_errorStreamProvider).value;
 
     return ref.watch<HomeState>(_homeViewModelProvider).when(
           init: () => const HomeLoadingWidget(),
           success: () => _buildHomeScreen(surveys, null),
-          error: () => _buildHomeScreen(surveys, error),
+          error: (exception) => _buildHomeScreen(surveys, exception.toString()),
         );
   }
 

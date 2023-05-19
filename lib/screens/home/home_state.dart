@@ -6,5 +6,5 @@ part 'home_state.freezed.dart';
 class HomeState with _$HomeState {
   const factory HomeState.init() = _Init;
   const factory HomeState.success() = _Success;
-  const factory HomeState.error() = _Error;
+  const factory HomeState.error(Exception exception) = _Error;
 }
