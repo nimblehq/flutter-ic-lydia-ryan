@@ -26,6 +26,9 @@ class _HomePagingWidgetState extends State<HomePagingWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.surveys.isEmpty) {
+      return const SizedBox.expand();
+    }
     final PageController pageController = PageController();
     return Stack(
       children: [

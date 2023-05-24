@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:lydiaryanfluttersurvey/model/response/survey_response.dart';
 
 class SurveyUiModel {
   final String id;
@@ -17,4 +18,14 @@ class SurveyUiModel {
 
   String formattedActiveAt() =>
       DateFormat("EEEE, MMMM dd").format(activeAt).toUpperCase();
+
+  static SurveyUiModel fromSurveyResponse(SurveyResponse e) {
+    return SurveyUiModel(
+      id: e.id,
+      title: e.title ?? "",
+      description: e.description ?? "",
+      coverImageUrl: e.coverImageUrl ?? "",
+      activeAt: DateTime.parse(e.activeAt ?? "1970-01-01"),
+    );
+  }
 }
