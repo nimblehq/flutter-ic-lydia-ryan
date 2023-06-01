@@ -6,7 +6,8 @@ import 'package:lydiaryanfluttersurvey/model/response/surveys_response.dart';
 
 abstract class SurveyRepository {
   Future<SurveysResponse> getSurveys();
-  Future<SurveyDetailResponse> getSurveyDetails(String surveyId);
+
+  Future<SurveyDetailResponse> getSurveyDetail(String surveyId);
 }
 
 @LazySingleton(as: SurveyRepository)
@@ -25,9 +26,9 @@ class SurveyRepositoryImpl implements SurveyRepository {
   }
 
   @override
-  Future<SurveyDetailResponse> getSurveyDetails(String surveyId) {
+  Future<SurveyDetailResponse> getSurveyDetail(String surveyId) {
     try {
-      return _surveyService.getSurveyDetails(surveyId);
+      return _surveyService.getSurveyDetail(surveyId);
     } catch (e) {
       return Future.error(NetworkExceptions.fromDioException(e));
     }
