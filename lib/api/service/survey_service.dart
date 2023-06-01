@@ -12,7 +12,7 @@ abstract class SurveyService {
   @GET('/api/v1/surveys')
   Future<SurveysResponse> getSurveys();
 
-  @GET('/surveys/{surveyId}')
+  @GET('api/v1/surveys/{surveyId}')
   Future<SurveyDetailResponse> getSurveyDetail(
     @Path('surveyId') String surveyId,
   );

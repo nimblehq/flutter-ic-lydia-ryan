@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:lydiaryanfluttersurvey/model/response/converter/response_converter.dart';
 
 import 'question_response.dart';
 
@@ -21,5 +22,5 @@ class SurveyDetailResponse {
   );
 
   factory SurveyDetailResponse.fromJson(Map<String, dynamic> json) =>
-      _$SurveyDetailResponseFromJson(json);
+      _$SurveyDetailResponseFromJson(fromJsonApi(json));
 }
