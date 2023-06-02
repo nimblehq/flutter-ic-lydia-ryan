@@ -2,15 +2,6 @@ import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
 
 import 'answer_ui_model.dart';
 
-enum QuestionDisplayType {
-  intro('intro'),
-  star('star');
-
-  const QuestionDisplayType(this.type);
-
-  final String type;
-}
-
 class QuestionUiModel {
   final String id;
   final String text;
