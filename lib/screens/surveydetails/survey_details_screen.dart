@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lydiaryanfluttersurvey/di/injection.dart';
-import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
-import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/survey_detail_view_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/question_paging_widget.dart';
@@ -68,44 +66,3 @@ class _SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
         : const SizedBox.shrink();
   }
 }
-
-final SurveyDetailUiModel _mockSurveyDetailUiModel = SurveyDetailUiModel(
-  id: "id",
-  title: "title",
-  description: "description",
-  coverImageUrl: "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_",
-  questions: _mockQuestionUiModels,
-);
-
-final List<QuestionUiModel> _mockQuestionUiModels = [
-  QuestionUiModel(
-    id: '1',
-    text: 'Mock Survey intro question 1',
-    displayType: DisplayType.intro,
-    answers: [],
-  ),
-  QuestionUiModel(
-    id: '2',
-    text: 'Mock Survey intro question 2',
-    displayType: DisplayType.star,
-    answers: [],
-  ),
-  QuestionUiModel(
-    id: '1',
-    text: 'Mock Survey intro question 3',
-    displayType: DisplayType.textarea,
-    answers: [],
-  ),
-  QuestionUiModel(
-    id: '1',
-    text: 'Mock Survey intro question 4',
-    displayType: DisplayType.choice,
-    answers: [],
-  ),
-  QuestionUiModel(
-    id: '1',
-    text: 'Mock Survey intro question 5',
-    displayType: DisplayType.smiley,
-    answers: [],
-  ),
-];

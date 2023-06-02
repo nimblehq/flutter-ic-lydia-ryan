@@ -22,10 +22,10 @@ class SurveyDetailUiModel {
   factory SurveyDetailUiModel.fromSurveyDetailsResponse(
       SurveyDetailResponse e) {
     return SurveyDetailUiModel(
-      id: e.id ?? '',
-      title: e.title ?? '',
-      description: e.description ?? '',
-      coverImageUrl: e.coverImageUrl ?? '',
+      id: e.id,
+      title: e.title,
+      description: e.description,
+      coverImageUrl: e.coverImageUrl,
       questions: e.questions
           .map((e) => QuestionUiModel.fromQuestionResponse(e))
           .toList(),
