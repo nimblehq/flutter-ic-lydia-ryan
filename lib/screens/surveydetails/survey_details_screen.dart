@@ -45,13 +45,13 @@ class _SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
     final surveyDetail = ref.watch(_surveyDetailStreamProvider).value;
     return ref.watch<SurveyDetailState>(_surveyDetailViewModelProvider).when(
           init: () => const Center(child: CircularProgressIndicator()),
-          success: () => _buildSurveyDetailsScreen(surveyDetail, null),
+          success: () => _buildSurveyDetailScreen(surveyDetail, null),
           error: (exception) =>
-              _buildSurveyDetailsScreen(surveyDetail, exception.toString()),
+              _buildSurveyDetailScreen(surveyDetail, exception.toString()),
         );
   }
 
-  Widget _buildSurveyDetailsScreen(
+  Widget _buildSurveyDetailScreen(
     SurveyDetailUiModel? surveyDetail,
     String? errorMessage,
   ) {

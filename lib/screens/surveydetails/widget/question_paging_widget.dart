@@ -51,7 +51,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
                   context,
                   widget.surveyDetailUiModel.questions[_currentIndex],
                 ),
-                _pagedQuestions(context, pageController),
+                _buildPagedQuestions(context, pageController),
                 const Spacer(),
                 _buildQuestionFooter(
                   context,
@@ -66,7 +66,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     );
   }
 
-  Widget _pagedQuestions(
+  Widget _buildPagedQuestions(
     BuildContext context,
     PageController pageController,
   ) {
@@ -92,7 +92,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
           children: [
             _isIntroQuestion(question)
                 ? MaterialButton(
-                    onPressed: () => {context.pop()},
+                    onPressed: () => context.pop(),
                     minWidth: 30,
                     height: 30,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -103,7 +103,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
             const Spacer(),
             !_isIntroQuestion(question)
                 ? MaterialButton(
-                    onPressed: () => {context.pop()},
+                    onPressed: () => context.pop(),
                     minWidth: 28,
                     height: 28,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

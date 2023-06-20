@@ -19,8 +19,7 @@ class SurveyDetailUiModel {
 
   String get largeCoverImageUrl => "${coverImageUrl}l";
 
-  factory SurveyDetailUiModel.fromSurveyDetailsResponse(
-      SurveyDetailResponse e) {
+  factory SurveyDetailUiModel.fromSurveyDetailResponse(SurveyDetailResponse e) {
     return SurveyDetailUiModel(
       id: e.id,
       title: e.title,
