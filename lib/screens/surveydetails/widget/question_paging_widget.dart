@@ -101,22 +101,21 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
                   )
                 : const SizedBox(),
             const Spacer(),
-            !_isIntroQuestion(question)
-                ? MaterialButton(
-                    onPressed: () => context.pop(),
-                    minWidth: 28,
-                    height: 28,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    color: Colors.white.withOpacity(0.2),
-                    textColor: Theme.of(context).primaryColor,
-                    padding: EdgeInsets.zero,
-                    shape: const CircleBorder(),
-                    child: const Icon(
-                      Icons.close,
-                      size: 18,
-                    ),
-                  )
-                : const SizedBox(),
+            if (!_isIntroQuestion(question))
+              MaterialButton(
+                onPressed: () => context.pop(),
+                minWidth: 28,
+                height: 28,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                color: Colors.white.withOpacity(0.2),
+                textColor: Theme.of(context).primaryColor,
+                padding: EdgeInsets.zero,
+                shape: const CircleBorder(),
+                child: const Icon(
+                  Icons.close,
+                  size: 18,
+                ),
+              ),
           ],
         ),
       ),

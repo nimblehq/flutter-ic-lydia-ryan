@@ -21,17 +21,16 @@ final _surveyDetailStreamProvider =
   (ref) => ref.watch(_surveyDetailViewModelProvider.notifier).surveyDetail,
 );
 
-class SurveyDetailsScreen extends ConsumerStatefulWidget {
+class SurveyDetailScreen extends ConsumerStatefulWidget {
   final String surveyId;
 
-  const SurveyDetailsScreen({required this.surveyId, super.key});
+  const SurveyDetailScreen({required this.surveyId, super.key});
 
   @override
-  ConsumerState<SurveyDetailsScreen> createState() =>
-      _SurveyDetailsScreenState();
+  ConsumerState<SurveyDetailScreen> createState() => _SurveyDetailScreenState();
 }
 
-class _SurveyDetailsScreenState extends ConsumerState<SurveyDetailsScreen> {
+class _SurveyDetailScreenState extends ConsumerState<SurveyDetailScreen> {
   @override
   void initState() {
     super.initState();
