@@ -84,13 +84,14 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   }
 
   Widget _buildQuestionToolbar(BuildContext context, QuestionUiModel question) {
+    final isIntroQuestion = _isIntroQuestion(question);
     return Padding(
       padding: const EdgeInsets.only(bottom: Dimensions.paddingMedium),
       child: SizedBox(
         height: 44.0,
         child: Row(
           children: [
-            _isIntroQuestion(question)
+            isIntroQuestion
                 ? MaterialButton(
                     onPressed: () => context.pop(),
                     minWidth: 30,
@@ -101,7 +102,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
                   )
                 : const SizedBox(),
             const Spacer(),
-            if (!_isIntroQuestion(question))
+            if (isIntroQuestion)
               MaterialButton(
                 onPressed: () => context.pop(),
                 minWidth: 28,
