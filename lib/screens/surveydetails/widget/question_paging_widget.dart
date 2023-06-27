@@ -3,15 +3,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
+import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
 
 class QuestionPagingWidget extends StatefulWidget {
-  final List<QuestionUiModel> questions;
+  final SurveyDetailUiModel surveyDetailUiModel;
 
-  const QuestionPagingWidget({super.key, required this.questions});
+  const QuestionPagingWidget({super.key, required this.surveyDetailUiModel});
 
   @override
   State<StatefulWidget> createState() => _QuestionPagingWidgetState();
@@ -28,80 +30,96 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.surveyDetailUiModel.questions.isEmpty) {
+      return const SizedBox.expand();
+    }
     final PageController pageController = PageController();
-    return Stack(
-      children: [
-        PageView(
-          controller: pageController,
-          onPageChanged: _onPageChanged,
-          physics: const NeverScrollableScrollPhysics(),
-          children: widget.questions
-              .map((QuestionUiModel question) => BackgroundWidget(
-                    image: Image.network(question.largeCoverImageUrl).image,
-                  ))
-              .toList(),
-        ),
-        _buildQuestionContent(
-            context, widget.questions[_currentIndex], pageController)
-      ],
-    );
-  }
 
-  Widget _buildQuestionContent(
-    BuildContext context,
-    QuestionUiModel question,
-    PageController controller,
-  ) {
     return Stack(
       children: [
+        BackgroundWidget(
+          image: Image.network(widget.surveyDetailUiModel.largeCoverImageUrl)
+              .image,
+        ),
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildQuestionToolbar(context, question),
-                const SizedBox(height: Dimensions.paddingLarge),
-                _buildQuestionHeader(context, question),
+                _buildQuestionToolbar(
+                  context,
+                  widget.surveyDetailUiModel.questions[_currentIndex],
+                ),
+                _buildPagedQuestions(context, pageController),
                 const Spacer(),
-                _buildQuestionFooter(context, question, controller),
+                _buildQuestionFooter(
+                  context,
+                  widget.surveyDetailUiModel.questions[_currentIndex],
+                  pageController,
+                ),
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }
 
+  Widget _buildPagedQuestions(
+    BuildContext context,
+    PageController pageController,
+  ) {
+    return Expanded(
+      child: PageView(
+        controller: pageController,
+        onPageChanged: _onPageChanged,
+        physics: const NeverScrollableScrollPhysics(),
+        children: widget.surveyDetailUiModel.questions
+            .map((QuestionUiModel question) =>
+                _buildQuestionHeader(context, question))
+            .toList(),
+      ),
+    );
+  }
+
   Widget _buildQuestionToolbar(BuildContext context, QuestionUiModel question) {
-    return Row(
-      children: [
-        _isIntroQuestion(question)
-            ? MaterialButton(
-                onPressed: () => {context.pop()},
-                minWidth: 30,
-                height: 30,
+    final isIntroQuestion = _isIntroQuestion(question);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Dimensions.paddingMedium),
+      child: SizedBox(
+        height: 44.0,
+        child: Row(
+          children: [
+            isIntroQuestion
+                ? MaterialButton(
+                    onPressed: () => context.pop(),
+                    minWidth: 30,
+                    height: 30,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    padding: EdgeInsets.zero,
+                    child: SvgPicture.asset(Assets.images.icBack),
+                  )
+                : const SizedBox(),
+            const Spacer(),
+            if (isIntroQuestion)
+              MaterialButton(
+                onPressed: () => context.pop(),
+                minWidth: 28,
+                height: 28,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                color: Colors.white.withOpacity(0.2),
+                textColor: Theme.of(context).primaryColor,
                 padding: EdgeInsets.zero,
-                child: SvgPicture.asset(Assets.images.icBack),
-              )
-            : const SizedBox(),
-        const Spacer(),
-        !_isIntroQuestion(question)
-            ? ElevatedButton(
-                onPressed: () => {context.pop()},
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(8.5),
-                  backgroundColor: Colors.white.withOpacity(0.2),
-                ),
-                child: Icon(
+                shape: const CircleBorder(),
+                child: const Icon(
                   Icons.close,
-                  color: Theme.of(context).primaryColor,
+                  size: 18,
                 ),
-              )
-            : const SizedBox(),
-      ],
+              ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -113,7 +131,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
           Text(
             AppLocalizations.of(context)!.question_number(
               _currentIndex,
-              widget.questions.length - 1,
+              widget.surveyDetailUiModel.questions.length - 1,
             ),
             style:
                 Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 15),
@@ -125,7 +143,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
           ),
         ] else ...[
           Text(
-            question.title,
+            widget.surveyDetailUiModel.title,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Padding(
@@ -196,8 +214,9 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   }
 
   bool _isIntroQuestion(QuestionUiModel question) =>
-      question.displayType == QuestionDisplayType.intro;
+      question.displayType == DisplayType.intro;
 
   bool _isLastQuestion(QuestionUiModel question) =>
-      widget.questions.indexOf(question) == widget.questions.length - 1;
+      widget.surveyDetailUiModel.questions.indexOf(question) ==
+      widget.surveyDetailUiModel.questions.length - 1;
 }

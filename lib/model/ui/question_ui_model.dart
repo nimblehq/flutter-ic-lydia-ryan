@@ -1,28 +1,28 @@
-enum QuestionDisplayType {
-  intro('intro'),
-  star('star');
+import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
 
-  const QuestionDisplayType(this.type);
-
-  final String type;
-}
+import 'answer_ui_model.dart';
 
 class QuestionUiModel {
   final String id;
-  final String title;
   final String text;
-  final String displayOrder;
-  final QuestionDisplayType displayType;
-  final String coverImageUrl;
+  final DisplayType displayType;
+  final List<AnswerUiModel> answers;
 
   QuestionUiModel({
     required this.id,
-    required this.title,
     required this.text,
-    required this.displayOrder,
     required this.displayType,
-    required this.coverImageUrl,
+    required this.answers,
   });
 
-  String get largeCoverImageUrl => "${coverImageUrl}l";
+  factory QuestionUiModel.fromQuestionResponse(QuestionResponse e) {
+    return QuestionUiModel(
+      id: e.id ?? '',
+      text: e.text ?? '',
+      displayType: e.displayType ?? DisplayType.unknown,
+      answers:
+          e.answers?.map((e) => AnswerUiModel.fromAnswerResponse(e)).toList() ??
+              [],
+    );
+  }
 }
