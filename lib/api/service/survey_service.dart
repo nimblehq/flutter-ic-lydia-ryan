@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:lydiaryanfluttersurvey/model/response/survey_detail_response.dart';
 import 'package:lydiaryanfluttersurvey/model/response/surveys_response.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -10,4 +11,9 @@ abstract class SurveyService {
 
   @GET('/api/v1/surveys')
   Future<SurveysResponse> getSurveys();
+
+  @GET('api/v1/surveys/{surveyId}')
+  Future<SurveyDetailResponse> getSurveyDetail(
+    @Path('surveyId') String surveyId,
+  );
 }
