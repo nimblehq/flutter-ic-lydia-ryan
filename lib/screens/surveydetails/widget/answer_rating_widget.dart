@@ -32,18 +32,29 @@ class _AnswerEmojiRatingWidgetState extends State<AnswerEmojiRatingWidget> {
     for (int index = 0; index < widget.count; index++) {
       widgets.add(
         Container(
-          margin: const EdgeInsets.all(Dimensions.paddingSmallPlus),
+          height: Dimensions.answerEmojiSize,
+          width: Dimensions.answerEmojiSize,
+          margin: const EdgeInsets.all(Dimensions.paddingSmall),
           child: ElevatedButton(
             key: AnswerEmojiKey.answerKey(index),
             onPressed: () => _highlightEmoji(index),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+              padding: const EdgeInsets.all(0.0),
+              shape: const CircleBorder(),
+            ),
             child: Text(
               key: AnswerEmojiKey.answerKey(index),
               widget.emoji,
               style: !isPressed
                   ? const TextStyle(
                       color: Colors.black45,
+                      fontSize: 28,
                     )
-                  : null,
+                  : const TextStyle(
+                      fontSize: 28,
+                    ),
             ),
           ),
         ),
