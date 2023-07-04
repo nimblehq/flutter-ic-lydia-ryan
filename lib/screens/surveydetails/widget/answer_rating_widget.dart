@@ -25,7 +25,7 @@ class AnswerEmojiRatingWidget extends StatefulWidget {
 }
 
 class _AnswerEmojiRatingWidgetState extends State<AnswerEmojiRatingWidget> {
-  bool isPressed = false;
+  int? selectedIndex;
 
   List<Widget> get _emojiRatingWidgets {
     List<Widget> widgets = [];
@@ -35,26 +35,21 @@ class _AnswerEmojiRatingWidgetState extends State<AnswerEmojiRatingWidget> {
           height: Dimensions.answerEmojiSize,
           width: Dimensions.answerEmojiSize,
           margin: const EdgeInsets.all(Dimensions.paddingSmall),
-          child: ElevatedButton(
-            key: AnswerEmojiKey.answerKey(index),
-            onPressed: () => _highlightEmoji(index),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              elevation: 0.0,
-              padding: const EdgeInsets.all(0.0),
-              shape: const CircleBorder(),
-            ),
+          child: GestureDetector(
+            onTapDown: (TapDownDetails details) {
+              for (int highlightIndex = 0;
+                  highlightIndex <= index;
+                  highlightIndex++) {
+                _highlightEmoji(highlightIndex);
+              }
+            },
             child: Text(
               key: AnswerEmojiKey.answerKey(index),
               widget.emoji,
-              style: !isPressed
-                  ? const TextStyle(
-                      color: Colors.black45,
-                      fontSize: 28,
-                    )
-                  : const TextStyle(
-                      fontSize: 28,
-                    ),
+              style: TextStyle(
+                color: _getEmojiColor(index),
+                fontSize: 28,
+              ),
             ),
           ),
         ),
@@ -73,8 +68,19 @@ class _AnswerEmojiRatingWidgetState extends State<AnswerEmojiRatingWidget> {
 
   void _highlightEmoji(int index) {
     setState(() {
-      isPressed = !isPressed;
-      widget.onRated(index);
+      selectedIndex = index;
     });
+    widget.onRated(index);
+  }
+
+  Color? _getEmojiColor(int index) {
+    if (selectedIndex == null) {
+      return Colors.black45;
+    }
+    if (index <= selectedIndex!) {
+      return null;
+    } else {
+      return Colors.black45;
+    }
   }
 }
