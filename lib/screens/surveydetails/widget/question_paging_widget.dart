@@ -53,9 +53,6 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
                   widget.surveyDetailUiModel.questions[_currentIndex],
                 ),
                 _buildPagedQuestions(context, pageController),
-                const Spacer(),
-                _buildAnswerContent(context,
-                    widget.surveyDetailUiModel.questions[_currentIndex]),
                 _buildQuestionFooter(
                   context,
                   widget.surveyDetailUiModel.questions[_currentIndex],
@@ -80,7 +77,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
         physics: const NeverScrollableScrollPhysics(),
         children: widget.surveyDetailUiModel.questions
             .map((QuestionUiModel question) =>
-                _buildQuestionHeader(context, question))
+                _buildQuestionHeaderAndAnswerContent(context, question))
             .toList(),
       ),
     );
@@ -126,7 +123,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     );
   }
 
-  Widget _buildQuestionHeader(BuildContext context, QuestionUiModel question) {
+  Widget _buildQuestionHeaderAndAnswerContent(
+      BuildContext context, QuestionUiModel question) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -144,6 +142,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
             question.text,
             style: Theme.of(context).textTheme.titleLarge,
           ),
+          _buildAnswerContent(
+              context, widget.surveyDetailUiModel.questions[_currentIndex]),
         ] else ...[
           Text(
             widget.surveyDetailUiModel.title,
@@ -163,20 +163,20 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerContent(BuildContext context, QuestionUiModel question) {
     return Expanded(
-      child: _buildEmojiRatingWidget(question),
+      child: _buildAnswerWidget(question),
     );
   }
 
-  Widget _buildEmojiRatingWidget(QuestionUiModel question) {
+  Widget _buildAnswerWidget(QuestionUiModel question) {
     switch (question.displayType) {
       case DisplayType.star:
-        return _answerEmojiRatingWidget('⭐️', question);
+        return _answerEmojiRatingWidget(question, '⭐️');
       default:
         return const SizedBox();
     }
   }
 
-  Widget _answerEmojiRatingWidget(String emoji, QuestionUiModel question) {
+  Widget _answerEmojiRatingWidget(QuestionUiModel question, String emoji) {
     return AnswerEmojiRatingWidget(
       emoji: emoji,
       count: question.answers.length,
