@@ -54,9 +54,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
                 ),
                 _buildPagedQuestions(context, pageController),
                 const Spacer(),
-                _buildAnswerContent(
-                  context,
-                  widget.surveyDetailUiModel.questions[_currentIndex]),
+                _buildAnswerContent(context,
+                    widget.surveyDetailUiModel.questions[_currentIndex]),
                 _buildQuestionFooter(
                   context,
                   widget.surveyDetailUiModel.questions[_currentIndex],
@@ -164,17 +163,24 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerContent(BuildContext context, QuestionUiModel question) {
     return Expanded(
-      // child: ListView.builder(
-      //   itemCount: question.answers.length,
-      //   itemBuilder: (BuildContext context, int index) {
-      //     return _buildAnswerItem(context, question.answers[index]);
-      //   },
-      // ),
-      child: AnswerEmojiRatingWidget(
-        emoji: '⭐️',
-        count: 5,
-        onRated: (int rating) {},
-      ),
+      child: _buildEmojiRatingWidget(question),
+    );
+  }
+
+  Widget _buildEmojiRatingWidget(QuestionUiModel question) {
+    switch (question.displayType) {
+      case DisplayType.star:
+        return _answerEmojiRatingWidget('⭐️', question);
+      default:
+        return const SizedBox();
+    }
+  }
+
+  Widget _answerEmojiRatingWidget(String emoji, QuestionUiModel question) {
+    return AnswerEmojiRatingWidget(
+      emoji: emoji,
+      count: question.answers.length,
+      onRated: (int rating) {},
     );
   }
 
