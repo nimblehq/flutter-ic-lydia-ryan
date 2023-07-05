@@ -172,7 +172,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
       case DisplayType.star:
         return _buildAnswerEmojiRatingWidget(question, '⭐️');
       case DisplayType.thumbs:
-        return _buildAnswerEmojiRatingWidget(question, '👍');
+        return _buildAnswerEmojiRatingWidget(question, '👍🏻');
       default:
         return const SizedBox();
     }
