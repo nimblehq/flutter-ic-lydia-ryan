@@ -170,17 +170,19 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerWidget(QuestionUiModel question) {
     switch (question.displayType) {
       case DisplayType.star:
-        return _answerEmojiRatingWidget(question, '⭐️');
+        return _buildAnswerEmojiRatingWidget(question, '⭐️');
       default:
         return const SizedBox();
     }
   }
 
-  Widget _answerEmojiRatingWidget(QuestionUiModel question, String emoji) {
+  Widget _buildAnswerEmojiRatingWidget(QuestionUiModel question, String emoji) {
     return AnswerEmojiRatingWidget(
       emoji: emoji,
       count: question.answers.length,
-      onRated: (int rating) {},
+      onRated: (int rating) {
+        // TODO: Save answer here
+      },
     );
   }
 
