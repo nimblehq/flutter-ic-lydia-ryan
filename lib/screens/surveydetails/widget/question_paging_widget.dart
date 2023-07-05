@@ -102,7 +102,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
                   )
                 : const SizedBox(),
             const Spacer(),
-            if (isIntroQuestion)
+            if (!isIntroQuestion)
               MaterialButton(
                 onPressed: () => context.pop(),
                 minWidth: 28,
