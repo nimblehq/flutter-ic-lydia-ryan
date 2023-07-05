@@ -8,6 +8,7 @@ import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_rating_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_smiley_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
 
@@ -173,6 +174,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
         return _buildAnswerEmojiRatingWidget(question, '⭐️');
       case DisplayType.thumbs:
         return _buildAnswerEmojiRatingWidget(question, '👍🏻');
+      case DisplayType.smiley:
+        return _buildAnswerSmileyWidget(question);
       default:
         return const SizedBox();
     }
@@ -183,6 +186,15 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
       emoji: emoji,
       count: question.answers.length,
       onRated: (int rating) {
+        // TODO: Save answer here
+      },
+    );
+  }
+
+  Widget _buildAnswerSmileyWidget(QuestionUiModel question) {
+    return AnswerSmileyWidget(
+      count: question.answers.length,
+      onSelected: (int score) {
         // TODO: Save answer here
       },
     );
