@@ -4,15 +4,12 @@ class AnswerUiModel {
   final String id;
   final String? text;
 
-  AnswerUiModel(
-    this.id,
-    this.text,
-  );
+  AnswerUiModel({
+    required this.id,
+    required this.text,
+  });
 
   factory AnswerUiModel.fromAnswerResponse(AnswerResponse e) {
-    return AnswerUiModel(
-      e.id,
-      e.text,
-    );
+    return AnswerUiModel(id: e.id, text: e.text);
   }
 }

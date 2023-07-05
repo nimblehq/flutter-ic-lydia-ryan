@@ -23,4 +23,6 @@ class Dimensions {
 
   static const double homeSkeletonLoadingTextHeight = 20.0;
   static const double homeSkeletonLoadingTextBorderRadius = 10.0;
+
+  static const double answerEmojiSize = 34.0;
 }

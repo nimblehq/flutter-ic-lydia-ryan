@@ -7,6 +7,7 @@ import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_rating_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
 
@@ -52,7 +53,6 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
                   widget.surveyDetailUiModel.questions[_currentIndex],
                 ),
                 _buildPagedQuestions(context, pageController),
-                const Spacer(),
                 _buildQuestionFooter(
                   context,
                   widget.surveyDetailUiModel.questions[_currentIndex],
@@ -77,7 +77,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
         physics: const NeverScrollableScrollPhysics(),
         children: widget.surveyDetailUiModel.questions
             .map((QuestionUiModel question) =>
-                _buildQuestionHeader(context, question))
+                _buildQuestionHeaderAndAnswerContent(context, question))
             .toList(),
       ),
     );
@@ -123,7 +123,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     );
   }
 
-  Widget _buildQuestionHeader(BuildContext context, QuestionUiModel question) {
+  Widget _buildQuestionHeaderAndAnswerContent(
+      BuildContext context, QuestionUiModel question) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -141,6 +142,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
             question.text,
             style: Theme.of(context).textTheme.titleLarge,
           ),
+          _buildAnswerContent(
+              context, widget.surveyDetailUiModel.questions[_currentIndex]),
         ] else ...[
           Text(
             widget.surveyDetailUiModel.title,
@@ -155,6 +158,31 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
           ),
         ],
       ],
+    );
+  }
+
+  Widget _buildAnswerContent(BuildContext context, QuestionUiModel question) {
+    return Expanded(
+      child: _buildAnswerWidget(question),
+    );
+  }
+
+  Widget _buildAnswerWidget(QuestionUiModel question) {
+    switch (question.displayType) {
+      case DisplayType.star:
+        return _buildAnswerEmojiRatingWidget(question, '⭐️');
+      default:
+        return const SizedBox();
+    }
+  }
+
+  Widget _buildAnswerEmojiRatingWidget(QuestionUiModel question, String emoji) {
+    return AnswerEmojiRatingWidget(
+      emoji: emoji,
+      count: question.answers.length,
+      onRated: (int rating) {
+        // TODO: Save answer here
+      },
     );
   }
 
