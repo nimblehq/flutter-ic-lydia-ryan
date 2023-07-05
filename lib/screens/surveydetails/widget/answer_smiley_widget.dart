@@ -23,7 +23,7 @@ class AnswerSmileyWidget extends StatefulWidget {
 
 class _AnswerSmileyWidgetState extends State<AnswerSmileyWidget> {
   int? selectedIndex;
-  List<String> smileys = ['😡', '😕', '😐', '😊', '😍'];
+  List<String> smileys = ['😡', '😕', '😐', '🙂', '😄'];
 
   List<Widget> get _smileyWidgets {
     List<Widget> widgets = [];
