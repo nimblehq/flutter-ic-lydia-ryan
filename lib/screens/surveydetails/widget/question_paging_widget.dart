@@ -7,6 +7,7 @@ import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_intro_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_rating_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
@@ -145,17 +146,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
           _buildAnswerContent(
               context, widget.surveyDetailUiModel.questions[_currentIndex]),
         ] else ...[
-          Text(
-            widget.surveyDetailUiModel.title,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: Text(
-              question.text,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ),
+          _buildAnswerIntroWidget(widget.surveyDetailUiModel.title, question)
         ],
       ],
     );
@@ -169,13 +160,18 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerWidget(QuestionUiModel question) {
     switch (question.displayType) {
-      case DisplayType.intro:
-        return const SizedBox();
       case DisplayType.star:
         return _buildAnswerEmojiRatingWidget(question, '⭐️');
       default:
         return const SizedBox();
     }
+  }
+
+  Widget _buildAnswerIntroWidget(String title, QuestionUiModel question) {
+    return AnswerIntroWidget(
+      title: title,
+      description: question.text,
+    );
   }
 
   Widget _buildAnswerEmojiRatingWidget(QuestionUiModel question, String emoji) {
