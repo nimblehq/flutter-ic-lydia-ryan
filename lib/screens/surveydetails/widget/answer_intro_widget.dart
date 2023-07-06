@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AnswerIntroWidget extends StatefulWidget {
+class AnswerIntroWidget extends StatelessWidget {
   final String title;
   final String description;
 
@@ -11,23 +11,18 @@ class AnswerIntroWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AnswerIntroWidget> createState() => _AnswerIntroWidgetState();
-}
-
-class _AnswerIntroWidgetState extends State<AnswerIntroWidget> {
-  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.title,
+          title,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         Padding(
           padding: const EdgeInsets.only(top: 16),
           child: Text(
-            widget.description,
+            description,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
