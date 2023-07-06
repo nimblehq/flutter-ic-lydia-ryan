@@ -9,7 +9,7 @@ import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_rating_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_smiley_widget.dart';
-import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_field_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
 
 class QuestionPagingWidget extends StatefulWidget {
@@ -37,33 +37,25 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     }
     final PageController pageController = PageController();
 
-    return Stack(
-      children: [
-        BackgroundWidget(
-          image: Image.network(widget.surveyDetailUiModel.largeCoverImageUrl)
-              .image,
-        ),
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildQuestionToolbar(
-                  context,
-                  widget.surveyDetailUiModel.questions[_currentIndex],
-                ),
-                _buildPagedQuestions(context, pageController),
-                _buildQuestionFooter(
-                  context,
-                  widget.surveyDetailUiModel.questions[_currentIndex],
-                  pageController,
-                ),
-              ],
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildQuestionToolbar(
+              context,
+              widget.surveyDetailUiModel.questions[_currentIndex],
             ),
-          ),
+            _buildPagedQuestions(context, pageController),
+            _buildQuestionFooter(
+              context,
+              widget.surveyDetailUiModel.questions[_currentIndex],
+              pageController,
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -176,6 +168,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
         return _buildAnswerEmojiRatingWidget(question, '👍🏻');
       case DisplayType.smiley:
         return _buildAnswerSmileyWidget(question);
+      case DisplayType.textfield:
+        return _buildAnswerTextFieldWidget(question);
       default:
         return const SizedBox();
     }
@@ -198,6 +192,14 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
         // TODO: Save answer here
       },
     );
+  }
+
+  Widget _buildAnswerTextFieldWidget(QuestionUiModel question) {
+    return AnswerTextFieldWidget(
+        question: question,
+        onAnswered: (List<String> answers) {
+          // TODO: Save answer here
+        });
   }
 
   Widget _buildQuestionFooter(

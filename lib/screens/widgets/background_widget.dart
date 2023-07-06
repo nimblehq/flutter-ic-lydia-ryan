@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class BackgroundWidget extends StatelessWidget {
   final ImageProvider image;
   final double opacity;
+  final Widget? child;
 
   const BackgroundWidget({
     Key? key,
     required this.image,
     this.opacity = 0.35,
+    this.child,
   }) : super(key: key);
 
   @override
@@ -21,6 +23,7 @@ class BackgroundWidget extends StatelessWidget {
               Colors.black.withOpacity(opacity), BlendMode.darken),
         ),
       ),
+      child: child,
     );
   }
 }
