@@ -30,8 +30,6 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final isLikely =
-        (selectedIndex ?? -1) >= (min(widget.count, _npsMaxSize) / 2);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,7 +38,7 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
         const SizedBox(
           height: 15,
         ),
-        _buildNpsLabels(isLikely),
+        _buildNpsLabels(),
       ],
     );
   }
@@ -100,7 +98,9 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
     return widgets;
   }
 
-  Widget _buildNpsLabels(bool isLikely) {
+  Widget _buildNpsLabels() {
+    final isLikely =
+        (selectedIndex ?? -1) >= (min(widget.count, _npsMaxSize) / 2);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
