@@ -101,6 +101,7 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                         index < widget.question.answers.length - 1
                             ? const Divider(
                                 color: Colors.white,
+                                thickness: 0.5,
                               )
                             : const SizedBox(),
                       ],
