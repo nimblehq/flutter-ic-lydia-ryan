@@ -39,11 +39,6 @@ class _AnswerTextFieldWidgetState extends State<AnswerTextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    TextField(
-      onChanged: (text) => _onTextChanged(-1, text),
-      controller: TextEditingController(),
-    );
-
     return Center(
       child: Form(
         autovalidateMode: AutovalidateMode.always,
