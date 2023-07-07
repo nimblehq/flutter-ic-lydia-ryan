@@ -99,7 +99,7 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                                     color: _getAnswerColor(index),
                                   )),
                         ),
-                        index <= widget.question.answers.length - 1
+                        index < widget.question.answers.length - 1
                             ? const Divider(
                                 color: Colors.white,
                               )
