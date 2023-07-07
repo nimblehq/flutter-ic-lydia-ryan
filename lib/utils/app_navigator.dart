@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lydiaryanfluttersurvey/screens/home/home_screen.dart';
 import 'package:lydiaryanfluttersurvey/screens/login/login_screen.dart';
-import 'package:lydiaryanfluttersurvey/screens/surveydetails/survey_details_screen.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/survey_detail_screen.dart';
 import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 
 enum RoutePath {
@@ -58,7 +58,7 @@ class AppNavigator {
               GoRoute(
                 path: RoutePath.surveyDetails.screenWithArguments,
                 name: RoutePath.surveyDetails.name,
-                builder: (context, state) => SurveyDetailsScreen(
+                builder: (context, state) => SurveyDetailScreen(
                   surveyId:
                       state.params[RoutePath.surveyDetails.argument] ?? '',
                 ),

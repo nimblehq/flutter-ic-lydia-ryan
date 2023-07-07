@@ -17,9 +17,12 @@ class Dimensions {
   // Button
   static const double buttonHeight = 56.0;
   static const double buttonHorizontalPadding = 21.0;
+  static const double backButtonSize = 28.0;
 
   static const double userAvatarRadius = 36.0;
 
   static const double homeSkeletonLoadingTextHeight = 20.0;
   static const double homeSkeletonLoadingTextBorderRadius = 10.0;
+
+  static const double answerEmojiSize = 34.0;
 }
