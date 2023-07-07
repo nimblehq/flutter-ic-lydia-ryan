@@ -218,7 +218,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerMultiChoiceWidget(QuestionUiModel question) {
     return AnswerMultiChoiceWidget(
         question: question,
-        onChecked: (List<String> answers) {
+        onChecked: (List<String> answerIds) {
           // TODO: Save answer here
         });
   }

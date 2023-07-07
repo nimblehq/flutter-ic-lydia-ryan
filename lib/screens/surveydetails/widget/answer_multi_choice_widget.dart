@@ -18,28 +18,27 @@ class AnswerMultiChoiceWidget extends StatefulWidget {
 }
 
 class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
-  final List<String> _answers = [];
-  final List<int> _checkedIndex = [];
+  final Set<String> _checkedAnswerIds = {};
 
   void _onCheckboxChecked(
     bool? isChecked,
-    int index,
-    String text,
+    String answerId,
   ) {
     setState(() {
       if (isChecked == true) {
-        _answers.add(widget.question.answers[index].text ?? "");
-        _checkedIndex.add(index);
+        _checkedAnswerIds.add(answerId);
       } else {
-        _answers.remove(widget.question.answers[index].text ?? "");
-        _checkedIndex.remove(index);
+        _checkedAnswerIds.remove(answerId);
       }
     });
-    widget.onChecked(_answers);
+    widget.onChecked(_checkedAnswerIds.toList());
   }
 
+  bool _isFoundAnswerId(int index) =>
+      _checkedAnswerIds.contains(widget.question.answers[index].id);
+
   Color? _getAnswerColor(int index) {
-    if (_checkedIndex.contains(index)) {
+    if (_isFoundAnswerId(index)) {
       return Colors.white;
     } else {
       return Colors.white54;
@@ -78,13 +77,11 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                             Transform.scale(
                               scale: 1.3,
                               child: Checkbox(
-                                value: _answers.contains(
-                                    widget.question.answers[index].text ?? ""),
+                                value: _isFoundAnswerId(index),
                                 onChanged: (bool? isChecked) =>
                                     _onCheckboxChecked(
                                   isChecked,
-                                  index,
-                                  widget.question.answers[index].text ?? "",
+                                  widget.question.answers[index].id,
                                 ),
                                 fillColor: MaterialStateColor.resolveWith(
                                     (states) => Colors.white),
