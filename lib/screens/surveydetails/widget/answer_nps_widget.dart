@@ -48,7 +48,7 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.white,
-          width: Dimensions.divider,
+          width: Dimensions.answerNpsDividerWidth,
         ),
         borderRadius:
             BorderRadius.circular(Dimensions.radiusRoundedRectangleButton),
@@ -72,7 +72,7 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
       if (index != 0) {
         widgets.add(
           const VerticalDivider(
-            thickness: Dimensions.divider,
+            thickness: Dimensions.answerNpsDividerWidth,
             color: Colors.white,
           ),
         );
@@ -88,7 +88,7 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontWeight:
                         isSelected ? FontWeight.bold : FontWeight.normal,
-                    color: Colors.white.withAlpha(isSelected ? 255 : 128),
+                    color: isSelected ? Colors.white : Colors.white54,
                   ),
             ),
           ),
@@ -108,14 +108,14 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
           AppLocalizations.of(context)!.nps_not_likely,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: isLikely ? FontWeight.normal : FontWeight.bold,
-                color: Colors.white.withAlpha(isLikely ? 128 : 255),
+                color: isLikely ? Colors.white54 : Colors.white,
               ),
         ),
         Text(
           AppLocalizations.of(context)!.nps_extremely_likely,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: isLikely ? FontWeight.bold : FontWeight.normal,
-                color: Colors.white.withAlpha(isLikely ? 255 : 128),
+                color: isLikely ? Colors.white : Colors.white54,
               ),
         ),
       ],
