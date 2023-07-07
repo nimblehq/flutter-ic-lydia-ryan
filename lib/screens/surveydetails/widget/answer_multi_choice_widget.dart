@@ -19,18 +19,21 @@ class AnswerMultiChoiceWidget extends StatefulWidget {
 
 class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
   final List<String> _answers = [];
-  final List<TextEditingController> _controllers = [];
-
-  List<int> _checkedIndex = [];
+  final List<int> _checkedIndex = [];
 
   void _onCheckboxChecked(
+    bool? isChecked,
     int index,
     String text,
   ) {
     setState(() {
-      print(text);
-      _answers[index] = text;
-      print(_answers.toString());
+      if (isChecked == true) {
+        _answers.add(widget.question.answers[index].text ?? "");
+        _checkedIndex.add(index);
+      } else {
+        _answers.remove(widget.question.answers[index].text ?? "");
+        _checkedIndex.remove(index);
+      }
     });
     widget.onChecked(_answers);
   }
@@ -41,14 +44,6 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
     } else {
       return Colors.white54;
     }
-  }
-
-  @override
-  void dispose() {
-    for (var element in _controllers) {
-      element.dispose();
-    }
-    super.dispose();
   }
 
   @override
@@ -77,19 +72,11 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                           value: _answers.contains(
                               widget.question.answers[index].text ?? ""),
                           shape: const CircleBorder(),
-                          onChanged: (bool? isChecked) {
-                            setState(() {
-                              if (isChecked == true) {
-                                _answers.add(
-                                    widget.question.answers[index].text ?? "");
-                                _checkedIndex.add(index);
-                              } else {
-                                _answers.remove(
-                                    widget.question.answers[index].text ?? "");
-                                _checkedIndex.remove(index);
-                              }
-                            });
-                          },
+                          onChanged: (bool? isChecked) => _onCheckboxChecked(
+                            isChecked,
+                            index,
+                            widget.question.answers[index].text ?? "",
+                          ),
                           title: Text(widget.question.answers[index].text ?? "",
                               style: Theme.of(context)
                                   .textTheme
