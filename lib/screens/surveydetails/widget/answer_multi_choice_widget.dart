@@ -64,27 +64,39 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                   child: Expanded(
                     child: Column(
                       children: [
-                        CheckboxListTile(
-                          dense: true,
-                          checkColor: Colors.white54,
-                          activeColor: Colors.white,
-                          checkboxShape: const CircleBorder(),
-                          value: _answers.contains(
-                              widget.question.answers[index].text ?? ""),
-                          shape: const CircleBorder(),
-                          onChanged: (bool? isChecked) => _onCheckboxChecked(
-                            isChecked,
-                            index,
-                            widget.question.answers[index].text ?? "",
-                          ),
-                          title: Text(widget.question.answers[index].text ?? "",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    fontSize: 20,
-                                    color: _getAnswerColor(index),
-                                  )),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(widget.question.answers[index].text ?? "",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      fontSize: 20,
+                                      color: _getAnswerColor(index),
+                                    )),
+                            Transform.scale(
+                              scale: 1.3,
+                              child: Checkbox(
+                                value: _answers.contains(
+                                    widget.question.answers[index].text ?? ""),
+                                onChanged: (bool? isChecked) =>
+                                    _onCheckboxChecked(
+                                  isChecked,
+                                  index,
+                                  widget.question.answers[index].text ?? "",
+                                ),
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) => Colors.white),
+                                checkColor: Colors.black,
+                                shape: const CircleBorder(),
+                                side: const BorderSide(
+                                  color: Colors.white54,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         index < widget.question.answers.length - 1
                             ? const Divider(
