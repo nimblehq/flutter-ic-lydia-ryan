@@ -71,9 +71,8 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                             Text(widget.question.answers[index].text ?? "",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyMedium
+                                    .bodyLarge
                                     ?.copyWith(
-                                      fontSize: 20,
                                       color: _getAnswerColor(index),
                                     )),
                             Transform.scale(
