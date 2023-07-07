@@ -5,6 +5,7 @@ import 'package:lydiaryanfluttersurvey/di/injection.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/survey_detail_view_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/question_paging_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
 import 'package:lydiaryanfluttersurvey/usecases/get_survey_detail_use_case.dart';
 
 import 'survey_detail_state.dart';
@@ -58,10 +59,16 @@ class _SurveyDetailScreenState extends ConsumerState<SurveyDetailScreen> {
       Fluttertoast.showToast(msg: errorMessage);
     }
 
-    return surveyDetail != null
-        ? Scaffold(
-            body: QuestionPagingWidget(surveyDetailUiModel: surveyDetail),
-          )
-        : const SizedBox.shrink();
+    if (surveyDetail == null) {
+      return const SizedBox.shrink();
+    }
+
+    return BackgroundWidget(
+      image: Image.network(surveyDetail.largeCoverImageUrl).image,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: QuestionPagingWidget(surveyDetailUiModel: surveyDetail),
+      ),
+    );
   }
 }
