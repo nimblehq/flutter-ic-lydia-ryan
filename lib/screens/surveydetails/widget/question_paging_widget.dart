@@ -155,7 +155,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerWidget(QuestionUiModel question) {
     switch (question.displayType) {
       case DisplayType.nps:
-        return _buildNpsRatingWidget(question);
+        return _buildAnswerNpsRatingWidget(question);
       case DisplayType.star:
         return _buildAnswerEmojiRatingWidget(question, '⭐️');
       case DisplayType.thumbs:
@@ -176,7 +176,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     );
   }
 
-  Widget _buildNpsRatingWidget(QuestionUiModel question) {
+  Widget _buildAnswerNpsRatingWidget(QuestionUiModel question) {
     return AnswerNpsWidget(
       count: question.answers.length,
       onRated: (int rating) {

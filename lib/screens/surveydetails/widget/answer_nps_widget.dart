@@ -48,7 +48,7 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.white,
-          width: Dimensions.answerNpsDividerWidth,
+          width: Dimensions.dividerWidth,
         ),
         borderRadius:
             BorderRadius.circular(Dimensions.radiusRoundedRectangleButton),
@@ -72,7 +72,7 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
       if (index != 0) {
         widgets.add(
           const VerticalDivider(
-            thickness: Dimensions.answerNpsDividerWidth,
+            thickness: Dimensions.dividerWidth,
             color: Colors.white,
           ),
         );
