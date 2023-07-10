@@ -45,6 +45,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   retrofit: ^3.0.1+1
   rxdart: ^0.27.7
+  scroll_snap_list: ^0.9.1
   shared_preferences: ^2.1.0
   shimmer: ^2.0.0
   smooth_page_indicator: ^1.1.0
