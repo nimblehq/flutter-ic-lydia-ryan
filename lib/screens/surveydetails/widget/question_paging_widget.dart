@@ -12,6 +12,7 @@ import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_multi
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_nps_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_rating_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_smiley_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_area_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_field_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
 
@@ -163,6 +164,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
         return _buildAnswerEmojiRatingWidget(question, '👍🏻');
       case DisplayType.smiley:
         return _buildAnswerSmileyWidget(question);
+      case DisplayType.textarea:
+        return _buildAnswerTextAreaWidget(question);
       case DisplayType.textfield:
         return _buildAnswerTextFieldWidget(question);
       case DisplayType.choice:
@@ -209,10 +212,20 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerTextFieldWidget(QuestionUiModel question) {
     return AnswerTextFieldWidget(
-        question: question,
-        onAnswered: (List<String> answers) {
-          // TODO: Save answer here
-        });
+      question: question,
+      onAnswered: (List<String> answers) {
+        // TODO: Save answer here
+      },
+    );
+  }
+
+  Widget _buildAnswerTextAreaWidget(QuestionUiModel question) {
+    return AnswerTextAreaWidget(
+      question: question,
+      onAnswered: (String answer) {
+        // TODO: Save answer here
+      },
+    );
   }
 
   Widget _buildAnswerMultiChoiceWidget(QuestionUiModel question) {

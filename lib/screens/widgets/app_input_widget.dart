@@ -9,6 +9,7 @@ class AppInputWidget extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.done,
     this.isPasswordType = false,
+    this.maxLines = 1,
     super.key,
   });
 
@@ -16,6 +17,7 @@ class AppInputWidget extends StatelessWidget {
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final bool isPasswordType;
+  final int maxLines;
   final TextEditingController controller;
 
   @override
@@ -57,6 +59,7 @@ class AppInputWidget extends StatelessWidget {
       enableSuggestions: !isPasswordType,
       autocorrect: !isPasswordType,
       textInputAction: textInputAction,
+      maxLines: maxLines,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
