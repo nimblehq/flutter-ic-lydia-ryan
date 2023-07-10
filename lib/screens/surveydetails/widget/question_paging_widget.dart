@@ -8,6 +8,7 @@ import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_intro_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_nps_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_rating_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_smiley_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_field_widget.dart';
@@ -153,6 +154,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerWidget(QuestionUiModel question) {
     switch (question.displayType) {
+      case DisplayType.nps:
+        return _buildAnswerNpsRatingWidget(question);
       case DisplayType.star:
         return _buildAnswerEmojiRatingWidget(question, '⭐️');
       case DisplayType.thumbs:
@@ -170,6 +173,15 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     return AnswerIntroWidget(
       title: title,
       description: question.text,
+    );
+  }
+
+  Widget _buildAnswerNpsRatingWidget(QuestionUiModel question) {
+    return AnswerNpsWidget(
+      count: question.answers.length,
+      onRatingChange: (int rating) {
+        // TODO: Save answer here
+      },
     );
   }
 
