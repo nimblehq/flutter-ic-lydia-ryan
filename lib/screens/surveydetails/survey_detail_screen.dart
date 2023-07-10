@@ -65,6 +65,7 @@ class _SurveyDetailScreenState extends ConsumerState<SurveyDetailScreen> {
 
     return BackgroundWidget(
       image: Image.network(surveyDetail.largeCoverImageUrl).image,
+      shouldBlur: true,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: QuestionPagingWidget(surveyDetailUiModel: surveyDetail),

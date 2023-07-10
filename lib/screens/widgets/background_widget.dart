@@ -1,14 +1,18 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class BackgroundWidget extends StatelessWidget {
   final ImageProvider image;
   final double opacity;
+  final bool shouldBlur;
   final Widget? child;
 
   const BackgroundWidget({
     Key? key,
     required this.image,
     this.opacity = 0.35,
+    this.shouldBlur = false,
     this.child,
   }) : super(key: key);
 
@@ -23,7 +27,14 @@ class BackgroundWidget extends StatelessWidget {
               Colors.black.withOpacity(opacity), BlendMode.darken),
         ),
       ),
-      child: child,
+      child: shouldBlur
+          ? ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: child,
+              ),
+            )
+          : child,
     );
   }
 }
