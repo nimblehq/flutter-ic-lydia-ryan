@@ -8,12 +8,12 @@ const int _npsMaxSize = 10;
 
 class AnswerNpsWidget extends StatefulWidget {
   final int count;
-  final Function(int) onRated;
+  final Function(int) onRatingChange;
 
   const AnswerNpsWidget({
     Key? key,
     required this.count,
-    required this.onRated,
+    required this.onRatingChange,
   }) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
 
   void _setNpsValue(int index) {
     setState(() => selectedIndex = index);
-    widget.onRated(index);
+    widget.onRatingChange(index);
   }
 
   @override

@@ -179,7 +179,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerNpsRatingWidget(QuestionUiModel question) {
     return AnswerNpsWidget(
       count: question.answers.length,
-      onRated: (int rating) {
+      onRatingChange: (int rating) {
         // TODO: Save answer here
       },
     );
