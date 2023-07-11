@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 
@@ -26,6 +27,9 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
   ) {
     setState(() {
       if (isChecked == true) {
+        if (widget.question.pickType == PickType.single) {
+          _checkedAnswerIds.clear();
+        }
         _checkedAnswerIds.add(answerId);
       } else {
         _checkedAnswerIds.remove(answerId);
@@ -47,6 +51,10 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.question.pickType == PickType.unknown) {
+      return const SizedBox();
+    }
+
     return Center(
       child: ListView(
         shrinkWrap: true,
@@ -91,7 +99,7 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                     index < widget.question.answers.length - 1
                         ? const Divider(
                             color: Colors.white,
-                            thickness: 0.5,
+                            thickness: Dimensions.dividerWidth,
                           )
                         : const SizedBox(),
                   ],
