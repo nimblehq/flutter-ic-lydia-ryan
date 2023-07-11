@@ -8,12 +8,10 @@ class AnswerSmileyKey {
 }
 
 class AnswerSmileyWidget extends StatefulWidget {
-  final int count;
   final Function(int) onSelected;
 
   const AnswerSmileyWidget({
     Key? key,
-    required this.count,
     required this.onSelected,
   }) : super(key: key);
 

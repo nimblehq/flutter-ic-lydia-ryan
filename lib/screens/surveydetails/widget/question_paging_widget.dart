@@ -203,7 +203,6 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerSmileyWidget(QuestionUiModel question) {
     return AnswerSmileyWidget(
-      count: question.answers.length,
       onSelected: (int score) {
         // TODO: Save answer here
       },
