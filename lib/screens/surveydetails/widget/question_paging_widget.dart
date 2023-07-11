@@ -7,6 +7,7 @@ import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_dropdown_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_intro_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_multi_choice_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_nps_widget.dart';
@@ -170,6 +171,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
         return _buildAnswerTextFieldWidget(question);
       case DisplayType.choice:
         return _buildAnswerMultiChoiceWidget(question);
+      case DisplayType.dropdown:
+        return _buildAnswerDropdownWidget(question);
       default:
         return const SizedBox();
     }
@@ -231,6 +234,14 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     return AnswerMultiChoiceWidget(
         question: question,
         onCheck: (List<String> answerIds) {
+          // TODO: Save answer here
+        });
+  }
+
+  Widget _buildAnswerDropdownWidget(QuestionUiModel question) {
+    return AnswerDropdownWidget(
+        question: question,
+        onSelect: (String answer) {
           // TODO: Save answer here
         });
   }

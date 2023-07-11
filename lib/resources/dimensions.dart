@@ -25,6 +25,7 @@ class Dimensions {
   static const double homeSkeletonLoadingTextBorderRadius = 10.0;
 
   static const double answerEmojiSize = 34.0;
+  static const double answerDropdownHeight = 57.0;
 
   static const double dividerWidth = 1.0;
 }
