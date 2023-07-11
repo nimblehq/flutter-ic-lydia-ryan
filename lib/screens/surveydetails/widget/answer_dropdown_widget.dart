@@ -3,8 +3,8 @@ import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
-int _dropdownItemLength = 3;
-double _dropdownThreshold = 20.0;
+const int _dropdownItemLength = 3;
+const double _dropdownThreshold = 20.0;
 
 class AnswerDropdownWidget extends StatefulWidget {
   final QuestionUiModel question;
