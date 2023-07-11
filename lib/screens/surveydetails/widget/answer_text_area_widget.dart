@@ -4,12 +4,12 @@ import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
 
 class AnswerTextAreaWidget extends StatefulWidget {
   final QuestionUiModel question;
-  final Function(String) onAnswered;
+  final Function(String) onAnswer;
 
   const AnswerTextAreaWidget({
     Key? key,
     required this.question,
-    required this.onAnswered,
+    required this.onAnswer,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class _AnswerTextAreaWidgetState extends State<AnswerTextAreaWidget> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(() => widget.onAnswered(_controller.text));
+    _controller.addListener(() => widget.onAnswer(_controller.text));
   }
 
   @override

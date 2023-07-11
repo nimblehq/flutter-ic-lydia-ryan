@@ -8,13 +8,11 @@ class AnswerSmileyKey {
 }
 
 class AnswerSmileyWidget extends StatefulWidget {
-  final int count;
-  final Function(int) onSelected;
+  final Function(int) onSelect;
 
   const AnswerSmileyWidget({
     Key? key,
-    required this.count,
-    required this.onSelected,
+    required this.onSelect,
   }) : super(key: key);
 
   @override
@@ -64,7 +62,7 @@ class _AnswerSmileyWidgetState extends State<AnswerSmileyWidget> {
     setState(() {
       selectedIndex = index;
     });
-    widget.onSelected(index);
+    widget.onSelect(index);
   }
 
   Color? _getEmojiColor(int index) {
