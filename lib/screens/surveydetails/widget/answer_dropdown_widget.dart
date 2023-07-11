@@ -75,18 +75,12 @@ class _AnswerDropdownWidgetState extends State<AnswerDropdownWidget> {
       child: SizedBox(
         height: (_dropdownItemLength * Dimensions.answerDropdownHeight) -
             _dropdownThreshold,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: ScrollSnapList(
-                scrollDirection: Axis.vertical,
-                onItemFocus: _onItemFocus,
-                itemSize: Dimensions.answerDropdownHeight,
-                itemBuilder: _buildListItem,
-                itemCount: widget.question.answers.length,
-              ),
-            ),
-          ],
+        child: ScrollSnapList(
+          scrollDirection: Axis.vertical,
+          onItemFocus: _onItemFocus,
+          itemSize: Dimensions.answerDropdownHeight,
+          itemBuilder: _buildListItem,
+          itemCount: widget.question.answers.length,
         ),
       ),
     );
