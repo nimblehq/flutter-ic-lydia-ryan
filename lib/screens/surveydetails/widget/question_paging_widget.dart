@@ -241,7 +241,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerDropdownWidget(QuestionUiModel question) {
     return AnswerDropdownWidget(
         question: question,
-        onSelected: (String answer) {
+        onSelect: (String answer) {
           // TODO: Save answer here
         });
   }

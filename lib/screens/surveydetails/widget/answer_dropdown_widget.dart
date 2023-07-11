@@ -8,12 +8,12 @@ const double _dropdownThreshold = 20.0;
 
 class AnswerDropdownWidget extends StatefulWidget {
   final QuestionUiModel question;
-  final Function(String) onSelected;
+  final Function(String) onSelect;
 
   const AnswerDropdownWidget({
     Key? key,
     required this.question,
-    required this.onSelected,
+    required this.onSelect,
   }) : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class _AnswerDropdownWidgetState extends State<AnswerDropdownWidget> {
     setState(() {
       _focusedIndex = index;
     });
-    widget.onSelected(widget.question.answers[index].text ?? "");
+    widget.onSelect(widget.question.answers[index].text ?? "");
   }
 
   Widget _buildListItem(BuildContext context, int index) {
