@@ -5,12 +5,12 @@ import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
 
 class AnswerTextFieldWidget extends StatefulWidget {
   final QuestionUiModel question;
-  final Function(List<String>) onAnswered;
+  final Function(List<String>) onAnswer;
 
   const AnswerTextFieldWidget({
     Key? key,
     required this.question,
-    required this.onAnswered,
+    required this.onAnswer,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class _AnswerTextFieldWidgetState extends State<AnswerTextFieldWidget> {
     String text,
   ) {
     _answers[index] = text;
-    widget.onAnswered(_answers);
+    widget.onAnswer(_answers);
   }
 
   @override

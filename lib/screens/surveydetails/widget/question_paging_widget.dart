@@ -195,7 +195,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     return AnswerEmojiRatingWidget(
       emoji: emoji,
       count: question.answers.length,
-      onRated: (int rating) {
+      onRatingChange: (int rating) {
         // TODO: Save answer here
       },
     );
@@ -203,7 +203,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerSmileyWidget(QuestionUiModel question) {
     return AnswerSmileyWidget(
-      onSelected: (int score) {
+      onSelect: (int score) {
         // TODO: Save answer here
       },
     );
@@ -212,7 +212,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerTextFieldWidget(QuestionUiModel question) {
     return AnswerTextFieldWidget(
       question: question,
-      onAnswered: (List<String> answers) {
+      onAnswer: (List<String> answers) {
         // TODO: Save answer here
       },
     );
@@ -221,7 +221,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerTextAreaWidget(QuestionUiModel question) {
     return AnswerTextAreaWidget(
       question: question,
-      onAnswered: (String answer) {
+      onAnswer: (String answer) {
         // TODO: Save answer here
       },
     );
@@ -230,7 +230,7 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerMultiChoiceWidget(QuestionUiModel question) {
     return AnswerMultiChoiceWidget(
         question: question,
-        onChecked: (List<String> answerIds) {
+        onCheck: (List<String> answerIds) {
           // TODO: Save answer here
         });
   }

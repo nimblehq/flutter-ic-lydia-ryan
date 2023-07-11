@@ -4,12 +4,12 @@ import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 
 class AnswerMultiChoiceWidget extends StatefulWidget {
   final QuestionUiModel question;
-  final Function(List<String>) onChecked;
+  final Function(List<String>) onCheck;
 
   const AnswerMultiChoiceWidget({
     Key? key,
     required this.question,
-    required this.onChecked,
+    required this.onCheck,
   }) : super(key: key);
 
   @override
@@ -31,7 +31,7 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
         _checkedAnswerIds.remove(answerId);
       }
     });
-    widget.onChecked(_checkedAnswerIds.toList());
+    widget.onCheck(_checkedAnswerIds.toList());
   }
 
   bool _isFoundAnswerId(int index) =>
