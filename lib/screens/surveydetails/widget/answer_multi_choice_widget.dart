@@ -74,9 +74,9 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                       children: [
                         Text(widget.question.answers[index].text ?? "",
                             style:
-                            Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: _getAnswerColor(index),
-                            )),
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: _getAnswerColor(index),
+                                    )),
                         Transform.scale(
                           scale: 1.3,
                           child: Checkbox(
@@ -86,7 +86,7 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                               widget.question.answers[index].id,
                             ),
                             fillColor: MaterialStateColor.resolveWith(
-                                    (states) => Colors.white),
+                                (states) => Colors.white),
                             checkColor: Colors.black,
                             shape: const CircleBorder(),
                             side: const BorderSide(
@@ -98,9 +98,9 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                     ),
                     index < widget.question.answers.length - 1
                         ? const Divider(
-                      color: Colors.white,
-                      thickness: 0.5,
-                    )
+                            color: Colors.white,
+                            thickness: Dimensions.dividerWidth,
+                          )
                         : const SizedBox(),
                   ],
                 ),
