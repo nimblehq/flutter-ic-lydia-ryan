@@ -10,7 +10,10 @@ abstract class SurveyService {
   factory SurveyService(Dio dio, {String baseUrl}) = _SurveyService;
 
   @GET('/api/v1/surveys')
-  Future<SurveysResponse> getSurveys();
+  Future<SurveysResponse> getSurveys(
+    @Query('page[number]') int pageNumber,
+    @Query('page[size]') int pageSize,
+  );
 
   @GET('api/v1/surveys/{surveyId}')
   Future<SurveyDetailResponse> getSurveyDetail(

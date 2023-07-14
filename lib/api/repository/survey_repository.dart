@@ -5,7 +5,10 @@ import 'package:lydiaryanfluttersurvey/model/response/survey_detail_response.dar
 import 'package:lydiaryanfluttersurvey/model/response/surveys_response.dart';
 
 abstract class SurveyRepository {
-  Future<SurveysResponse> getSurveys();
+  Future<SurveysResponse> getSurveys({
+    required int pageNumber,
+    required int pageSize,
+  });
 
   Future<SurveyDetailResponse> getSurveyDetail(String surveyId);
 }
@@ -17,9 +20,12 @@ class SurveyRepositoryImpl implements SurveyRepository {
   SurveyRepositoryImpl(this._surveyService);
 
   @override
-  Future<SurveysResponse> getSurveys() {
+  Future<SurveysResponse> getSurveys({
+    required int pageNumber,
+    required int pageSize,
+  }) {
     try {
-      return _surveyService.getSurveys();
+      return _surveyService.getSurveys(pageNumber, pageSize);
     } catch (e) {
       return Future.error(NetworkExceptions.fromDioException(e));
     }
