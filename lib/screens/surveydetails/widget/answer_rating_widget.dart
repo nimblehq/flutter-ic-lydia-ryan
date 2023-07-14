@@ -10,13 +10,13 @@ class AnswerEmojiKey {
 class AnswerEmojiRatingWidget extends StatefulWidget {
   final String emoji;
   final int count;
-  final Function(int) onRated;
+  final Function(int) onRatingChange;
 
   const AnswerEmojiRatingWidget({
     Key? key,
     required this.emoji,
     required this.count,
-    required this.onRated,
+    required this.onRatingChange,
   }) : super(key: key);
 
   @override
@@ -70,7 +70,7 @@ class _AnswerEmojiRatingWidgetState extends State<AnswerEmojiRatingWidget> {
     setState(() {
       selectedIndex = index;
     });
-    widget.onRated(index);
+    widget.onRatingChange(index);
   }
 
   Color? _getEmojiColor(int index) {

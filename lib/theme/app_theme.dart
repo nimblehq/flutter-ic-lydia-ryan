@@ -29,6 +29,10 @@ class AppTheme {
             fontSize: 17.0,
             color: Colors.white,
           ),
+          bodyLarge: TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+          ),
           labelMedium: TextStyle(
             fontSize: 15.0,
             color: Colors.white,

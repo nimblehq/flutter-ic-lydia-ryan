@@ -7,10 +7,14 @@ import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_dropdown_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_intro_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_multi_choice_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_nps_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_rating_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_smiley_widget.dart';
-import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_area_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_field_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
 
 class QuestionPagingWidget extends StatefulWidget {
@@ -38,33 +42,25 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     }
     final PageController pageController = PageController();
 
-    return Stack(
-      children: [
-        BackgroundWidget(
-          image: Image.network(widget.surveyDetailUiModel.largeCoverImageUrl)
-              .image,
-        ),
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildQuestionToolbar(
-                  context,
-                  widget.surveyDetailUiModel.questions[_currentIndex],
-                ),
-                _buildPagedQuestions(context, pageController),
-                _buildQuestionFooter(
-                  context,
-                  widget.surveyDetailUiModel.questions[_currentIndex],
-                  pageController,
-                ),
-              ],
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildQuestionToolbar(
+              context,
+              widget.surveyDetailUiModel.questions[_currentIndex],
             ),
-          ),
+            _buildPagedQuestions(context, pageController),
+            _buildQuestionFooter(
+              context,
+              widget.surveyDetailUiModel.questions[_currentIndex],
+              pageController,
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -161,12 +157,22 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerWidget(QuestionUiModel question) {
     switch (question.displayType) {
+      case DisplayType.nps:
+        return _buildAnswerNpsRatingWidget(question);
       case DisplayType.star:
         return _buildAnswerEmojiRatingWidget(question, '⭐️');
       case DisplayType.thumbs:
         return _buildAnswerEmojiRatingWidget(question, '👍🏻');
       case DisplayType.smiley:
         return _buildAnswerSmileyWidget(question);
+      case DisplayType.textarea:
+        return _buildAnswerTextAreaWidget(question);
+      case DisplayType.textfield:
+        return _buildAnswerTextFieldWidget(question);
+      case DisplayType.choice:
+        return _buildAnswerMultiChoiceWidget(question);
+      case DisplayType.dropdown:
+        return _buildAnswerDropdownWidget(question);
       default:
         return const SizedBox();
     }
@@ -179,11 +185,20 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
     );
   }
 
+  Widget _buildAnswerNpsRatingWidget(QuestionUiModel question) {
+    return AnswerNpsWidget(
+      count: question.answers.length,
+      onRatingChange: (int rating) {
+        // TODO: Save answer here
+      },
+    );
+  }
+
   Widget _buildAnswerEmojiRatingWidget(QuestionUiModel question, String emoji) {
     return AnswerEmojiRatingWidget(
       emoji: emoji,
       count: question.answers.length,
-      onRated: (int rating) {
+      onRatingChange: (int rating) {
         // TODO: Save answer here
       },
     );
@@ -191,11 +206,44 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerSmileyWidget(QuestionUiModel question) {
     return AnswerSmileyWidget(
-      count: question.answers.length,
-      onSelected: (int score) {
+      onSelect: (int score) {
         // TODO: Save answer here
       },
     );
+  }
+
+  Widget _buildAnswerTextFieldWidget(QuestionUiModel question) {
+    return AnswerTextFieldWidget(
+      question: question,
+      onAnswer: (List<String> answers) {
+        // TODO: Save answer here
+      },
+    );
+  }
+
+  Widget _buildAnswerTextAreaWidget(QuestionUiModel question) {
+    return AnswerTextAreaWidget(
+      question: question,
+      onAnswer: (String answer) {
+        // TODO: Save answer here
+      },
+    );
+  }
+
+  Widget _buildAnswerMultiChoiceWidget(QuestionUiModel question) {
+    return AnswerMultiChoiceWidget(
+        question: question,
+        onCheck: (List<String> answerIds) {
+          // TODO: Save answer here
+        });
+  }
+
+  Widget _buildAnswerDropdownWidget(QuestionUiModel question) {
+    return AnswerDropdownWidget(
+        question: question,
+        onSelect: (String answer) {
+          // TODO: Save answer here
+        });
   }
 
   Widget _buildQuestionFooter(

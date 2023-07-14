@@ -31,5 +31,7 @@
     }
   },
   "start_survey": "Start Survey",
-  "submit": "Submit"
+  "submit": "Submit",
+  "nps_not_likely": "Not at all Likely",
+  "nps_extremely_likely": "Extremely Likely"
 }
