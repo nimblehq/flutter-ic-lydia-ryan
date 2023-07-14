@@ -6,6 +6,7 @@ class BackgroundWidget extends StatelessWidget {
   final ImageProvider image;
   final double opacity;
   final bool shouldBlur;
+  final double blurSigma;
   final Widget? child;
 
   const BackgroundWidget({
@@ -13,6 +14,7 @@ class BackgroundWidget extends StatelessWidget {
     required this.image,
     this.opacity = 0.35,
     this.shouldBlur = false,
+    this.blurSigma = 5,
     this.child,
   }) : super(key: key);
 
@@ -30,7 +32,7 @@ class BackgroundWidget extends StatelessWidget {
       child: shouldBlur
           ? ClipRRect(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
                 child: child,
               ),
             )

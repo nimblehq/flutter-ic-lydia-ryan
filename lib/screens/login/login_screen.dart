@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +8,7 @@ import 'package:lydiaryanfluttersurvey/di/injection.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
+import 'package:lydiaryanfluttersurvey/screens/widgets/background_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/circle_loading_indicator.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
 import 'package:lydiaryanfluttersurvey/usecases/login_use_case.dart';
@@ -34,14 +33,92 @@ class LoginScreen extends ConsumerStatefulWidget {
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen>
+    with TickerProviderStateMixin {
   final _emailInputController = TextEditingController();
   final _passwordInputController = TextEditingController();
+
+  late AnimationController _animationController;
+  late Animation<double> _backgroundBlurAnimation;
+  late Animation<double> _loginFieldsOpacityAnimation;
+  late Animation<double> _logoFadeInAnimation;
+  late Animation<double> _logoHeightAnimation;
+  late Animation<double> _logoPositionAnimation;
+
+  Animation<double> _buildAnimation({
+    required double beginValue,
+    required double endValue,
+    required double startTime,
+    required double endTime,
+    Curve curve = Curves.linear,
+  }) {
+    return Tween<double>(
+      begin: beginValue,
+      end: endValue,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Interval(
+          startTime,
+          endTime,
+          curve: curve,
+        ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
+
+    _logoFadeInAnimation = _buildAnimation(
+      beginValue: 0,
+      endValue: 1,
+      startTime: 0.33,
+      endTime: 0.495,
+    );
+
+    _logoHeightAnimation = _buildAnimation(
+      beginValue: 48,
+      endValue: 40,
+      startTime: 0.66,
+      endTime: 0.825,
+    );
+
+    _backgroundBlurAnimation = _buildAnimation(
+      beginValue: 0,
+      endValue: 25,
+      startTime: 0.66,
+      endTime: 0.825,
+    );
+
+    _loginFieldsOpacityAnimation = _buildAnimation(
+      beginValue: 0,
+      endValue: 1,
+      startTime: 0.66,
+      endTime: 0.825,
+    );
+
+    _logoPositionAnimation = _buildAnimation(
+      beginValue: 1,
+      endValue: 0.5,
+      startTime: 0.66,
+      endTime: 0.825,
+      curve: Curves.fastOutSlowIn,
+    );
+
+    _animationController.forward();
+  }
 
   @override
   void dispose() {
     _emailInputController.dispose();
     _passwordInputController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -58,83 +135,97 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       );
     });
 
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(Assets.images.bgLogin.path),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 25.0, sigmaY: 25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Colors.black,
-                      Colors.black.withOpacity(0.20),
-                    ],
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.paddingDefault),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          Assets.images.nimbleLogoWhite,
-                        ),
-                        const SizedBox(height: 109),
-                        AppInputWidget(
-                          key: LoginKey.liLoginEmail,
-                          hintText: AppLocalizations.of(context)!.email,
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                          controller: _emailInputController,
-                        ),
-                        const SizedBox(height: Dimensions.paddingMedium),
-                        AppInputWidget(
-                          key: LoginKey.liLoginPassword,
-                          hintText: AppLocalizations.of(context)!.password,
-                          isPasswordType: true,
-                          controller: _passwordInputController,
-                        ),
-                        const SizedBox(height: Dimensions.paddingMedium),
-                        RoundedRectangleButtonWidget(
-                          key: LoginKey.rrbLogin,
-                          text: AppLocalizations.of(context)!.login,
-                          width: double.infinity,
-                          onPressed: () {
-                            ref.watch(loginViewModelProvider).maybeWhen(
-                                loading: () {
-                              return;
-                            }, orElse: () {
-                              ref.read(loginViewModelProvider.notifier).login(
-                                    _emailInputController.text,
-                                    _passwordInputController.text,
-                                  );
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: _buildAnimatedLoginWidgets,
+    );
+  }
+
+  Widget _buildAnimatedLoginWidgets(BuildContext context, Widget? child) {
+    return BackgroundWidget(
+      image: Image.asset(Assets.images.bgLogin.path).image,
+      shouldBlur: true,
+      blurSigma: _backgroundBlurAnimation.value,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          alignment: Alignment.center,
+          child: Stack(
+            children: [
+              _buildLogo(),
+              _buildLoginFields(),
+              ref.watch(loginViewModelProvider).maybeWhen(
+                    loading: () => const CircleLoadingIndicator(),
+                    orElse: () => const SizedBox(),
+                  )
+            ],
           ),
-          ref.watch(loginViewModelProvider).maybeWhen(
-              loading: () => const CircleLoadingIndicator(),
-              orElse: () => const SizedBox())
-        ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return FractionallySizedBox(
+      alignment: Alignment.center,
+      heightFactor: _logoPositionAnimation.value,
+      child: Container(
+        height: _logoHeightAnimation.value,
+        alignment: Alignment.center,
+        child: Opacity(
+          opacity: _logoFadeInAnimation.value,
+          child: SvgPicture.asset(
+            Assets.images.nimbleLogoWhite,
+            fit: BoxFit.scaleDown,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoginFields() {
+    return Center(
+      child: Opacity(
+        opacity: _loginFieldsOpacityAnimation.value,
+        child: Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: Dimensions.paddingDefault),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppInputWidget(
+                key: LoginKey.liLoginEmail,
+                hintText: AppLocalizations.of(context)!.email,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                controller: _emailInputController,
+              ),
+              const SizedBox(height: Dimensions.paddingMedium),
+              AppInputWidget(
+                key: LoginKey.liLoginPassword,
+                hintText: AppLocalizations.of(context)!.password,
+                isPasswordType: true,
+                controller: _passwordInputController,
+              ),
+              const SizedBox(height: Dimensions.paddingMedium),
+              RoundedRectangleButtonWidget(
+                key: LoginKey.rrbLogin,
+                text: AppLocalizations.of(context)!.login,
+                width: double.infinity,
+                onPressed: () {
+                  ref.watch(loginViewModelProvider).maybeWhen(loading: () {
+                    return;
+                  }, orElse: () {
+                    ref.read(loginViewModelProvider.notifier).login(
+                          _emailInputController.text,
+                          _passwordInputController.text,
+                        );
+                  });
+                },
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
