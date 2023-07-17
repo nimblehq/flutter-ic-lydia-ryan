@@ -3,12 +3,14 @@ import 'package:injectable/injectable.dart';
 import 'package:lydiaryanfluttersurvey/screens/home/home_screen.dart';
 import 'package:lydiaryanfluttersurvey/screens/login/login_screen.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/survey_detail_screen.dart';
+import 'package:lydiaryanfluttersurvey/screens/thankyou/thank_you_screen.dart';
 import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 
 enum RoutePath {
   login('/'),
   home('/home'),
-  surveyDetails('surveyDetails');
+  surveyDetails('surveyDetails'),
+  thankYou('/thankYou');
 
   const RoutePath(this.path);
 
@@ -18,6 +20,7 @@ enum RoutePath {
     switch (this) {
       case RoutePath.home:
       case RoutePath.login:
+      case RoutePath.thankYou:
         return path;
       default:
         return path.replaceRange(0, 1, '');
@@ -65,6 +68,11 @@ class AppNavigator {
               ),
             ],
           ),
+          GoRoute(
+            path: RoutePath.thankYou.screen,
+            name: RoutePath.thankYou.name,
+            builder: (context, state) => const ThankYouScreen(),
+          )
         ],
         redirect: (state) {
           final isLoggedIn = _sharePreferencesUtils.isLoggedIn;
