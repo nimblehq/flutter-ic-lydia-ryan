@@ -16,12 +16,14 @@ class HomeViewModel extends StateNotifier<HomeState> {
   Stream<List<SurveyUiModel>> get surveys => _surveys.stream;
 
   int _currentPage = 1;
-  bool fetchMore = true;
+  bool hasMore = true;
+  bool isFetching = false;
 
   HomeViewModel(this._getSurveysUseCase) : super(const HomeState.init());
 
   Future<void> getSurveys() async {
-    if (fetchMore) {
+    if (hasMore && !isFetching) {
+      isFetching = true;
       final getSurveysInput = GetSurveysInput(_currentPage, _pageSize);
       final result = await _getSurveysUseCase.call(getSurveysInput);
 
@@ -39,12 +41,13 @@ class HomeViewModel extends StateNotifier<HomeState> {
         final exception = result.exception.actualException;
         state = HomeState.error(exception);
       }
+      isFetching = false;
     }
   }
 
   void _handleMetaResponse(SurveyMetaModel meta) {
     if (meta.fetchedRecords >= meta.records) {
-      fetchMore = false;
+      hasMore = false;
     } else {
       _currentPage = meta.page + 1;
     }
