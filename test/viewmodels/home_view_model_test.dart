@@ -20,9 +20,9 @@ void main() {
 
     test('When getSurveys is successful, it emits success state', () async {
       final viewModelStream = viewModel.stream;
-      final surveysResponse = SurveysResponse([]);
+      final surveysResponse = SurveysResponse([], null);
 
-      when(mockGetUserUseCase.call())
+      when(mockGetUserUseCase.call(any))
           .thenAnswer((_) async => Success(surveysResponse));
 
       expect(viewModelStream, emits(const HomeState.success()));
@@ -36,7 +36,7 @@ void main() {
       final actualException = Exception();
 
       when(mockException.actualException).thenReturn(actualException);
-      when(mockGetUserUseCase.call())
+      when(mockGetUserUseCase.call(any))
           .thenAnswer((_) async => Failed(mockException));
 
       expect(

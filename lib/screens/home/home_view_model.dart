@@ -6,20 +6,26 @@ import 'package:lydiaryanfluttersurvey/usecases/base/base_use_case.dart';
 import 'package:lydiaryanfluttersurvey/usecases/get_surveys_use_case.dart';
 import 'package:rxdart/subjects.dart';
 
+const _pageSize = 10;
+
 class HomeViewModel extends StateNotifier<HomeState> {
   final GetSurveysUseCase _getSurveysUseCase;
 
   final BehaviorSubject<List<SurveyUiModel>> _surveys = BehaviorSubject();
   Stream<List<SurveyUiModel>> get surveys => _surveys.stream;
 
+  // TODO: Update this value in integrate ticket
+  final int _currentPage = 1;
+
   HomeViewModel(this._getSurveysUseCase) : super(const HomeState.init());
 
   Future<void> getSurveys() async {
-    final result = await _getSurveysUseCase.call();
+    final getSurveysInput = GetSurveysInput(_currentPage, _pageSize);
+    final result = await _getSurveysUseCase.call(getSurveysInput);
 
     if (result is Success<SurveysResponse>) {
       final surveys = result.value.surveysResponse
-          .map((e) => SurveyUiModel.fromSurveyResponse(e))
+          .map((response) => SurveyUiModel.fromSurveyResponse(response))
           .toList();
       _surveys.add(surveys);
       state = const HomeState.success();
