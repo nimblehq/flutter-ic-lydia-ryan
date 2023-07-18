@@ -8,8 +8,13 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePagingWidget extends StatefulWidget {
   final List<SurveyUiModel> surveys;
+  final Function(int) onPageChanged;
 
-  const HomePagingWidget({super.key, required this.surveys});
+  const HomePagingWidget({
+    super.key,
+    required this.surveys,
+    required this.onPageChanged,
+  });
 
   @override
   State<StatefulWidget> createState() => _HomePagingWidgetState();
@@ -21,6 +26,7 @@ class _HomePagingWidgetState extends State<HomePagingWidget> {
   void _onPageChanged(int index) {
     setState(() {
       _currentIndex = index;
+      widget.onPageChanged(index);
     });
   }
 
