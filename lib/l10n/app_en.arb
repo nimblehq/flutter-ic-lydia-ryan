@@ -33,5 +33,6 @@
   "start_survey": "Start Survey",
   "submit": "Submit",
   "nps_not_likely": "Not at all Likely",
-  "nps_extremely_likely": "Extremely Likely"
+  "nps_extremely_likely": "Extremely Likely",
+  "thank_you": "Thanks for taking\u2028the survey."
 }

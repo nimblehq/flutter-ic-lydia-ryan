@@ -16,6 +16,7 @@ import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_smile
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_area_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_field_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
+import 'package:lydiaryanfluttersurvey/utils/app_navigator.dart';
 
 class QuestionPagingWidget extends StatefulWidget {
   final SurveyDetailUiModel surveyDetailUiModel;
@@ -290,7 +291,10 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _submitSurveyButtonWidget(BuildContext context) {
     return RoundedRectangleButtonWidget(
       text: AppLocalizations.of(context)!.submit,
-      onPressed: () {},
+      onPressed: () {
+        // TODO: submit survey here
+        context.push(RoutePath.thankYou.path);
+      },
     );
   }
 
