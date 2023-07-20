@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/answer_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
@@ -8,7 +9,7 @@ const double _dropdownThreshold = 20.0;
 
 class AnswerDropdownWidget extends StatefulWidget {
   final QuestionUiModel question;
-  final Function(String) onSelect;
+  final Function(AnswerUiModel) onSelect;
 
   const AnswerDropdownWidget({
     Key? key,
@@ -33,7 +34,8 @@ class _AnswerDropdownWidgetState extends State<AnswerDropdownWidget> {
     setState(() {
       _focusedIndex = index;
     });
-    widget.onSelect(widget.question.answers[index].text ?? "");
+    widget.question.answers[index];
+    widget.onSelect(widget.question.answers[index]);
   }
 
   Widget _buildListItem(BuildContext context, int index) {

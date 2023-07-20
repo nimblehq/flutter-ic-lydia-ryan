@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/answer_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 
 class AnswerMultiChoiceWidget extends StatefulWidget {
   final QuestionUiModel question;
-  final Function(List<String>) onCheck;
+  final Function(List<AnswerUiModel>) onCheck;
 
   const AnswerMultiChoiceWidget({
     Key? key,
@@ -35,7 +36,10 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
         _checkedAnswerIds.remove(answerId);
       }
     });
-    widget.onCheck(_checkedAnswerIds.toList());
+    final answers = widget.question.answers
+        .where((answer) => _checkedAnswerIds.contains(answer.id))
+        .toList();
+    widget.onCheck(answers);
   }
 
   bool _isFoundAnswerId(int index) =>

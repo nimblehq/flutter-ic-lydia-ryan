@@ -12,4 +12,14 @@ class AnswerUiModel {
   factory AnswerUiModel.fromAnswerResponse(AnswerResponse e) {
     return AnswerUiModel(id: e.id, text: e.text);
   }
+
+  AnswerUiModel copyWith({
+    String? id,
+    String? text,
+  }) {
+    return AnswerUiModel(
+      id: id ?? this.id,
+      text: text ?? this.text,
+    );
+  }
 }

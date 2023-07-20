@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lydiaryanfluttersurvey/model/response/survey_detail_response.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/answer_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/survey_detail_state.dart';
 import 'package:lydiaryanfluttersurvey/usecases/base/base_use_case.dart';
@@ -12,6 +13,8 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
 
   final BehaviorSubject<SurveyDetailUiModel> _surveyDetail = BehaviorSubject();
   Stream<SurveyDetailUiModel> get surveyDetail => _surveyDetail.stream;
+
+  final Map<String, List<AnswerUiModel>> _surveyAnswers = {};
 
   SurveyDetailViewModel(this._getSurveyDetailUseCase)
       : super(const SurveyDetailState.init());
@@ -27,6 +30,14 @@ class SurveyDetailViewModel extends StateNotifier<SurveyDetailState> {
       final exception = result.exception.actualException;
       state = SurveyDetailState.error(exception);
     }
+  }
+
+  void setAnswer(String questionId, List<AnswerUiModel> answer) {
+    _surveyAnswers[questionId] = answer;
+  }
+
+  void submitSurvey() {
+    // TODO
   }
 
   @override

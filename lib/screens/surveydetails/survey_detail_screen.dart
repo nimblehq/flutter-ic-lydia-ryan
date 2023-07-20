@@ -68,7 +68,14 @@ class _SurveyDetailScreenState extends ConsumerState<SurveyDetailScreen> {
       shouldBlur: true,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: QuestionPagingWidget(surveyDetailUiModel: surveyDetail),
+        body: QuestionPagingWidget(
+          surveyDetailUiModel: surveyDetail,
+          onAnswer: (questionId, answers) => ref
+              .read(_surveyDetailViewModelProvider.notifier)
+              .setAnswer(questionId, answers),
+          onSubmit: () =>
+              ref.read(_surveyDetailViewModelProvider.notifier).submitSurvey(),
+        ),
       ),
     );
   }
