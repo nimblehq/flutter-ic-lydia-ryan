@@ -6,12 +6,14 @@ class RoundedRectangleButtonWidget extends StatelessWidget {
     required this.onPressed,
     required this.text,
     this.width,
+    this.isLoading = false,
     super.key,
   });
 
   final VoidCallback onPressed;
   final String text;
   final double? width;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +31,14 @@ class RoundedRectangleButtonWidget extends StatelessWidget {
                 BorderRadius.circular(Dimensions.radiusRoundedRectangleButton),
           ),
         ),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: Colors.black,
+        child: isLoading
+            ? const CircularProgressIndicator()
+            : Text(
+                text,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: Colors.black,
+                    ),
               ),
-        ),
       ),
     );
   }
