@@ -2,17 +2,19 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/answer_ui_model.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 
 const int _npsMaxSize = 10;
 
 class AnswerNpsWidget extends StatefulWidget {
-  final int count;
-  final Function(int) onRatingChange;
+  final QuestionUiModel question;
+  final Function(AnswerUiModel) onRatingChange;
 
   const AnswerNpsWidget({
     Key? key,
-    required this.count,
+    required this.question,
     required this.onRatingChange,
   }) : super(key: key);
 
@@ -25,7 +27,7 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
 
   void _setNpsValue(int index) {
     setState(() => selectedIndex = index);
-    widget.onRatingChange(index);
+    widget.onRatingChange(widget.question.answers[index]);
   }
 
   @override
@@ -68,7 +70,9 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
 
   List<Widget> get _npsWidgets {
     List<Widget> widgets = [];
-    for (int index = 0; index < min(widget.count, _npsMaxSize); index++) {
+    for (int index = 0;
+        index < min(widget.question.answers.length, _npsMaxSize);
+        index++) {
       if (index != 0) {
         widgets.add(
           const VerticalDivider(
@@ -99,8 +103,8 @@ class _AnswerNpsWidgetState extends State<AnswerNpsWidget> {
   }
 
   Widget _buildNpsLabels() {
-    final isLikely =
-        (selectedIndex ?? -1) >= (min(widget.count, _npsMaxSize) / 2);
+    final isLikely = (selectedIndex ?? -1) >=
+        (min(widget.question.answers.length, _npsMaxSize) / 2);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

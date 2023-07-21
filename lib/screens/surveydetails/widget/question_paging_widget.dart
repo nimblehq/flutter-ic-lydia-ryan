@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lydiaryanfluttersurvey/gen/assets.gen.dart';
 import 'package:lydiaryanfluttersurvey/model/response/question_response.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/answer_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/survey_detail_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
@@ -16,12 +17,20 @@ import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_smile
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_area_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/surveydetails/widget/answer_text_field_widget.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/rounded_rectangle_button_widget.dart';
-import 'package:lydiaryanfluttersurvey/utils/app_navigator.dart';
 
 class QuestionPagingWidget extends StatefulWidget {
   final SurveyDetailUiModel surveyDetailUiModel;
+  final bool isSubmitting;
+  final Function(String, List<AnswerUiModel>) onAnswer;
+  final Function() onSubmit;
 
-  const QuestionPagingWidget({super.key, required this.surveyDetailUiModel});
+  const QuestionPagingWidget({
+    super.key,
+    required this.surveyDetailUiModel,
+    required this.isSubmitting,
+    required this.onAnswer,
+    required this.onSubmit,
+  });
 
   @override
   State<StatefulWidget> createState() => _QuestionPagingWidgetState();
@@ -190,27 +199,28 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
 
   Widget _buildAnswerNpsRatingWidget(QuestionUiModel question) {
     return AnswerNpsWidget(
-      count: question.answers.length,
-      onRatingChange: (int rating) {
-        // TODO: Save answer here
+      question: question,
+      onRatingChange: (AnswerUiModel answer) {
+        widget.onAnswer(question.id, [answer]);
       },
     );
   }
 
   Widget _buildAnswerEmojiRatingWidget(QuestionUiModel question, String emoji) {
     return AnswerEmojiRatingWidget(
+      question: question,
       emoji: emoji,
-      count: question.answers.length,
-      onRatingChange: (int rating) {
-        // TODO: Save answer here
+      onRatingChange: (AnswerUiModel answer) {
+        widget.onAnswer(question.id, [answer]);
       },
     );
   }
 
   Widget _buildAnswerSmileyWidget(QuestionUiModel question) {
     return AnswerSmileyWidget(
-      onSelect: (int score) {
-        // TODO: Save answer here
+      question: question,
+      onSelect: (AnswerUiModel answer) {
+        widget.onAnswer(question.id, [answer]);
       },
     );
   }
@@ -218,8 +228,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerTextFieldWidget(QuestionUiModel question) {
     return AnswerTextFieldWidget(
       question: question,
-      onAnswer: (List<String> answers) {
-        // TODO: Save answer here
+      onAnswer: (List<AnswerUiModel> answers) {
+        widget.onAnswer(question.id, answers);
       },
     );
   }
@@ -227,8 +237,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerTextAreaWidget(QuestionUiModel question) {
     return AnswerTextAreaWidget(
       question: question,
-      onAnswer: (String answer) {
-        // TODO: Save answer here
+      onAnswer: (AnswerUiModel answer) {
+        widget.onAnswer(question.id, [answer]);
       },
     );
   }
@@ -236,16 +246,16 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _buildAnswerMultiChoiceWidget(QuestionUiModel question) {
     return AnswerMultiChoiceWidget(
         question: question,
-        onCheck: (List<String> answerIds) {
-          // TODO: Save answer here
+        onCheck: (List<AnswerUiModel> answers) {
+          widget.onAnswer(question.id, answers);
         });
   }
 
   Widget _buildAnswerDropdownWidget(QuestionUiModel question) {
     return AnswerDropdownWidget(
         question: question,
-        onSelect: (String answer) {
-          // TODO: Save answer here
+        onSelect: (AnswerUiModel answer) {
+          widget.onAnswer(question.id, [answer]);
         });
   }
 
@@ -293,10 +303,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
   Widget _submitSurveyButtonWidget(BuildContext context) {
     return RoundedRectangleButtonWidget(
       text: AppLocalizations.of(context)!.submit,
-      onPressed: () {
-        // TODO: submit survey here
-        context.push(RoutePath.thankYou.path);
-      },
+      isLoading: widget.isSubmitting,
+      onPressed: () => widget.onSubmit(),
     );
   }
 

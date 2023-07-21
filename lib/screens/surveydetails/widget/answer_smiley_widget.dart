@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/answer_ui_model.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 
 class AnswerSmileyKey {
@@ -8,10 +10,12 @@ class AnswerSmileyKey {
 }
 
 class AnswerSmileyWidget extends StatefulWidget {
-  final Function(int) onSelect;
+  final QuestionUiModel question;
+  final Function(AnswerUiModel) onSelect;
 
   const AnswerSmileyWidget({
     Key? key,
+    required this.question,
     required this.onSelect,
   }) : super(key: key);
 
@@ -62,7 +66,7 @@ class _AnswerSmileyWidgetState extends State<AnswerSmileyWidget> {
     setState(() {
       selectedIndex = index;
     });
-    widget.onSelect(index);
+    widget.onSelect(widget.question.answers[index]);
   }
 
   Color? _getEmojiColor(int index) {

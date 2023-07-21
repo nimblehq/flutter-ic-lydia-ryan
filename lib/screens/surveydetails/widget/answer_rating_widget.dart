@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/answer_ui_model.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 
 class AnswerEmojiKey {
@@ -8,14 +10,14 @@ class AnswerEmojiKey {
 }
 
 class AnswerEmojiRatingWidget extends StatefulWidget {
+  final QuestionUiModel question;
   final String emoji;
-  final int count;
-  final Function(int) onRatingChange;
+  final Function(AnswerUiModel) onRatingChange;
 
   const AnswerEmojiRatingWidget({
     Key? key,
+    required this.question,
     required this.emoji,
-    required this.count,
     required this.onRatingChange,
   }) : super(key: key);
 
@@ -29,7 +31,7 @@ class _AnswerEmojiRatingWidgetState extends State<AnswerEmojiRatingWidget> {
 
   List<Widget> get _emojiRatingWidgets {
     List<Widget> widgets = [];
-    for (int index = 0; index < widget.count; index++) {
+    for (int index = 0; index < widget.question.answers.length; index++) {
       widgets.add(
         Container(
           height: Dimensions.answerEmojiSize,
@@ -42,6 +44,7 @@ class _AnswerEmojiRatingWidgetState extends State<AnswerEmojiRatingWidget> {
                   highlightIndex++) {
                 _highlightEmoji(highlightIndex);
               }
+              widget.onRatingChange(widget.question.answers[index]);
             },
             child: Text(
               key: AnswerEmojiKey.answerKey(index),
@@ -70,7 +73,6 @@ class _AnswerEmojiRatingWidgetState extends State<AnswerEmojiRatingWidget> {
     setState(() {
       selectedIndex = index;
     });
-    widget.onRatingChange(index);
   }
 
   Color? _getEmojiColor(int index) {

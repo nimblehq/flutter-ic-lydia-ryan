@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/answer_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
 
 class AnswerTextAreaWidget extends StatefulWidget {
   final QuestionUiModel question;
-  final Function(String) onAnswer;
+  final Function(AnswerUiModel) onAnswer;
 
   const AnswerTextAreaWidget({
     Key? key,
@@ -22,7 +23,13 @@ class _AnswerTextAreaWidgetState extends State<AnswerTextAreaWidget> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(() => widget.onAnswer(_controller.text));
+    _controller.addListener(() => {
+          widget.onAnswer(
+            widget.question.answers.first.copyWith(
+              text: _controller.text,
+            ),
+          )
+        });
   }
 
   @override
