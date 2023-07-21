@@ -54,7 +54,7 @@ platform :ios do
   desc 'Build and upload production to Firebase App Distribution'
   lane :build_and_upload_to_firebase do
     set_app_version
-    bump_build_number
+    bump_build_number_production
     builder.build_app_store(
       Constants.SCHEME_NAME_PRODUCTION,
       Constants.PRODUCT_NAME_PRODUCTION,
@@ -75,7 +75,7 @@ platform :ios do
   desc 'Build and upload Staging app to Test Flight'
   lane :build_and_upload_testflight_staging_app do
     set_app_version
-    bump_build_number
+    bump_build_number_staging
     builder.build_app_store(
       Constants.SCHEME_NAME_STAGING,
       Constants.PRODUCT_NAME_STAGING,
@@ -97,7 +97,7 @@ platform :ios do
   desc 'Build and upload Production app to Test Flight'
   lane :build_and_upload_testflight_production_app do
     set_app_version
-    bump_build_number
+    bump_build_number_production
     builder.build_app_store(
       Constants.SCHEME_NAME_PRODUCTION,
       Constants.PRODUCT_NAME_PRODUCTION,
@@ -121,7 +121,7 @@ platform :ios do
   desc 'Build and upload Staging app to App Store Connect'
   lane :build_and_upload_app_store_connect_app do
     set_app_version
-    bump_build_number
+    bump_build_number_staging
     builder.build_app_store(
       Constants.SCHEME_NAME_STAGING,
       Constants.PRODUCT_NAME_STAGING,
@@ -161,10 +161,18 @@ platform :ios do
   end
 
   desc 'set build number with number of commits'
-  private_lane :bump_build_number do
+  private_lane :bump_build_number_staging do
     increment_build_number(
       build_number: number_of_commits,
       xcodeproj: Constants.PROJECT_PATH
     )
   end
+
+  desc 'set build number with number of commits'
+    private_lane :bump_build_number_production do
+      increment_build_number(
+        build_number: latest_testflight_build_number + 1,
+        xcodeproj: Constants.PROJECT_PATH
+      )
+    end
 end
