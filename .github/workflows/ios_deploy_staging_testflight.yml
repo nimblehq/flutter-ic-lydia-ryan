@@ -5,7 +5,6 @@ on:
     branches:
       - develop
       - 'release/**'
-      - chore/51-ios-distribution-to-firebase
 
 jobs:
   build_and_upload_staging_to_testflight:
@@ -30,6 +29,11 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '3.7.11'
+
+      - name: Setup .env
+        env:
+          ENV_STAGING: ${{ secrets.ENV_STAGING }}
+        run: echo $ENV_STAGING >> .env.staging
 
       - name: Get flutter dependencies
         run: flutter pub get
