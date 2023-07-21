@@ -72,11 +72,16 @@ class _AnswerMultiChoiceWidgetState extends State<AnswerMultiChoiceWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(widget.question.answers[index].text ?? "",
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: _getAnswerColor(index),
-                                    )),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: Text(widget.question.answers[index].text ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    color: _getAnswerColor(index),
+                                  )),
+                        ),
                         Transform.scale(
                           scale: 1.3,
                           child: Checkbox(
