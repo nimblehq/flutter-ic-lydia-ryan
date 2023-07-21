@@ -164,6 +164,8 @@ class _QuestionPagingWidgetState extends State<QuestionPagingWidget> {
         return _buildAnswerEmojiRatingWidget(question, '⭐️');
       case DisplayType.thumbs:
         return _buildAnswerEmojiRatingWidget(question, '👍🏻');
+      case DisplayType.heart:
+        return _buildAnswerEmojiRatingWidget(question, '\u2764\ufe0f');
       case DisplayType.smiley:
         return _buildAnswerSmileyWidget(question);
       case DisplayType.textarea:
