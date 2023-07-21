@@ -5,6 +5,7 @@ on:
     branches:
       - develop
       - 'release/**'
+      - chore/51-ios-distribution-to-firebase
 
 jobs:
   build_and_upload_staging_to_testflight:
@@ -13,6 +14,8 @@ jobs:
     env:
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       APPSTORE_CONNECT_API_KEY: ${{ secrets.APPSTORE_CONNECT_API_KEY }}
+      APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
+      APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3.3.0

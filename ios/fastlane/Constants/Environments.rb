@@ -26,4 +26,12 @@ class Environments
   def self.BUILD_NUMBER
     ENV['BUILD_NUMBER']
   end
+
+  def self.APP_STORE_KEY_ID
+    ENV['APP_STORE_KEY_ID']
+  end
+
+  def self.APP_STORE_ISSUER_ID
+      ENV['APP_STORE_ISSUER_ID']
+  end
 end

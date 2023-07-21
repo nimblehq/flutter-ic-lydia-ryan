@@ -11,7 +11,8 @@ jobs:
     runs-on: macOS-latest
     env:
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
+      APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
