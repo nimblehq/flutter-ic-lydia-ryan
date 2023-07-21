@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - develop
-      - chore/51-ios-distribution-to-firebase
+      - 'release/**'
 
 jobs:
   build_and_upload_staging_to_testflight:
