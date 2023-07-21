@@ -171,7 +171,9 @@ platform :ios do
   desc 'set build number with number of commits'
     private_lane :bump_build_number_production do
       increment_build_number(
-        build_number: latest_testflight_build_number + 1,
+        build_number: latest_testflight_build_number(
+            app_identifier: Constants.BUNDLE_ID_PRODUCTION
+        ) + 1,
         xcodeproj: Constants.PROJECT_PATH
       )
     end
