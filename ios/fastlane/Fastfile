@@ -55,7 +55,7 @@ platform :ios do
   lane :build_and_upload_to_firebase do
     set_connect_api_key
     set_app_version
-    bump_build_number
+    bump_build_number_production
     builder.build_app_store(
       Constants.SCHEME_NAME_PRODUCTION,
       Constants.PRODUCT_NAME_PRODUCTION,
@@ -77,7 +77,7 @@ platform :ios do
   lane :build_and_upload_testflight_staging_app do
     set_connect_api_key
     set_app_version
-    bump_build_number
+    bump_build_number_staging
     builder.build_app_store(
       Constants.SCHEME_NAME_STAGING,
       Constants.PRODUCT_NAME_STAGING,
@@ -99,7 +99,7 @@ platform :ios do
   lane :build_and_upload_testflight_production_app do
     set_connect_api_key
     set_app_version
-    bump_build_number
+    bump_build_number_production
     builder.build_app_store(
       Constants.SCHEME_NAME_PRODUCTION,
       Constants.PRODUCT_NAME_PRODUCTION,
@@ -123,7 +123,7 @@ platform :ios do
   lane :build_and_upload_app_store_connect_app do
     set_connect_api_key
     set_app_version
-    bump_build_number
+    bump_build_number_production
     builder.build_app_store(
       Constants.SCHEME_NAME_STAGING,
       Constants.PRODUCT_NAME_STAGING,
@@ -162,13 +162,23 @@ platform :ios do
     end
   end
 
-  desc 'set build number from the latest Testflight build number'
-    private_lane :bump_build_number do
-      increment_build_number(
-        build_number: latest_testflight_build_number(
-            app_identifier: Constants.BUNDLE_ID_PRODUCTION
-        ) + 1,
-        xcodeproj: Constants.PROJECT_PATH
-      )
-    end
+  desc 'set build number from the latest Testflight staging build number'
+  private_lane :bump_build_number_staging do
+    increment_build_number(
+      build_number: latest_testflight_build_number(
+          app_identifier: Constants.BUNDLE_ID_STAGING
+      ) + 1,
+      xcodeproj: Constants.PROJECT_PATH
+    )
+  end
+
+  desc 'set build number from the latest Testflight production build number'
+  private_lane :bump_build_number_production do
+    increment_build_number(
+      build_number: latest_testflight_build_number(
+          app_identifier: Constants.BUNDLE_ID_PRODUCTION
+      ) + 1,
+      xcodeproj: Constants.PROJECT_PATH
+    )
+  end
 end
