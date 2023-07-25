@@ -86,6 +86,6 @@ class Constants
   end
 
   def self.DEV_PORTAL_TEAM_ID
-      '4TWS7E2EPE'
-    end
+    '4TWS7E2EPE'
+  end
 end
