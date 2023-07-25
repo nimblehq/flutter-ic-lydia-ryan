@@ -4,6 +4,7 @@ import 'package:lydiaryanfluttersurvey/api/repository/auth_repository.dart';
 import 'package:lydiaryanfluttersurvey/api/repository/survey_repository.dart';
 import 'package:lydiaryanfluttersurvey/api/service/auth_service.dart';
 import 'package:lydiaryanfluttersurvey/api/service/survey_service.dart';
+import 'package:lydiaryanfluttersurvey/model/request/submit_survey_request.dart';
 import 'package:lydiaryanfluttersurvey/model/response/survey_detail_response.dart';
 import 'package:lydiaryanfluttersurvey/storage/shared_preferences_utils.dart';
 import 'package:lydiaryanfluttersurvey/usecases/base/base_use_case.dart';
@@ -23,6 +24,7 @@ import 'package:mockito/annotations.dart';
   MockSpec<LoginUseCase>(),
   MockSpec<GetSurveysUseCase>(),
   MockSpec<SurveyDetailResponse>(),
+  MockSpec<SubmitSurveyRequest>(),
 ])
 main() {
   // empty class to generate mock repository classes

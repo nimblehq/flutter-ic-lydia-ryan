@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lydiaryanfluttersurvey/model/ui/answer_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/model/ui/question_ui_model.dart';
 import 'package:lydiaryanfluttersurvey/resources/dimensions.dart';
 import 'package:lydiaryanfluttersurvey/screens/widgets/app_input_widget.dart';
 
 class AnswerTextFieldWidget extends StatefulWidget {
   final QuestionUiModel question;
-  final Function(List<String>) onAnswer;
+  final Function(List<AnswerUiModel>) onAnswer;
 
   const AnswerTextFieldWidget({
     Key? key,
@@ -18,15 +19,24 @@ class AnswerTextFieldWidget extends StatefulWidget {
 }
 
 class _AnswerTextFieldWidgetState extends State<AnswerTextFieldWidget> {
-  final List<String> _answers = [];
+  final Map<AnswerUiModel, String> _answers = {};
   final List<TextEditingController> _controllers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (var element in widget.question.answers) {
+      _answers[element] = "";
+    }
+  }
 
   void _onTextChanged(
     int index,
     String text,
   ) {
-    _answers[index] = text;
-    widget.onAnswer(_answers);
+    _answers[widget.question.answers[index]] = text;
+    final answers = _answers.entries.map((e) => e.key.copyWith(text: e.value));
+    widget.onAnswer(answers.toList());
   }
 
   @override

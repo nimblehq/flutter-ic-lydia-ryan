@@ -28,4 +28,7 @@ class Dimensions {
   static const double answerDropdownHeight = 57.0;
 
   static const double dividerWidth = 1.0;
+
+  // Image size
+  static const double thankYouIconSize = 200.0;
 }

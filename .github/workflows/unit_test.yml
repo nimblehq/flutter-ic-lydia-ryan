@@ -1,4 +1,4 @@
-name: CI
+name: Unit test on PR and Push
 on:
   # Trigger the workflow on push or pull request,
   # but push action is only for the feature branch

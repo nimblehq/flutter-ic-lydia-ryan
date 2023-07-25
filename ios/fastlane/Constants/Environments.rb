@@ -11,10 +11,6 @@ class Environments
     ENV['FASTLANE_USER']
   end
 
-  def self.TEAM_ID
-    ENV['TEAM_ID']
-  end
-
   def self.APPSTORE_CONNECT_API_KEY
     ENV["APPSTORE_CONNECT_API_KEY"]
   end
@@ -29,5 +25,13 @@ class Environments
 
   def self.BUILD_NUMBER
     ENV['BUILD_NUMBER']
+  end
+
+  def self.APP_STORE_KEY_ID
+    ENV['APP_STORE_KEY_ID']
+  end
+
+  def self.APP_STORE_ISSUER_ID
+      ENV['APP_STORE_ISSUER_ID']
   end
 end

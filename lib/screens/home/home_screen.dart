@@ -27,10 +27,19 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final _currentPageIndex = ValueNotifier<int>(0);
+
   @override
   void initState() {
     super.initState();
     ref.read(_homeViewModelProvider.notifier).getSurveys();
+    _setupListener();
+  }
+
+  @override
+  void dispose() {
+    _currentPageIndex.dispose();
+    super.dispose();
   }
 
   @override
@@ -62,10 +71,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               minHeight: MediaQuery.of(context).size.height,
               maxHeight: MediaQuery.of(context).size.height,
             ),
-            child: HomePagingWidget(surveys: surveys),
+            child: HomePagingWidget(
+                surveys: surveys,
+                onPageChanged: (index) {
+                  _currentPageIndex.value = index;
+                }),
           ),
         ),
       ),
     );
+  }
+
+  void _setupListener() {
+    _currentPageIndex.addListener(() {
+      final currentPageIndex = _currentPageIndex.value;
+      final surveys = ref.read(_surveysStreamProvider).value ?? [];
+      if (currentPageIndex == surveys.length - 2) {
+        ref.read(_homeViewModelProvider.notifier).getSurveys();
+      }
+    });
   }
 }
