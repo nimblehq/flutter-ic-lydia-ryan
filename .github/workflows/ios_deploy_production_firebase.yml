@@ -28,10 +28,11 @@ jobs:
           channel: 'stable'
           flutter-version: '3.7.11'
 
-      - name: Setup .env for production
+      - name: Setup .env
         env:
-          ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
-        run: echo $ENV_PRODUCTION > .env
+          ENV: ${{ secrets.ENV_PRODUCTION }}
+        run: |
+          echo "$ENV_PRODUCTION" > .env
 
       - name: Get flutter dependencies
         run: flutter pub get
