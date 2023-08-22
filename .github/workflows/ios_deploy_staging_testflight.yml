@@ -32,8 +32,9 @@ jobs:
 
       - name: Setup .env
         env:
-          ENV_STAGING: ${{ secrets.ENV_STAGING }}
-        run: echo $ENV_STAGING >> .env.staging
+          ENV: ${{ secrets.ENV_STAGING }}
+        run: |
+          echo "$ENV_STAGING" > .env
 
       - name: Get flutter dependencies
         run: flutter pub get

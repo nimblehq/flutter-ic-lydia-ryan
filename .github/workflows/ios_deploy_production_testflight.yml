@@ -33,8 +33,9 @@ jobs:
 
       - name: Setup .env
         env:
-          ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
-        run: echo $ENV_PRODUCTION >> .env
+          ENV: ${{ secrets.ENV_PRODUCTION }}
+        run: |
+          echo "$ENV_PRODUCTION" > .env
 
       - name: Get Flutter dependencies
         run: flutter pub get
